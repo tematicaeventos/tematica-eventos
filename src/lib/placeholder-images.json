@@ -2,57 +2,39 @@
   "placeholderImages": [
     {
       "id": "hero",
-      "description": "A crowd at a vibrant concert with colorful lights.",
-      "imageUrl": "https://images.unsplash.com/photo-1612389930565-6975454dc7cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxldmVudCUyMGNyb3dkfGVufDB8fHx8MTc2ODg0NTg1N3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "event crowd"
+      "description": "Elegant abstract background with gold and black.",
+      "imageUrl": "https://images.unsplash.com/photo-1581985673473-0784a7a4063a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhYnN0cmFjdCUyMGdvbGQlMjBibGFja3xlbnwwfHx8fDE3Njg5Mjc4MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract gold black"
     },
     {
-      "id": "event-1",
-      "description": "A close-up of a DJ mixing music on a turntable at a brightly lit concert.",
-      "imageUrl": "https://images.unsplash.com/photo-1656283384093-1e227e621fad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtdXNpYyUyMGNvbmNlcnR8ZW58MHx8fHwxNzY4ODM0NTkyfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "music concert"
+      "id": "event-type-15-anos",
+      "description": "A quinceañera party with pink decorations and a large cake.",
+      "imageUrl": "https://images.unsplash.com/photo-1763959952811-ee9fb16242d1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxxdWluY2VhbmVyYSUyMHBhcnR5fGVufDB8fHx8MTc2ODg0NjIwM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "quinceanera party"
     },
     {
-      "id": "event-2",
-      "description": "An abstract painting with vibrant splashes of color on a canvas in an art gallery.",
-      "imageUrl": "https://images.unsplash.com/photo-1606819717115-9159c900370b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhcnQlMjBnYWxsZXJ5fGVufDB8fHx8MTc2ODc1NTU3MHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "art gallery"
+      "id": "event-type-matrimonio",
+      "description": "An elegant wedding reception setup with beautifully decorated tables.",
+      "imageUrl": "https://images.unsplash.com/photo-1714972383523-7c636d2f0e9b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx3ZWRkaW5nJTIwcmVjZXB0aW9ufGVufDB8fHx8MTc2ODc5ODI4MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "wedding reception"
     },
     {
-      "id": "event-3",
-      "description": "A gourmet food truck serving street food at a bustling outdoor festival.",
-      "imageUrl": "https://images.unsplash.com/photo-1675674683873-1232862e3c64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxmb29kJTIwZmVzdGl2YWx8ZW58MHx8fHwxNzY4NzczNTY5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "food festival"
+      "id": "event-type-social",
+      "description": "A family gathering for a social event, like a baptism or birthday.",
+      "imageUrl": "https://images.unsplash.com/photo-1519671282429-b44660ead0a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8c29jaWFsJTIwZXZlbnR8ZW58MHx8fHwxNzY4ODMxNjU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "social event"
     },
     {
-      "id": "event-4",
-      "description": "A group of people planting trees in a park for a community greening event.",
-      "imageUrl": "https://images.unsplash.com/photo-1768306662463-4e3f6c858889?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb21tdW5pdHklMjB2b2x1bnRlZXJ8ZW58MHx8fHwxNzY4ODQ1ODU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "community volunteer"
+      "id": "event-type-empresarial",
+      "description": "A corporate meeting room with a large screen and presentation setup.",
+      "imageUrl": "https://images.unsplash.com/photo-1605256585681-455837661b18?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb3Jwb3JhdGUlMjBtZWV0aW5nfGVufDB8fHx8MTc2ODc0NzM0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "corporate meeting"
     },
     {
-      "id": "event-5",
-      "description": "A speaker presenting on a stage at a modern tech conference with a large screen behind.",
-      "imageUrl": "https://images.unsplash.com/photo-1560439514-4e9645039924?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx0ZWNoJTIwY29uZmVyZW5jZXxlbnwwfHx8fDE3Njg3NDgyNTJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "tech conference"
-    },
-    {
-      "id": "event-6",
-      "description": "A classical music quartet performing in an elegant concert hall.",
-      "imageUrl": "https://images.unsplash.com/photo-1488630228244-bcdf33562a43?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjbGFzc2ljYWwlMjBjb25jZXJ0fGVufDB8fHx8MTc2ODg0NTg1N3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "classical concert"
-    },
-    {
-      "id": "event-7",
-      "description": "People browsing through various stalls at a local farmers market.",
-      "imageUrl": "https://images.unsplash.com/photo-1444459094717-a39f1e3e0903?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxmYXJtZXJzJTIwbWFya2V0fGVufDB8fHx8MTc2ODc5NDY3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "farmers market"
-    },
-    {
-      "id": "event-8",
-      "description": "An artist sculpting a clay pot on a potter's wheel in a studio.",
-      "imageUrl": "https://images.unsplash.com/photo-1560831340-b9679dc9e9f0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhcnQlMjB3b3Jrc2hvcHxlbnwwfHx8fDE3Njg4NDU4NTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "art workshop"
+      "id": "event-type-despedida",
+      "description": "People celebrating at a company year-end party.",
+      "imageUrl": "https://images.unsplash.com/photo-1528605105345-5344ea20e269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb21wYW55JTIwcGFydHl8ZW58MHx8fHwxNzY4ODQ2MjAzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "company party"
     }
   ]
 }

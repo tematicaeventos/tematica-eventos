@@ -1,17 +1,8 @@
-import type { PlaceHolderImages } from "./placeholder-images";
-
-export type EventCategory = 'Music' | 'Art' | 'Food' | 'Community' | 'Tech';
-
-export type Event = {
+export type EventTypeInfo = {
   id: string;
   title: string;
   description: string;
-  date: string; // "YYYY-MM-DD"
-  time: string; // "HH:MM"
-  location: string;
-  organizer: string;
-  category: EventCategory;
-  image: (typeof PlaceHolderImages)[number]['id'];
+  image: string;
 };
 
 export const VendorServices = ['Venue', 'Catering', 'Music', 'Photography'] as const;
