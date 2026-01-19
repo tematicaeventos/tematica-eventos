@@ -55,6 +55,7 @@ type QuoteDetails = {
 
 export default function QuotesPage() {
   const [quote, setQuote] = useState<QuoteDetails | null>(null);
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   const form = useForm<QuoteFormValues>({
     resolver: zodResolver(quoteFormSchema),
@@ -154,7 +155,7 @@ export default function QuotesPage() {
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
                     <FormLabel>Fecha del Evento</FormLabel>
-                    <Popover>
+                    <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
@@ -177,7 +178,10 @@ export default function QuotesPage() {
                         <Calendar
                           mode="single"
                           selected={field.value}
-                          onSelect={field.onChange}
+                          onSelect={(date) => {
+                            field.onChange(date);
+                            setCalendarOpen(false);
+                          }}
                           disabled={(date) => date < new Date()}
                           initialFocus
                           locale={es}
