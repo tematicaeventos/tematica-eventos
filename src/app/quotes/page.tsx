@@ -68,7 +68,7 @@ export default function QuotesPage() {
   function onSubmit(data: QuoteFormValues) {
     const serviceCosts = {
       Salón: 500,
-      Catering: 40, // per guest
+      'Alimentos y bebidas': 40, // per guest
       Música: 300,
       Fotografía: 600,
     };
@@ -77,7 +77,7 @@ export default function QuotesPage() {
       .map((service) => {
         const s = service as VendorService;
         let cost = serviceCosts[s];
-        if (s === 'Catering') {
+        if (s === 'Alimentos y bebidas') {
           cost *= data.guestCount;
         }
         return { service: s, cost };

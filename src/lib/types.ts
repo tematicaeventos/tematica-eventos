@@ -5,5 +5,5 @@ export type EventTypeInfo = {
   image: string;
 };
 
-export const VendorServices = ['Salón', 'Catering', 'Música', 'Fotografía'] as const;
+export const VendorServices = ['Salón', 'Alimentos y bebidas', 'Música', 'Fotografía'] as const;
 export type VendorService = (typeof VendorServices)[number];
