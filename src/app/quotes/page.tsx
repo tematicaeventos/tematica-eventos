@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import { Calendar as CalendarIcon, Calculator, Check, PartyPopper } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -37,11 +38,11 @@ import { cn } from '@/lib/utils';
 import { VendorServices, type VendorService } from '@/lib/types';
 
 const quoteFormSchema = z.object({
-  eventType: z.string().min(1, 'Please select an event type.'),
-  guestCount: z.coerce.number().min(1, 'At least one guest is required.'),
-  eventDate: z.date({ required_error: 'An event date is required.' }),
+  eventType: z.string().min(1, 'Por favor, selecciona un tipo de evento.'),
+  guestCount: z.coerce.number().min(1, 'Se requiere al menos un invitado.'),
+  eventDate: z.date({ required_error: 'Se requiere una fecha para el evento.' }),
   services: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: 'You have to select at least one service.',
+    message: 'Debes seleccionar al menos un servicio.',
   }),
 });
 
@@ -66,10 +67,10 @@ export default function QuotesPage() {
 
   function onSubmit(data: QuoteFormValues) {
     const serviceCosts = {
-      Venue: 500,
+      Salón: 500,
       Catering: 40, // per guest
-      Music: 300,
-      Photography: 600,
+      Música: 300,
+      Fotografía: 600,
     };
 
     const breakdown = data.services
@@ -92,17 +93,17 @@ export default function QuotesPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="text-center mb-12 fade-in">
         <h1 className="text-4xl font-bold tracking-tight font-headline">
-          Instant Event Quote
+          Cotización de Evento al Instante
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Plan your budget in minutes.
+          Planifica tu presupuesto en minutos.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
         <Card className="fade-in">
             <CardHeader>
-                <CardTitle className="flex items-center"><Calculator className="mr-2 h-5 w-5 text-primary"/>Quote Calculator</CardTitle>
+                <CardTitle className="flex items-center"><Calculator className="mr-2 h-5 w-5 text-primary"/>Calculadora de Cotización</CardTitle>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
@@ -112,18 +113,18 @@ export default function QuotesPage() {
                 name="eventType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Event Type</FormLabel>
+                    <FormLabel>Tipo de Evento</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select an event type" />
+                          <SelectValue placeholder="Selecciona un tipo de evento" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="wedding">Wedding</SelectItem>
-                        <SelectItem value="birthday">Birthday Party</SelectItem>
-                        <SelectItem value="corporate">Corporate Event</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
+                        <SelectItem value="matrimonio">Matrimonio</SelectItem>
+                        <SelectItem value="cumpleanos">Fiesta de Cumpleaños</SelectItem>
+                        <SelectItem value="corporativo">Evento Corporativo</SelectItem>
+                        <SelectItem value="otro">Otro</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -136,7 +137,7 @@ export default function QuotesPage() {
                 name="guestCount"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Number of Guests</FormLabel>
+                    <FormLabel>Número de Invitados</FormLabel>
                     <FormControl>
                       <Input type="number" placeholder="50" {...field} />
                     </FormControl>
@@ -150,7 +151,7 @@ export default function QuotesPage() {
                 name="eventDate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Event Date</FormLabel>
+                    <FormLabel>Fecha del Evento</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -162,9 +163,9 @@ export default function QuotesPage() {
                             )}
                           >
                             {field.value ? (
-                              format(field.value, 'PPP')
+                              format(field.value, 'PPP', { locale: es })
                             ) : (
-                              <span>Pick a date</span>
+                              <span>Elige una fecha</span>
                             )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
@@ -177,6 +178,7 @@ export default function QuotesPage() {
                           onSelect={field.onChange}
                           disabled={(date) => date < new Date()}
                           initialFocus
+                          locale={es}
                         />
                       </PopoverContent>
                     </Popover>
@@ -191,9 +193,9 @@ export default function QuotesPage() {
                 render={() => (
                   <FormItem>
                     <div className="mb-4">
-                      <FormLabel>Required Services</FormLabel>
+                      <FormLabel>Servicios Requeridos</FormLabel>
                       <FormDescription>
-                        Select the services you are interested in.
+                        Selecciona los servicios que te interesan.
                       </FormDescription>
                     </div>
                     {VendorServices.map((item) => (
@@ -231,7 +233,7 @@ export default function QuotesPage() {
               />
 
               <Button type="submit" className="w-full">
-                Generate Quote
+                Generar Cotización
               </Button>
             </form>
           </Form>
@@ -243,7 +245,7 @@ export default function QuotesPage() {
             <Card className="sticky top-24">
               <CardHeader>
                 <CardTitle className='flex items-center'>
-                    <PartyPopper className="mr-2 h-5 w-5 text-primary"/> Your Estimated Quote
+                    <PartyPopper className="mr-2 h-5 w-5 text-primary"/> Tu Cotización Estimada
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -255,12 +257,12 @@ export default function QuotesPage() {
                     </div>
                   ))}
                   <div className="border-t pt-4 mt-4 flex justify-between font-bold text-lg">
-                    <span>Estimated Total</span>
+                    <span>Total Estimado</span>
                     <span>${quote.total.toLocaleString()}</span>
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground mt-6">
-                  *This is an estimate. Prices may vary based on specific vendors and availability.
+                  *Esta es una estimación. Los precios pueden variar según los proveedores específicos y la disponibilidad.
                 </p>
               </CardContent>
             </Card>

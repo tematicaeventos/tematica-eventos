@@ -22,7 +22,7 @@ export default function Home() {
             data-ai-hint={heroImage.imageHint}
           />
         )}
-        <div className="relative z-10 animate-fade-in-up">
+        <div className="relative z-10">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white font-headline">
             Temática Eventos
           </h1>
