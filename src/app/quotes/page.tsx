@@ -50,7 +50,7 @@ type QuoteFormValues = z.infer<typeof quoteFormSchema>;
 
 type QuoteDetails = {
   total: number;
-  breakdown: { service: VendorService; cost: number }[];
+  breakdown: { service: string; cost: number }[];
 };
 
 export default function QuotesPage() {
@@ -67,22 +67,24 @@ export default function QuotesPage() {
 
   function onSubmit(data: QuoteFormValues) {
     const serviceCosts = {
-      Salón: 500,
-      'Alimentos y bebidas': 40, // per guest
-      Música: 300,
-      Fotografía: 600,
+      'Salón': 3000000,
+      'Alimentos y bebidas': 45000, // per guest
+      'Música': 900000,
+      'Fotografía': 1200000,
+      'Decoración': 1800000,
+      'Pastel': 800000,
     };
 
     const breakdown = data.services
       .map((service) => {
-        const s = service as VendorService;
+        const s = service as keyof typeof serviceCosts;
         let cost = serviceCosts[s];
         if (s === 'Alimentos y bebidas') {
           cost *= data.guestCount;
         }
         return { service: s, cost };
       })
-      .filter((item): item is { service: VendorService, cost: number } => !!item);
+      .filter((item): item is { service: string, cost: number } => !!item);
 
     const total = breakdown.reduce((acc, item) => acc + item.cost, 0);
 
@@ -253,12 +255,12 @@ export default function QuotesPage() {
                   {quote.breakdown.map((item) => (
                     <div key={item.service} className="flex justify-between">
                       <span className="text-muted-foreground">{item.service}</span>
-                      <span>${item.cost.toLocaleString()}</span>
+                      <span>${item.cost.toLocaleString('es-CO')}</span>
                     </div>
                   ))}
                   <div className="border-t pt-4 mt-4 flex justify-between font-bold text-lg">
                     <span>Total Estimado</span>
-                    <span>${quote.total.toLocaleString()}</span>
+                    <span>${quote.total.toLocaleString('es-CO')}</span>
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground mt-6">
