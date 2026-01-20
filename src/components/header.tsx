@@ -20,39 +20,56 @@ const navLinks = [
   { href: '/build', label: 'Arma tu Evento' },
 ];
 
-export function Header() {
-  const pathname = usePathname();
-
-  const NavLinksContent = ({ isMobile = false }: { isMobile?: boolean }) => (
-    <nav
-      className={cn(
-        'flex items-center',
-        isMobile
-          ? 'flex-col space-y-4 text-lg items-start space-x-0'
-          : 'space-x-4 lg:space-x-6'
-      )}
-    >
-      {navLinks.map((link) => {
-        const linkContent = (
+const NavLinksContent = ({
+  isMobile = false,
+  pathname,
+}: {
+  isMobile?: boolean;
+  pathname: string;
+}) => (
+  <nav
+    className={cn(
+      'flex items-center',
+      isMobile
+        ? 'flex-col space-y-4 text-lg items-start space-x-0'
+        : 'space-x-4 lg:space-x-6'
+    )}
+  >
+    {navLinks.map((link) =>
+      isMobile ? (
+        <SheetClose asChild key={link.href}>
           <Link
-            key={link.href}
             href={link.href}
             className={cn(
               'text-sm font-medium transition-colors hover:text-primary',
-              pathname === link.href ? 'text-foreground' : 'text-muted-foreground'
+              pathname === link.href
+                ? 'text-foreground'
+                : 'text-muted-foreground'
             )}
           >
             {link.label}
           </Link>
-        );
+        </SheetClose>
+      ) : (
+        <Link
+          key={link.href}
+          href={link.href}
+          className={cn(
+            'text-sm font-medium transition-colors hover:text-primary',
+            pathname === link.href
+              ? 'text-foreground'
+              : 'text-muted-foreground'
+          )}
+        >
+          {link.label}
+        </Link>
+      )
+    )}
+  </nav>
+);
 
-        if (isMobile) {
-          return <SheetClose asChild key={link.href}>{linkContent}</SheetClose>;
-        }
-        return linkContent;
-      })}
-    </nav>
-  );
+export function Header() {
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -63,7 +80,7 @@ export function Header() {
         </Link>
 
         <div className="hidden md:flex">
-          <NavLinksContent />
+          <NavLinksContent pathname={pathname} />
         </div>
 
         <div className="md:hidden">
@@ -77,7 +94,7 @@ export function Header() {
             <SheetContent side="right" className="bg-background text-foreground">
               <SheetTitle className="sr-only">Menú</SheetTitle>
                 <div className="flex flex-col p-6 pt-12">
-                     <NavLinksContent isMobile />
+                     <NavLinksContent isMobile pathname={pathname}/>
                 </div>
             </SheetContent>
           </Sheet>
