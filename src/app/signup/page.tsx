@@ -45,10 +45,15 @@ export default function SignupPage() {
       });
       router.push('/build');
     } catch (error: any) {
+      let description = 'No se pudo crear tu cuenta. Intenta de nuevo.';
+      if (error.code === 'auth/email-already-in-use') {
+        description = 'Este correo electrónico ya está registrado. Por favor, inicia sesión o utiliza otro correo.';
+      }
+      
       toast({
         variant: 'destructive',
         title: 'Error en el registro',
-        description: error.message || 'No se pudo crear tu cuenta. Intenta de nuevo.',
+        description: description,
       });
     }
   }
