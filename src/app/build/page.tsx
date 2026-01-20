@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -13,13 +14,32 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { serviceCategories } from '@/lib/services-data';
-import type { SelectedService, ServiceItem } from '@/lib/types';
-import { ArrowRight, Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react';
+import type { SelectedService, ServiceItem, Quote, UserProfile } from '@/lib/types';
+import { ArrowRight, Minus, Plus, ShoppingCart, Trash2, Download, MessageCircle } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
+import { useUser } from '@/firebase/auth/use-user';
+import { saveQuote } from '@/firebase/firestore';
+import { useToast } from '@/hooks/use-toast';
+import QuotePDFDocument from '@/components/QuotePDFDocument';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export default function BuildEventPage() {
+  const { user, profile } = useUser();
+  const router = useRouter();
+  const { toast } = useToast();
+
   const [selectedServices, setSelectedServices] = useState<SelectedService[]>([]);
+  const [quoteId, setQuoteId] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const pdfRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (user === null) {
+      router.push('/login');
+    }
+  }, [user, router]);
 
   const handleServiceToggle = (service: ServiceItem, checked: boolean) => {
     if (checked) {
@@ -27,6 +47,7 @@ export default function BuildEventPage() {
     } else {
       setSelectedServices((prev) => prev.filter((s) => s.id !== service.id));
     }
+    setQuoteId(null);
   };
 
   const handleQuantityChange = (serviceId: string, newQuantity: number) => {
@@ -37,6 +58,7 @@ export default function BuildEventPage() {
     } else {
       setSelectedServices((prev) => prev.filter((s) => s.id !== serviceId));
     }
+    setQuoteId(null);
   };
 
   const total = useMemo(() => {
@@ -53,17 +75,113 @@ export default function BuildEventPage() {
       maximumFractionDigits: 0,
     }).format(value);
   };
-  
-  const getServiceFromId = (serviceId: string): ServiceItem | undefined => {
-    for (const category of serviceCategories) {
-      const found = category.items.find(item => item.id === serviceId);
-      if (found) return found;
+
+  const handleGenerateQuote = async () => {
+    if (!user || !profile) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Debes iniciar sesión para generar una cotización.',
+      });
+      return;
     }
-    return undefined;
+
+    setIsSaving(true);
+    try {
+      const newQuote: Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> = {
+        usuarioId: user.uid,
+        nombreCliente: profile.nombre,
+        correo: profile.correo,
+        telefono: profile.telefono,
+        items: selectedServices.map(s => ({
+            categoria: serviceCategories.find(c => c.items.some(i => i.id === s.id))?.name || 'Desconocido',
+            nombre: s.name,
+            cantidad: s.quantity,
+            precioUnitario: s.price,
+            subtotal: s.price * s.quantity
+        })),
+        total: total,
+        estado: 'pendiente',
+        origen: 'web',
+      };
+      
+      const newQuoteId = await saveQuote(newQuote);
+      setQuoteId(newQuoteId);
+
+      toast({
+        title: 'Cotización Generada',
+        description: 'Tu cotización ha sido guardada exitosamente.',
+      });
+
+    } catch (error) {
+      console.error("Error saving quote: ", error);
+      toast({
+        variant: 'destructive',
+        title: 'Error al guardar',
+        description: 'No se pudo guardar tu cotización. Inténtalo de nuevo.',
+      });
+    } finally {
+        setIsSaving(false);
+    }
+  };
+  
+  const handleDownloadPdf = () => {
+    const input = pdfRef.current;
+    if (!input) return;
+
+    html2canvas(input, { scale: 2 }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+      const ratio = canvasWidth / canvasHeight;
+      const width = pdfWidth;
+      const height = width / ratio;
+
+      let position = 0;
+      if (height > pdfHeight) {
+         position = - (height - pdfHeight) / 2
+      }
+      
+      pdf.addImage(imgData, 'PNG', 0, position, width, height);
+      pdf.save(`cotizacion-${quoteId}.pdf`);
+    });
+  };
+
+  const handleWhatsAppRedirect = () => {
+    if (!profile || !quoteId) return;
+
+    const businessPhoneNumber = '573001234567'; // Reemplazar con el número del negocio
+    const message = `Hola, soy ${profile.nombre}.
+Acabo de generar la cotización ${quoteId}.
+Total: ${formatCurrency(total)}.
+Correo: ${profile.correo}
+Teléfono: ${profile.telefono}`;
+
+    const url = `https://wa.me/${businessPhoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  };
+
+  if (!user) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">
+        <p>Cargando...</p>
+      </div>
+    );
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
+       {/* Hidden element for PDF generation */}
+       <div className="absolute left-[-9999px] top-[-9999px]" >
+        <div ref={pdfRef} className="p-8 bg-white text-black w-[210mm]">
+          {quoteId && profile && <QuotePDFDocument quoteId={quoteId} quote={{items: selectedServices, total}} user={profile} />}
+        </div>
+      </div>
+
+
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold tracking-tight font-headline">
           Arma tu Evento a Medida
@@ -75,7 +193,7 @@ export default function BuildEventPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 items-start">
         <div className="md:col-span-2">
-          <Accordion type="multiple" className="w-full space-y-4">
+          <Accordion type="multiple" className="w-full space-y-4" defaultValue={serviceCategories.map(c => c.id)}>
             {serviceCategories.map((category) => (
               <Card key={category.id} className="overflow-hidden">
                 <AccordionItem value={category.id} className="border-b-0">
@@ -109,7 +227,7 @@ export default function BuildEventPage() {
                                 </div>
                               </div>
                               {selected && (
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-2 self-center">
                                   <Button
                                     variant="outline"
                                     size="icon"
@@ -189,10 +307,23 @@ export default function BuildEventPage() {
             </CardContent>
             {selectedServices.length > 0 && (
                 <CardFooter>
-                    <Button className="w-full group" size="lg">
-                        Continuar con la reserva
-                        <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                    </Button>
+                  {!quoteId ? (
+                      <Button onClick={handleGenerateQuote} className="w-full group" size="lg" disabled={isSaving}>
+                          {isSaving ? 'Guardando...' : 'Generar Cotización'}
+                          {!isSaving && <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />}
+                      </Button>
+                  ) : (
+                    <div className='w-full flex flex-col gap-2'>
+                        <Button onClick={handleDownloadPdf} className="w-full" size="lg" variant="outline">
+                            <Download className="mr-2 h-5 w-5" />
+                            Descargar PDF
+                        </Button>
+                        <Button onClick={handleWhatsAppRedirect} className="w-full" size="lg">
+                            <MessageCircle className="mr-2 h-5 w-5" />
+                            Enviar por WhatsApp
+                        </Button>
+                    </div>
+                  )}
                 </CardFooter>
             )}
           </Card>

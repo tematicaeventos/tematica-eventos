@@ -1,0 +1,82 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores public information about a user.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "nombre": { "type": "string" },
+        "correo": { "type": "string", "format": "email" },
+        "telefono": { "type": "string" },
+        "fechaRegistro": { "type": "string", "format": "date-time" },
+        "estado": { "type": "string", "enum": ["activo", "inactivo"] }
+      },
+      "required": ["uid", "nombre", "correo", "telefono", "fechaRegistro", "estado"]
+    },
+    "Quote": {
+      "title": "Quote",
+      "description": "Represents a customer's price quotation.",
+      "type": "object",
+      "properties": {
+        "cotizacionId": { "type": "string" },
+        "usuarioId": { "type": "string" },
+        "nombreCliente": { "type": "string" },
+        "correo": { "type": "string" },
+        "telefono": { "type": "string" },
+        "fechaCotizacion": { "type": "string", "format": "date-time" },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/backend/entities/QuoteItem" }
+        },
+        "total": { "type": "number" },
+        "estado": { "type": "string", "enum": ["pendiente", "enviado", "contactado", "en negociación", "cerrado", "descartado"] },
+        "origen": { "type": "string" }
+      },
+      "required": ["cotizacionId", "usuarioId", "nombreCliente", "fechaCotizacion", "items", "total", "estado"]
+    },
+    "QuoteItem": {
+      "title": "Quote Item",
+      "description": "A single item within a quote.",
+      "type": "object",
+      "properties": {
+        "categoria": { "type": "string" },
+        "nombre": { "type": "string" },
+        "cantidad": { "type": "number" },
+        "precioUnitario": { "type": "number" },
+        "subtotal": { "type": "number" }
+      },
+      "required": ["categoria", "nombre", "cantidad", "precioUnitario", "subtotal"]
+    },
+    "Tracking": {
+      "title": "Tracking",
+      "description": "Tracks the commercial follow-up of a quote.",
+      "type": "object",
+      "properties": {
+        "cotizacionId": { "type": "string" },
+        "usuarioId": { "type": "string" },
+        "estado": { "type": "string" },
+        "contactado": { "type": "boolean" },
+        "fechaUltimoContacto": { "type": "string", "format": "date-time" },
+        "observaciones": { "type": "string" }
+      }
+    }
+  },
+  "auth": {
+    "providers": ["email_password"]
+  },
+  "firestore": {
+    "/usuarios/{userId}": {
+      "schema": { "$ref": "#/backend/entities/UserProfile" },
+      "description": "User profile documents."
+    },
+    "/cotizaciones/{quoteId}": {
+      "schema": { "$ref": "#/backend/entities/Quote" },
+      "description": "Customer quotations."
+    },
+    "/seguimiento/{quoteId}": {
+      "schema": { "$ref": "#/backend/entities/Tracking" },
+      "description": "Commercial tracking for quotations."
+    }
+  }
+}
