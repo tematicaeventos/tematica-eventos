@@ -45,10 +45,24 @@ export default function ForgotPasswordPage() {
       });
       router.push('/login');
     } catch (error: any) {
-        let description = 'No se pudo enviar el correo de recuperación. Inténtalo de nuevo.';
-        if (error.code === 'auth/user-not-found') {
-            description = 'No existe una cuenta con este correo electrónico. Por favor, verifica el correo o regístrate.';
-        }
+      console.error("Error al enviar correo de recuperación:", error);
+      let description = 'Ocurrió un error inesperado. Inténtalo de nuevo.';
+      switch (error.code) {
+        case 'auth/user-not-found':
+          description =
+            'No existe una cuenta con este correo. Verifica que lo hayas escrito bien.';
+          break;
+        case 'auth/invalid-email':
+          description = 'El formato del correo electrónico no es válido.';
+          break;
+        case 'auth/too-many-requests':
+          description =
+            'Hemos bloqueado las solicitudes desde este dispositivo debido a actividad inusual. Inténtalo más tarde.';
+          break;
+        default:
+          description = `No se pudo enviar el correo. Causa: ${error.message}`;
+          break;
+      }
       toast({
         variant: 'destructive',
         title: 'Error',
