@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/sheet';
 import { useUser } from '@/firebase/auth/use-user';
 import { signOut } from '@/firebase/auth';
+import { Separator } from '@/components/ui/separator';
 
 const navLinks = [
   { href: '/', label: 'Inicio' },
