@@ -11,11 +11,13 @@ import {
   SheetContent,
   SheetTrigger,
   SheetClose,
+  SheetTitle,
 } from '@/components/ui/sheet';
 
 const navLinks = [
   { href: '/', label: 'Inicio' },
   { href: '/quotes', label: 'Cotizar' },
+  { href: '/build', label: 'Arma tu Evento' },
 ];
 
 export function Header() {
@@ -73,6 +75,7 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="bg-background text-foreground">
+              <SheetTitle className="sr-only">Menú</SheetTitle>
                 <div className="flex flex-col p-6 pt-12">
                      <NavLinksContent isMobile />
                 </div>
