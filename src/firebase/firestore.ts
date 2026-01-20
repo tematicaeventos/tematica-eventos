@@ -34,7 +34,7 @@ export async function saveQuote(quoteData: Omit<Quote, 'cotizacionId' | 'fechaCo
       estado: 'enviado',
       contactado: false,
       fechaUltimoContacto: null,
-      observaciones: 'Cotización generada desde la web.'
+      observaciones: 'Cotización generada desde el nuevo cotizador web.'
   });
 
   return cotizacionId;

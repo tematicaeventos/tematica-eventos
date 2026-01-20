@@ -1,197 +1,66 @@
-/**
- * Core Philosophy: This ruleset implements a dual security model. It enforces
- * a strict user-ownership model for all user-specific data, such as profiles
- * and quote requests, ensuring users can only access their own information.
- * For global, shared data like categories, events, organizers, and vendors,
- * it adopts a public read-only model, allowing any client to read the data
- * but prohibiting any client-side writes. This secure-by-default posture
- * assumes that global data is managed by a trusted backend or through the
- * Firebase console.
- *
- * Data Structure: User-specific data is hierarchically organized under the
- * `/users/{userId}` path. This includes the user's main profile document
- * and any related subcollections like `quoteRequests`. All other data collections
- * (`categories`, `organizers`, `vendors`) are placed at the root level to
- * facilitate public browsing and queries. Events are nested under categories
- * (`/categories/{categoryId}/events/{eventId}`) for organized retrieval.
- *
- * Key Security Decisions:
- * - User Isolation: A user's data tree (`/users/{userId}/**`) is completely
- *   inaccessible to any other user.
- * - No User Enumeration: The top-level `/users` collection cannot be listed,
- *   preventing malicious actors from scraping user data.
- * - Public Data is Read-Only: All top-level collections intended for public
- *   browsing (`categories`, `organizers`, `vendors`, and `events`) are configured
- *   to be read-only from the client. This prevents unauthorized modification
- *   of shared application data.
- * - Path-based Authorization: Security rules rely on information in the
- *   document path (e.g., `userId`) to make authorization decisions, which is
- *   highly performant.
- *
- * Denormalization for Authorization: The rules for `quoteRequests` require that
- * the document data contains a `userId` field that matches the `userId` in the
- * path. This denormalized field is validated upon creation and made immutable
- * on update, ensuring a permanent and verifiable link between a document and
- * its owner directly within the data. This avoids costly `get()` calls and
- * simplifies rule logic.
- *
- * Structural Segregation: The design correctly segregates private user data
- * (like `/users/{userId}/quoteRequests`) from public, browsable data (like
- * `/categories` and `/vendors`). This separation is critical for writing
- * secure and performant rules for list operations.
- */
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper functions for reusable logic
-    
-    /**
-     * Checks if a user is authenticated.
-     */
     function isSignedIn() {
       return request.auth != null;
     }
-    
-    /**
-     * Checks if the authenticated user's UID matches the provided userId.
-     */
+
     function isOwner(userId) {
-      return isSignedIn() && request.auth.uid == userId;
+      return request.auth.uid == userId;
     }
     
-    /**
-     * Checks if a document currently exists in the database.
-     */
-    function isExistingDoc() {
-      return resource != null;
-    }
-    
-    /**
-     * Verifies the requesting user is the owner of an existing document.
-     * Used for secure update and delete operations.
-     */
-    function isExistingOwner(userId) {
-      return isOwner(userId) && isExistingDoc();
-    }
-    
-    /**
-     * @description   Manages user profile data. Only the user themselves can
-     *                access or modify their own profile document.
-     * @path          /users/{userId}
-     * @allow         (create) An authenticated user creating their own profile: auth.uid == 'user_abc', path == '/users/user_abc'
-     * @deny          (get) An authenticated user trying to read another's profile: auth.uid == 'user_123', path == '/users/user_abc'
-     * @principle     Restricts access to a user's own data tree and enforces self-creation.
-     */
     match /users/{userId} {
-      allow get: if isOwner(userId);
-      allow list: if false;
-      allow create: if isOwner(userId) && request.resource.data.id == userId;
-      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
-      allow delete: if isExistingOwner(userId);
-
-      /**
-       * @description   Manages quote requests created by a user. Access is
-       *                strictly limited to the user who owns the requests.
-       * @path          /users/{userId}/quoteRequests/{quoteRequestId}
-       * @allow         (create) A user creating a quote request in their own subcollection: auth.uid == 'user_abc', path == '/users/user_abc/quoteRequests/...'
-       * @deny          (list) A different user trying to list quote requests: auth.uid == 'user_123', path == '/users/user_abc/quoteRequests'
-       * @principle     Enforces document ownership within a user-specific subcollection.
-       */
-      match /quoteRequests/{quoteRequestId} {
-        allow get: if isOwner(userId);
-        allow list: if isOwner(userId);
-        allow create: if isOwner(userId) && request.resource.data.userId == userId;
-        allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
-        allow delete: if isExistingOwner(userId);
-      }
+      allow read, create, update: if isOwner(userId);
+      allow delete: if false;
     }
 
-    /**
-     * @description   Manages user-generated quotes. Users can create quotes
-     *                and read/update their own quotes. Listing all quotes is disallowed.
-     * @path          /cotizaciones/{quoteId}
-     * @principle     Secures user data by checking for ownership via a `usuarioId` field.
-     */
+    match /users/{userId}/quotes/{quoteId} {
+      allow read, create, update: if isOwner(userId);
+      allow delete: if false;
+    }
+    
+    // Legacy quote collections, secure to prevent new writes from clients
     match /cotizaciones/{quoteId} {
-      allow get, update: if isSignedIn() && resource.data.usuarioId == request.auth.uid;
-      allow create: if isSignedIn() && request.resource.data.usuarioId == request.auth.uid;
-      allow list, delete: if false;
+      allow read, update: if isSignedIn() && resource.data.usuarioId == request.auth.uid;
+      allow create, delete, list: if false;
     }
 
-    /**
-     * @description   Internal tracking for quotes. A user can create this when
-     *                they generate a quote, but they cannot read or modify it.
-     * @path          /seguimiento/{quoteId}
-     * @principle     Allows creation by the user for workflow triggers, but protects data from client reads/writes.
-     */
     match /seguimiento/{quoteId} {
-      allow create: if isSignedIn() && request.resource.data.usuarioId == request.auth.uid;
       allow get, list, update, delete: if false;
+      allow create: if isSignedIn() && request.resource.data.usuarioId == request.auth.uid;
     }
 
-    /**
-     * @description   Publicly readable collection of event categories.
-     *                This data is considered global and is not writable by clients.
-     * @path          /categories/{categoryId}
-     * @allow         (get, list) Any user, authenticated or not, reading category data.
-     * @deny          (create) Any client attempting to create a new category.
-     * @principle     Secures global lookup data by making it read-only for clients.
-     */
-    match /categories/{categoryId} {
-      allow get: if true;
-      allow list: if true;
-      allow create: if false;
-      allow update: if false;
-      allow delete: if false;
-
-      /**
-       * @description   Publicly readable collection of events, nested under their category.
-       *                This data is not writable by clients.
-       * @path          /categories/{categoryId}/events/{eventId}
-       * @allow         (get, list) Any user reading event data for a specific category.
-       * @deny          (update) Any client attempting to modify an existing event.
-       * @principle     Secures global application data by making it read-only for clients.
-       */
-      match /events/{eventId} {
-        allow get: if true;
-        allow list: if true;
-        allow create: if false;
-        allow update: if false;
-        allow delete: if false;
-      }
+    // Publicly readable data for the quote builder
+    match /eventTypes/{docId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
     }
-
-    /**
-     * @description   Publicly readable collection of event organizers.
-     *                This data is considered global and is not writable by clients.
-     * @path          /organizers/{organizerId}
-     * @allow         (get, list) Any user, authenticated or not, viewing organizer profiles.
-     * @deny          (create) Any client attempting to create a new organizer profile.
-     * @principle     Secures global lookup data by making it read-only for clients.
-     */
-    match /organizers/{organizerId} {
-      allow get: if true;
-      allow list: if true;
-      allow create: if false;
-      allow update: if false;
-      allow delete: if false;
+    match /basePlans/{docId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
     }
-
-    /**
-     * @description   Publicly readable collection of event vendors.
-     *                This data is considered global and is not writable by clients.
-     * @path          /vendors/{vendorId}
-     * @allow         (get, list) Any user, authenticated or not, browsing vendor profiles.
-     * @deny          (create) Any client attempting to create a new vendor profile.
-     * @principle     Secures global lookup data by making it read-only for clients.
-     */
-    match /vendors/{vendorId} {
-      allow get: if true;
-      allow list: if true;
-      allow create: if false;
-      allow update: if false;
-      allow delete: if false;
+    match /foodOptions/{docId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+    match /drinkOptions/{docId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+    match /liquorOptions/{docId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+    match /extraOptions/{docId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+    match /reservations/{docId} {
+      allow get, list: if true;
+      // Allow authenticated users to create reservations (to be validated further)
+      allow create: if isSignedIn();
+      allow update, delete: if false;
     }
   }
 }

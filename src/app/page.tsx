@@ -67,8 +67,8 @@ export default function Home() {
           <h2 className="mt-6 text-4xl font-bold font-headline text-foreground">
             Arma tu Evento
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-            Selecciona únicamente los servicios que necesitas y arma tu evento a tu medida. El valor se calcula automáticamente.
+          <p className="mt-4 max-w-3xl mx-auto text-lg text-muted-foreground">
+            Temática Eventos te ofrece una experiencia completa: salón, sonido, luces, comida, bebidas, decoración y extras personalizables. Cotiza rápida y visualmente según tus necesidades.
           </p>
           <Button asChild size="lg" className="mt-8 group bg-primary text-primary-foreground hover:bg-primary/90">
             <Link href="/quotes">
