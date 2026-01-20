@@ -8,9 +8,9 @@
     },
     {
       "id": "event-type-15-anos",
-      "description": "A quinceañera party with pink decorations and a large cake.",
-      "imageUrl": "https://images.unsplash.com/photo-1763959952811-ee9fb16242d1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxxdWluY2VhbmVyYSUyMHBhcnR5fGVufDB8fHx8MTc2ODg0NjIwM3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "quinceanera party"
+      "description": "Un collage de temáticas para fiestas de 15 años.",
+      "imageUrl": "https://images.unsplash.com/photo-1513151233558-d860c5398176?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwYXJ0eSUyMGRlY29yYXRpb25zfGVufDB8fHx8MTc3MjE5MzM3NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "party decorations"
     },
     {
       "id": "event-type-matrimonio",
@@ -27,7 +27,7 @@
     {
       "id": "event-type-empresarial",
       "description": "A corporate meeting room with a large screen and presentation setup.",
-      "imageUrl": "https://images.unsplash.com/photo-1605256585681-455837661b18?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb3Jwb3JhdGUlMjBtZWV0aW5nfGVufDB8fHx8MTc2ODc0NzM0NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1605256585681-455837661b18?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb3Jwb3JhdGUlMjBtZWV0aW5nfGVufDB8fHx8MTc2ODc0NzM0NXww&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "corporate meeting"
     },
     {
