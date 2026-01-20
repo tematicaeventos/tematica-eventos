@@ -14,68 +14,19 @@
       },
       "required": ["id", "nombre", "correo", "telefono"]
     },
-    "EventType": {
-      "title": "Event Type",
+    "IndividualService": {
+      "title": "Individual Service",
       "type": "object",
-      "description": "Describes a type of event that can be quoted.",
+      "description": "Represents a single billable service for an event.",
       "properties": {
         "id": { "type": "string" },
+        "categoria": { "type": "string" },
         "nombre": { "type": "string" },
         "descripcion": { "type": "string" },
-        "imagen": { "type": "string" }
+        "precioUnitario": { "type": "number" },
+        "tipoCobro": { "type": "string", "enum": ["unidad", "persona", "paquete"] }
       },
-      "required": ["id", "nombre"]
-    },
-    "BasePlan": {
-      "title": "Base Plan",
-      "type": "object",
-      "description": "Pricing for the base plan (venue, sound, lights) based on number of people.",
-      "properties": {
-        "personas": { "type": "number" },
-        "precio": { "type": "number" }
-      },
-      "required": ["personas", "precio"]
-    },
-    "FoodOption": {
-      "title": "Food Option",
-      "type": "object",
-      "description": "Pricing for a catering/food option.",
-      "properties": {
-        "nombre": { "type": "string" },
-        "precioPorPersona": { "type": "number" }
-      },
-      "required": ["nombre", "precioPorPersona"]
-    },
-    "DrinkOption": {
-      "title": "Drink Option",
-      "type": "object",
-      "description": "Pricing for a non-alcoholic drink option.",
-      "properties": {
-        "nombre": { "type": "string" },
-        "precioPorPersona": { "type": "number" }
-      },
-      "required": ["nombre", "precioPorPersona"]
-    },
-    "LiquorOption": {
-      "title": "Liquor Option",
-      "type": "object",
-      "description": "Pricing for a liquor option.",
-      "properties": {
-        "nombre": { "type": "string" },
-        "precioPorBotella": { "type": "number" }
-      },
-      "required": ["nombre", "precioPorBotella"]
-    },
-    "ExtraOption": {
-      "title": "Extra Option",
-      "type": "object",
-      "description": "Pricing for an optional extra item/service.",
-      "properties": {
-        "nombre": { "type": "string" },
-        "descripcion": { "type": "string" },
-        "precio": { "type": "number" }
-      },
-      "required": ["nombre", "precio"]
+      "required": ["id", "categoria", "nombre", "precioUnitario", "tipoCobro"]
     },
     "Quote": {
       "title": "Quote",
@@ -87,10 +38,21 @@
         "total": { "type": "number" },
         "fechaCotizacion": { "type": "string", "format": "date-time" },
         "estado": { "type": "string" },
-        "personas": { "type": "number" },
-        "fechaEvento": { "type": "string", "format": "date" }
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "categoria": { "type": "string" },
+              "nombre": { "type": "string" },
+              "cantidad": { "type": "number" },
+              "precioUnitario": { "type": "number" },
+              "subtotal": { "type": "number" }
+            }
+          }
+        }
       },
-      "required": ["usuarioId", "total", "personas", "fechaEvento"]
+      "required": ["usuarioId", "total", "items"]
     },
     "Reservation": {
         "title": "Reservation",
@@ -146,51 +108,11 @@
         }
       },
       {
-        "path": "/eventTypes/{eventTypeId}",
+        "path": "/servicios_individuales/{serviceId}",
         "definition": {
-          "entityName": "EventType",
-          "schema": { "$ref": "#/entities/EventType" },
-          "description": "Publicly readable list of event types."
-        }
-      },
-      {
-        "path": "/basePlans/{planId}",
-        "definition": {
-            "entityName": "BasePlan",
-            "schema": { "$ref": "#/entities/BasePlan" },
-            "description": "Publicly readable pricing for base plans."
-        }
-      },
-      {
-        "path": "/foodOptions/{foodOptionId}",
-        "definition": {
-            "entityName": "FoodOption",
-            "schema": { "$ref": "#/entities/FoodOption" },
-            "description": "Publicly readable pricing for food."
-        }
-      },
-      {
-        "path": "/drinkOptions/{drinkOptionId}",
-        "definition": {
-            "entityName": "DrinkOption",
-            "schema": { "$ref": "#/entities/DrinkOption" },
-            "description": "Publicly readable pricing for drinks."
-        }
-      },
-      {
-        "path": "/liquorOptions/{liquorOptionId}",
-        "definition": {
-            "entityName": "LiquorOption",
-            "schema": { "$ref": "#/entities/LiquorOption" },
-            "description": "Publicly readable pricing for liquor."
-        }
-      },
-      {
-        "path": "/extraOptions/{extraOptionId}",
-        "definition": {
-            "entityName": "ExtraOption",
-            "schema": { "$ref": "#/entities/ExtraOption" },
-            "description": "Publicly readable pricing for extras."
+            "entityName": "IndividualService",
+            "schema": { "$ref": "#/entities/IndividualService" },
+            "description": "Publicly readable list of all individual services offered."
         }
       },
       {

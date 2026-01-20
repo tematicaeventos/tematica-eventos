@@ -9,35 +9,13 @@ export type EventTypeInfo = {
 };
 
 // --- Quote Builder Data ---
-export type BasePlan = {
-  personas: number;
-  precio: number;
-};
-
-export type FoodOption = {
+export type IndividualService = {
   id: string;
-  nombre: string;
-  precioPorPersona: number;
-};
-
-export type DrinkOption = {
-  id: string;
-  nombre: string;
-  precioPorPersona: number;
-};
-
-export type LiquorOption = {
-  id: string;
-  nombre: string;
-  precioPorBotella: number;
-  botellasSugeridas: number[];
-};
-
-export type ExtraOption = {
-  id: string;
+  categoria: string;
   nombre: string;
   descripcion: string;
-  precio: number;
+  precioUnitario: number;
+  tipoCobro: 'unidad' | 'persona' | 'paquete';
 };
 
 // --- User and Quote ---

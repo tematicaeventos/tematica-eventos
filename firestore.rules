@@ -32,30 +32,11 @@ service cloud.firestore {
     }
 
     // Publicly readable data for the quote builder
-    match /eventTypes/{docId} {
+    match /servicios_individuales/{docId} {
       allow get, list: if true;
       allow create, update, delete: if false;
     }
-    match /basePlans/{docId} {
-      allow get, list: if true;
-      allow create, update, delete: if false;
-    }
-    match /foodOptions/{docId} {
-      allow get, list: if true;
-      allow create, update, delete: if false;
-    }
-    match /drinkOptions/{docId} {
-      allow get, list: if true;
-      allow create, update, delete: if false;
-    }
-    match /liquorOptions/{docId} {
-      allow get, list: if true;
-      allow create, update, delete: if false;
-    }
-    match /extraOptions/{docId} {
-      allow get, list: if true;
-      allow create, update, delete: if false;
-    }
+
     match /reservations/{docId} {
       allow get, list: if true;
       // Allow authenticated users to create reservations (to be validated further)
