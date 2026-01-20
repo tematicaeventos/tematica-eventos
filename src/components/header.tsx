@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Sparkles, Menu } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -25,7 +26,7 @@ const NavLinksContent = ({
   pathname,
 }: {
   isMobile?: boolean;
-  pathname: string;
+  pathname: string | null;
 }) => (
   <nav
     className={cn(
@@ -40,7 +41,6 @@ const NavLinksContent = ({
         <SheetClose asChild key={link.href}>
           <Link
             href={link.href}
-            suppressHydrationWarning
             className={cn(
               'text-sm font-medium transition-colors hover:text-primary',
               pathname === link.href
@@ -55,7 +55,6 @@ const NavLinksContent = ({
         <Link
           key={link.href}
           href={link.href}
-          suppressHydrationWarning
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary',
             pathname === link.href
@@ -72,6 +71,12 @@ const NavLinksContent = ({
 
 export function Header() {
   const pathname = usePathname();
+  const [currentPathname, setCurrentPathname] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCurrentPathname(pathname);
+  }, [pathname]);
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -82,7 +87,7 @@ export function Header() {
         </Link>
 
         <div className="hidden md:flex">
-          <NavLinksContent pathname={pathname} />
+          <NavLinksContent pathname={currentPathname} />
         </div>
 
         <div className="md:hidden">
@@ -96,7 +101,7 @@ export function Header() {
             <SheetContent side="right" className="bg-background text-foreground">
               <SheetTitle className="sr-only">Menú</SheetTitle>
               <div className="flex flex-col p-6 pt-12">
-                <NavLinksContent isMobile pathname={pathname} />
+                <NavLinksContent isMobile pathname={currentPathname} />
               </div>
             </SheetContent>
           </Sheet>
