@@ -1,82 +1,325 @@
 {
   "entities": {
-    "UserProfile": {
-      "title": "User Profile",
-      "description": "Stores public information about a user.",
+    "Event": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Event",
       "type": "object",
+      "description": "Represents a social event.",
       "properties": {
-        "uid": { "type": "string" },
-        "nombre": { "type": "string" },
-        "correo": { "type": "string", "format": "email" },
-        "telefono": { "type": "string" },
-        "fechaRegistro": { "type": "string", "format": "date-time" },
-        "estado": { "type": "string", "enum": ["activo", "inactivo"] }
-      },
-      "required": ["uid", "nombre", "correo", "telefono", "fechaRegistro", "estado"]
-    },
-    "Quote": {
-      "title": "Quote",
-      "description": "Represents a customer's price quotation.",
-      "type": "object",
-      "properties": {
-        "cotizacionId": { "type": "string" },
-        "usuarioId": { "type": "string" },
-        "nombreCliente": { "type": "string" },
-        "correo": { "type": "string" },
-        "telefono": { "type": "string" },
-        "fechaCotizacion": { "type": "string", "format": "date-time" },
-        "items": {
-          "type": "array",
-          "items": { "$ref": "#/backend/entities/QuoteItem" }
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the event."
         },
-        "total": { "type": "number" },
-        "estado": { "type": "string", "enum": ["pendiente", "enviado", "contactado", "en negociación", "cerrado", "descartado"] },
-        "origen": { "type": "string" }
+        "name": {
+          "type": "string",
+          "description": "Name of the event."
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the event."
+        },
+        "startTime": {
+          "type": "string",
+          "description": "Start time of the event.",
+          "format": "date-time"
+        },
+        "endTime": {
+          "type": "string",
+          "description": "End time of the event.",
+          "format": "date-time"
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of the event."
+        },
+        "categoryId": {
+          "type": "string",
+          "description": "Reference to Category. (Relationship: Category 1:N Event)"
+        },
+        "organizerId": {
+          "type": "string",
+          "description": "Reference to Organizer. (Relationship: Organizer 1:N Event)"
+        }
       },
-      "required": ["cotizacionId", "usuarioId", "nombreCliente", "fechaCotizacion", "items", "total", "estado"]
+      "required": [
+        "id",
+        "name",
+        "description",
+        "startTime",
+        "endTime",
+        "location",
+        "categoryId",
+        "organizerId"
+      ]
     },
-    "QuoteItem": {
-      "title": "Quote Item",
-      "description": "A single item within a quote.",
+    "Category": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Category",
       "type": "object",
+      "description": "Represents a category for events.",
       "properties": {
-        "categoria": { "type": "string" },
-        "nombre": { "type": "string" },
-        "cantidad": { "type": "number" },
-        "precioUnitario": { "type": "number" },
-        "subtotal": { "type": "number" }
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the category."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the category."
+        }
       },
-      "required": ["categoria", "nombre", "cantidad", "precioUnitario", "subtotal"]
+      "required": [
+        "id",
+        "name"
+      ]
     },
-    "Tracking": {
-      "title": "Tracking",
-      "description": "Tracks the commercial follow-up of a quote.",
+    "Organizer": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Organizer",
       "type": "object",
+      "description": "Represents the organizer of an event.",
       "properties": {
-        "cotizacionId": { "type": "string" },
-        "usuarioId": { "type": "string" },
-        "estado": { "type": "string" },
-        "contactado": { "type": "boolean" },
-        "fechaUltimoContacto": { "type": "string", "format": "date-time" },
-        "observaciones": { "type": "string" }
-      }
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the organizer."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the organizer."
+        },
+        "contactEmail": {
+          "type": "string",
+          "description": "Contact email of the organizer.",
+          "format": "email"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "contactEmail"
+      ]
+    },
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user.",
+          "format": "email"
+        },
+        "interestedEventIds": {
+          "type": "array",
+          "description": "References to Events the user is interested in. (Relationship: User N:N Event)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "email"
+      ]
+    },
+    "Vendor": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Vendor",
+      "type": "object",
+      "description": "Represents a vendor providing services for events.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the vendor."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the vendor."
+        },
+        "category": {
+          "type": "string",
+          "description": "Category of vendor services (e.g., venue, catering)."
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of the vendor."
+        },
+        "contactEmail": {
+          "type": "string",
+          "description": "Contact email for the vendor.",
+          "format": "email"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "category",
+        "location",
+        "contactEmail"
+      ]
+    },
+    "QuoteRequest": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "QuoteRequest",
+      "type": "object",
+      "description": "Represents a quote request from a user to a vendor.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the quote request."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N QuoteRequest)"
+        },
+        "vendorId": {
+          "type": "string",
+          "description": "Reference to Vendor. (Relationship: Vendor 1:N QuoteRequest)"
+        },
+        "eventId": {
+          "type": "string",
+          "description": "Reference to Event. (Relationship: Event 1:N QuoteRequest)"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the quote requirements."
+        },
+        "quoteAmount": {
+          "type": "number",
+          "description": "The quoted amount from the vendor."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "vendorId",
+        "eventId",
+        "description"
+      ]
     }
   },
   "auth": {
-    "providers": ["email_password"]
+    "providers": [
+      "password",
+      "anonymous"
+    ]
   },
   "firestore": {
-    "/usuarios/{userId}": {
-      "schema": { "$ref": "#/backend/entities/UserProfile" },
-      "description": "User profile documents."
-    },
-    "/cotizaciones/{quoteId}": {
-      "schema": { "$ref": "#/backend/entities/Quote" },
-      "description": "Customer quotations."
-    },
-    "/seguimiento/{quoteId}": {
-      "schema": { "$ref": "#/backend/entities/Tracking" },
-      "description": "Commercial tracking for quotations."
-    }
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles. User ID is used as the document ID.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/categories/{categoryId}",
+        "definition": {
+          "entityName": "Category",
+          "schema": {
+            "$ref": "#/backend/entities/Category"
+          },
+          "description": "Stores event categories. Category ID is used as the document ID.",
+          "params": [
+            {
+              "name": "categoryId",
+              "description": "The unique identifier of the category."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/categories/{categoryId}/events/{eventId}",
+        "definition": {
+          "entityName": "Event",
+          "schema": {
+            "$ref": "#/backend/entities/Event"
+          },
+          "description": "Stores events associated with a specific category. Category ID and Event ID are used in the path.",
+          "params": [
+            {
+              "name": "categoryId",
+              "description": "The unique identifier of the category."
+            },
+            {
+              "name": "eventId",
+              "description": "The unique identifier of the event."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/organizers/{organizerId}",
+        "definition": {
+          "entityName": "Organizer",
+          "schema": {
+            "$ref": "#/backend/entities/Organizer"
+          },
+          "description": "Stores organizer profiles. Organizer ID is used as the document ID.",
+          "params": [
+            {
+              "name": "organizerId",
+              "description": "The unique identifier of the organizer."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/vendors/{vendorId}",
+        "definition": {
+          "entityName": "Vendor",
+          "schema": {
+            "$ref": "#/backend/entities/Vendor"
+          },
+          "description": "Stores vendor profiles. Vendor ID is used as the document ID.",
+          "params": [
+            {
+              "name": "vendorId",
+              "description": "The unique identifier of the vendor."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/quoteRequests/{quoteRequestId}",
+        "definition": {
+          "entityName": "QuoteRequest",
+          "schema": {
+            "$ref": "#/backend/entities/QuoteRequest"
+          },
+          "description": "Stores quote requests made by a specific user.  Includes denormalized 'userId' for authorization independence.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "quoteRequestId",
+              "description": "The unique identifier of the quote request."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to support the Vibrant Events application, focusing on events, categories, organizers, users, vendors, and quote requests. The structure emphasizes authorization independence and efficient data retrieval while adhering to the design principles of DBAC (Database-Based Access Control) and QAPs (Queries Are Not Filters). Data is structured to avoid hierarchical authorization dependencies, ensuring atomic operations and simplified security rules.\n\n**Authorization Independence:** The primary method for achieving authorization independence is through path-based ownership and denormalization. For instance, QuoteRequests are placed under the user's path (`/users/{userId}/quoteRequests/{quoteRequestId}`), associating them directly with the user.  This allows direct authorization checks based on the path without needing to `get()` parent document data.\n\n**Structural Segregation:** Data with different access requirements are segregated into distinct collections. User-specific data resides under `/users/{userId}`, while global data like `/categories` and `/organizers` are at the root level.\n\n**Access Modeling:** Path-based ownership is used extensively for private data (e.g., quote requests).  Collaborative data patterns (membership maps) are not required based on the current entities and requirements.\n\n**QAPs Support:** The structure supports secure `list` operations by segregating data based on ownership or category. For example, listing events by category can be done directly from the `/categories/{categoryId}/events/{eventId}` collection without requiring filtering on the client side. Quote requests can be listed for a specific user under `/users/{userId}/quoteRequests/{quoteRequestId}` without needing to filter by `userId`.\n\n**Denormalization:** Although the provided schema doesn't explicitly show denormalization (e.g., copying organizer details into events), it might be beneficial to denormalize commonly accessed information for performance. For example, consider copying the organizer's name into the event document to avoid extra reads when displaying event lists.\n\nThis structure avoids custom claims and relies solely on `request.auth.uid` for authorization, enforcing a straightforward and debuggable security model."
   }
 }
