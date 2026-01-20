@@ -5,6 +5,8 @@ import {
   addDoc,
   serverTimestamp,
   updateDoc,
+  doc,
+  setDoc,
 } from 'firebase/firestore';
 import { initializeFirebase } from '.';
 import type { Quote } from '@/lib/types';
