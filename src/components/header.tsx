@@ -40,6 +40,7 @@ const NavLinksContent = ({
         <SheetClose asChild key={link.href}>
           <Link
             href={link.href}
+            suppressHydrationWarning
             className={cn(
               'text-sm font-medium transition-colors hover:text-primary',
               pathname === link.href
@@ -54,6 +55,7 @@ const NavLinksContent = ({
         <Link
           key={link.href}
           href={link.href}
+          suppressHydrationWarning
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary',
             pathname === link.href
@@ -93,9 +95,9 @@ export function Header() {
             </SheetTrigger>
             <SheetContent side="right" className="bg-background text-foreground">
               <SheetTitle className="sr-only">Menú</SheetTitle>
-                <div className="flex flex-col p-6 pt-12">
-                     <NavLinksContent isMobile pathname={pathname}/>
-                </div>
+              <div className="flex flex-col p-6 pt-12">
+                <NavLinksContent isMobile pathname={pathname} />
+              </div>
             </SheetContent>
           </Sheet>
         </div>
