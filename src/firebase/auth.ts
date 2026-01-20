@@ -4,8 +4,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
-import { doc, setDoc, getFirestore, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, getFirestore } from 'firebase/firestore';
 import { initializeFirebase } from '.';
 
 const { firebaseApp } = initializeFirebase();
@@ -36,4 +37,8 @@ export function signIn(email: string, password: string) {
 
 export function signOut() {
   return firebaseSignOut(auth);
+}
+
+export function sendPasswordReset(email: string) {
+  return sendPasswordResetEmail(auth, email);
 }
