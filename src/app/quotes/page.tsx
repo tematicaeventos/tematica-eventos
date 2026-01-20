@@ -5,8 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { format } from 'date-fns';
-import { es } from 'date-fns/locale/es';
-import { Calendar as CalendarIcon, Calculator, Check, PartyPopper } from 'lucide-react';
+import { Calendar as CalendarIcon, Calculator, PartyPopper } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -35,7 +34,7 @@ import {
 } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { VendorServices, type VendorService } from '@/lib/types';
+import { VendorServices } from '@/lib/types';
 
 const quoteFormSchema = z.object({
   eventType: z.string().min(1, 'Por favor, selecciona un tipo de evento.'),
@@ -94,7 +93,7 @@ export default function QuotesPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="text-center mb-12 fade-in">
+      <div className="text-center mb-12">
         <h1 className="text-4xl font-bold tracking-tight font-headline">
           Cotización de Evento al Instante
         </h1>
@@ -104,7 +103,7 @@ export default function QuotesPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-        <Card className="fade-in">
+        <Card>
             <CardHeader>
                 <CardTitle className="flex items-center"><Calculator className="mr-2 h-5 w-5 text-primary"/>Calculadora de Cotización</CardTitle>
             </CardHeader>
@@ -166,7 +165,7 @@ export default function QuotesPage() {
                             )}
                           >
                             {field.value ? (
-                              format(field.value, 'PPP', { locale: es })
+                              format(field.value, 'PPP')
                             ) : (
                               <span>Elige una fecha</span>
                             )}
@@ -184,7 +183,6 @@ export default function QuotesPage() {
                           }}
                           disabled={(date) => date < new Date()}
                           initialFocus
-                          locale={es}
                         />
                       </PopoverContent>
                     </Popover>
@@ -246,7 +244,7 @@ export default function QuotesPage() {
             </CardContent>
         </Card>
         
-        <div className="fade-in" style={{ animationDelay: '200ms' }}>
+        <div>
           {quote && (
             <Card className="sticky top-24">
               <CardHeader>
