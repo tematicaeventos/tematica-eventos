@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { eventTypes } from '@/lib/data';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Puzzle } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { EventTypeCard } from '@/components/event-type-card';
 
@@ -60,6 +60,24 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section className="py-16 md:py-24 bg-card border-t border-b border-border">
+        <div className="container mx-auto px-4 text-center">
+          <Puzzle className="mx-auto h-12 w-12 text-primary" />
+          <h2 className="mt-6 text-4xl font-bold font-headline text-foreground">
+            Arma tu Evento
+          </h2>
+          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+            Selecciona únicamente los servicios que necesitas y arma tu evento a tu medida. El valor se calcula automáticamente.
+          </p>
+          <Button asChild size="lg" className="mt-8 group bg-primary text-primary-foreground hover:bg-primary/90">
+            <Link href="/build">
+              Empezar a construir <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Button>
+        </div>
+      </section>
+
     </div>
   );
 }
