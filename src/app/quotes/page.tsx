@@ -42,6 +42,7 @@ import { Separator } from '@/components/ui/separator';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { saveQuote } from '@/firebase/firestore';
@@ -68,6 +69,7 @@ export default function QuotesPage() {
   const [eventDate, setEventDate] = useState<Date | undefined>();
   const [startTime, setStartTime] = useState<string>('19:00');
   const [endTime, setEndTime] = useState<string>('03:00');
+  const [isCalendarOpen, setCalendarOpen] = useState(false);
 
   const [isSaving, setIsSaving] = useState(false);
   const [quoteId, setQuoteId] = useState<string | null>(null);
@@ -347,7 +349,7 @@ export default function QuotesPage() {
             <CalendarIcon className="text-primary" />,
             '5. Agenda',
             <div className="grid md:grid-cols-3 gap-4">
-              <Popover>
+              <Popover open={isCalendarOpen} onOpenChange={setCalendarOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant={'outline'}
@@ -357,14 +359,17 @@ export default function QuotesPage() {
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {eventDate ? format(eventDate, 'PPP') : <span>Elige una fecha</span>}
+                    {eventDate ? format(eventDate, 'PPP', { locale: es }) : <span>Elige una fecha</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
                   <Calendar
                     mode="single"
                     selected={eventDate}
-                    onSelect={setEventDate}
+                    onSelect={(date) => {
+                      setEventDate(date);
+                      setCalendarOpen(false);
+                    }}
                     initialFocus
                     disabled={(date) => date < new Date(new Date().setDate(new Date().getDate() - 1))}
                   />
