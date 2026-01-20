@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
   Accordion,
   AccordionContent,
@@ -43,6 +44,7 @@ import type {
   QuoteItem as QuoteItemType,
 } from '@/lib/types';
 import { services as allServices } from '@/lib/services-data';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const categoryIcons: { [key: string]: React.ReactNode } = {
   'Sillas y Mesas': <Armchair className="h-5 w-5" />,
@@ -71,6 +73,8 @@ export default function ModularQuotePage() {
   const [selectedServices, setSelectedServices] = useState<SelectedServices>(
     {}
   );
+  
+  const bannerImage = useMemo(() => PlaceHolderImages.find(img => img.id === 'build-event-banner'), []);
 
   const servicesByCategory = useMemo(() => {
     return allServices.reduce((acc, service) => {
@@ -198,172 +202,186 @@ export default function ModularQuotePage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold tracking-tight font-headline">
-          Arma tu Evento
-        </h1>
-        <p className="mt-2 text-lg text-muted-foreground max-w-2xl mx-auto">
-          Selecciona únicamente los servicios que necesitas y arma tu evento a tu
-          medida. El valor se calcula automáticamente.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-        {/* Services Selection */}
-        <div className="lg:col-span-2 space-y-4">
-          <Accordion
-            type="multiple"
-            defaultValue={Object.keys(servicesByCategory)}
-            className="w-full"
-          >
-            {Object.entries(servicesByCategory).map(([category, services]) => (
-              <AccordionItem value={category} key={category}>
-                <AccordionTrigger className="text-xl font-semibold hover:no-underline">
-                  <div className="flex items-center gap-3 text-primary">
-                    {categoryIcons[category]}
-                    <span>{category}</span>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="space-y-4 pt-2">
-                    {services.map((service) => (
-                      <div
-                        key={service.id}
-                        className="flex items-center gap-4 p-3 rounded-lg border bg-card/50"
-                      >
-                        <Checkbox
-                          id={service.id}
-                          checked={!!selectedServices[service.id]}
-                          onCheckedChange={(checked) =>
-                            handleServiceSelection(service, !!checked)
-                          }
-                          className="h-5 w-5"
-                        />
-                        <div className="flex-1 grid gap-1.5 leading-none">
-                          <Label
-                            htmlFor={service.id}
-                            className="font-semibold text-base cursor-pointer"
-                          >
-                            {service.nombre}
-                          </Label>
-                          <p className="text-sm text-muted-foreground">
-                            {service.descripcion}
-                          </p>
-                          <p className="text-sm font-bold text-primary">
-                            {formatCurrency(service.precioUnitario)}{' '}
-                            <span className="font-normal text-xs text-muted-foreground">
-                              / {service.tipoCobro}
-                            </span>
-                          </p>
-                        </div>
-                        {selectedServices[service.id] && (
-                          <div className="flex items-center gap-2">
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              className="h-8 w-8"
-                              onClick={() =>
-                                handleQuantityChange(
-                                  service.id,
-                                  selectedServices[service.id].quantity - 1
-                                )
-                              }
-                            >
-                              <Minus className="h-4 w-4" />
-                            </Button>
-                            <Input
-                              type="number"
-                              className="w-16 h-8 text-center"
-                              value={selectedServices[service.id].quantity}
-                              onChange={(e) =>
-                                handleQuantityChange(
-                                  service.id,
-                                  parseInt(e.target.value) || 0
-                                )
-                              }
-                              min="0"
-                            />
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              className="h-8 w-8"
-                              onClick={() =>
-                                handleQuantityChange(
-                                  service.id,
-                                  selectedServices[service.id].quantity + 1
-                                )
-                              }
-                            >
-                              <Plus className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+    <div>
+      <section className="relative w-full h-[40vh] bg-black flex flex-col justify-center items-center text-center px-4">
+        {bannerImage && (
+          <Image
+            src={bannerImage.imageUrl}
+            alt={bannerImage.description}
+            fill
+            className="object-cover z-0 opacity-20"
+            priority
+            data-ai-hint={bannerImage.imageHint}
+          />
+        )}
+        <div className="relative z-10 container mx-auto">
+            <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-white font-headline">
+              Arma tu Evento
+            </h1>
+            <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-200">
+              Selecciona únicamente los servicios que necesitas y arma tu evento a tu
+              medida. El valor se calcula automáticamente.
+            </p>
         </div>
+      </section>
 
-        {/* Quote Summary */}
-        <div className="lg:col-span-1">
-          <Card className="sticky top-24">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <ShoppingCart className="text-primary" />
-                Tu Cotización
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 max-h-[50vh] overflow-y-auto">
-              {quoteItems.length > 0 ? (
-                quoteItems.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex justify-between items-center text-sm"
-                  >
-                    <div>
-                      <p className="font-medium">{item.nombre}</p>
-                      <p className="text-muted-foreground">
-                        {item.cantidad} x {formatCurrency(item.precioUnitario)}
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          {/* Services Selection */}
+          <div className="lg:col-span-2 space-y-4">
+            <Accordion
+              type="multiple"
+              defaultValue={Object.keys(servicesByCategory)}
+              className="w-full"
+            >
+              {Object.entries(servicesByCategory).map(([category, services]) => (
+                <AccordionItem value={category} key={category}>
+                  <AccordionTrigger className="text-xl font-semibold hover:no-underline">
+                    <div className="flex items-center gap-3 text-primary">
+                      {categoryIcons[category]}
+                      <span>{category}</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="space-y-4 pt-2">
+                      {services.map((service) => (
+                        <div
+                          key={service.id}
+                          className="flex items-center gap-4 p-3 rounded-lg border bg-card/50"
+                        >
+                          <Checkbox
+                            id={service.id}
+                            checked={!!selectedServices[service.id]}
+                            onCheckedChange={(checked) =>
+                              handleServiceSelection(service, !!checked)
+                            }
+                            className="h-5 w-5"
+                          />
+                          <div className="flex-1 grid gap-1.5 leading-none">
+                            <Label
+                              htmlFor={service.id}
+                              className="font-semibold text-base cursor-pointer"
+                            >
+                              {service.nombre}
+                            </Label>
+                            <p className="text-sm text-muted-foreground">
+                              {service.descripcion}
+                            </p>
+                            <p className="text-sm font-bold text-primary">
+                              {formatCurrency(service.precioUnitario)}{' '}
+                              <span className="font-normal text-xs text-muted-foreground">
+                                / {service.tipoCobro}
+                              </span>
+                            </p>
+                          </div>
+                          {selectedServices[service.id] && (
+                            <div className="flex items-center gap-2">
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={() =>
+                                  handleQuantityChange(
+                                    service.id,
+                                    selectedServices[service.id].quantity - 1
+                                  )
+                                }
+                              >
+                                <Minus className="h-4 w-4" />
+                              </Button>
+                              <Input
+                                type="number"
+                                className="w-16 h-8 text-center"
+                                value={selectedServices[service.id].quantity}
+                                onChange={(e) =>
+                                  handleQuantityChange(
+                                    service.id,
+                                    parseInt(e.target.value) || 0
+                                  )
+                                }
+                                min="0"
+                              />
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={() =>
+                                  handleQuantityChange(
+                                    service.id,
+                                    selectedServices[service.id].quantity + 1
+                                  )
+                                }
+                              >
+                                <Plus className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+
+          {/* Quote Summary */}
+          <div className="lg:col-span-1">
+            <Card className="sticky top-24">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                  <ShoppingCart className="text-primary" />
+                  Tu Cotización
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 max-h-[50vh] overflow-y-auto">
+                {quoteItems.length > 0 ? (
+                  quoteItems.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center text-sm"
+                    >
+                      <div>
+                        <p className="font-medium">{item.nombre}</p>
+                        <p className="text-muted-foreground">
+                          {item.cantidad} x {formatCurrency(item.precioUnitario)}
+                        </p>
+                      </div>
+                      <p className="font-semibold">
+                        {formatCurrency(item.subtotal)}
                       </p>
                     </div>
-                    <p className="font-semibold">
-                      {formatCurrency(item.subtotal)}
-                    </p>
-                  </div>
-                ))
-              ) : (
-                <p className="text-muted-foreground text-center py-8">
-                  Selecciona servicios para ver tu cotización.
-                </p>
-              )}
-            </CardContent>
-            <Separator className={quoteItems.length === 0 ? 'hidden' : 'my-4'} />
-            <CardFooter className="flex-col gap-4">
-              <div className="w-full flex justify-between font-bold text-xl">
-                <span>TOTAL</span>
-                <span>{formatCurrency(total)}</span>
-              </div>
-              <Button
-                onClick={handleContinueToReservation}
-                size="lg"
-                className="w-full group"
-                disabled={isSaving}
-              >
-                {isSaving ? 'Guardando...' : 'Continuar con Reserva'}
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-              {quoteId && (
-                <p className="text-sm text-center w-full">
-                  ¡Cotización guardada! Código:{' '}
-                  <span className="font-bold text-primary">{quoteId}</span>
-                </p>
-              )}
-            </CardFooter>
-          </Card>
+                  ))
+                ) : (
+                  <p className="text-muted-foreground text-center py-8">
+                    Selecciona servicios para ver tu cotización.
+                  </p>
+                )}
+              </CardContent>
+              <Separator className={quoteItems.length === 0 ? 'hidden' : 'my-4'} />
+              <CardFooter className="flex-col gap-4">
+                <div className="w-full flex justify-between font-bold text-xl">
+                  <span>TOTAL</span>
+                  <span>{formatCurrency(total)}</span>
+                </div>
+                <Button
+                  onClick={handleContinueToReservation}
+                  size="lg"
+                  className="w-full group"
+                  disabled={isSaving}
+                >
+                  {isSaving ? 'Guardando...' : 'Continuar con Reserva'}
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+                {quoteId && (
+                  <p className="text-sm text-center w-full">
+                    ¡Cotización guardada! Código:{' '}
+                    <span className="font-bold text-primary">{quoteId}</span>
+                  </p>
+                )}
+              </CardFooter>
+            </Card>
+          </div>
         </div>
       </div>
     </div>

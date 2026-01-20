@@ -35,6 +35,12 @@
       "description": "People celebrating at a company year-end party.",
       "imageUrl": "https://images.unsplash.com/photo-1528605105345-5344ea20e269?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb21wYW55JTIwcGFydHl8ZW58MHx8fHwxNzY4ODQ2MjAzfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "company party"
+    },
+    {
+      "id": "build-event-banner",
+      "description": "A top-down view of an event planner's desk with various tools and notes.",
+      "imageUrl": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxldmVudCUyMHBsYW5uaW5nJTIwZGVza3xlbnwwfHx8fDE3NzAwNjU3MTF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "event planning"
     }
   ]
 }
