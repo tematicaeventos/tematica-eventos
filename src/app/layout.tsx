@@ -5,6 +5,7 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
+import { BottomNav } from '@/components/bottom-nav';
 
 export const metadata: Metadata = {
   title: 'Temática Eventos',
@@ -34,8 +35,9 @@ export default function RootLayout({
         <FirebaseClientProvider>
           <div className="relative flex min-h-dvh flex-col">
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pb-16 md:pb-0">{children}</main>
             <Footer />
+            <BottomNav />
           </div>
           <Toaster />
         </FirebaseClientProvider>
