@@ -2,10 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Puzzle, User, LogOut } from 'lucide-react';
+import { Home, Puzzle, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/firebase/auth/use-user';
-import { signOut } from '@/firebase/auth';
 
 export function BottomNav() {
   const pathname = usePathname();
@@ -46,13 +45,18 @@ export function BottomNav() {
         ))}
 
         {user ? (
-          <button
-              onClick={() => signOut()}
-              className="flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+          <Link
+            href="/profile"
+            className={cn(
+              'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
+              pathname === '/profile'
+                ? 'text-primary'
+                : 'text-muted-foreground hover:text-primary'
+            )}
           >
-              <LogOut className="h-5 w-5" />
-              <span className="text-xs tracking-tight">Salir</span>
-          </button>
+            <User className="h-5 w-5" />
+            <span className="text-xs tracking-tight">Mi Perfil</span>
+          </Link>
         ) : (
           <Link
             href="/login"

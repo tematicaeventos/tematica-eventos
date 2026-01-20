@@ -2,13 +2,13 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sparkles, LogOut } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useUser } from '@/firebase/auth/use-user';
-import { signOut } from '@/firebase/auth';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const navLinks = [
   { href: '/', label: 'Inicio' },
@@ -29,6 +29,7 @@ const NavLinksContent = ({
     {navLinks.map((link) => {
       const linkComponent = (
         <Link
+          key={link.href}
           href={link.href}
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary',
@@ -48,13 +49,25 @@ const NavLinksContent = ({
 );
 
 export function Header() {
-  const { user } = useUser();
+  const { user, profile } = useUser();
   const pathname = usePathname();
   const [currentPathname, setCurrentPathname] = useState<string | null>(null);
 
   useEffect(() => {
     setCurrentPathname(pathname);
   }, [pathname]);
+
+  const getInitials = (name: string) => {
+    if (!name) return '';
+    const names = name.split(' ');
+    if (names.length > 1 && names[0] && names[names.length - 1]) {
+      return `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase();
+    }
+    if (name.length > 1) {
+        return name.substring(0, 2).toUpperCase();
+    }
+    return name.toUpperCase();
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -69,12 +82,15 @@ export function Header() {
                 <NavLinksContent pathname={currentPathname} />
             </div>
 
-            <div className='hidden md:flex items-center gap-2'>
-              {user ? (
-                  <Button onClick={signOut} variant="outline" size="sm">
-                      <LogOut className="mr-2 h-4 w-4" />
-                      Salir
-                  </Button>
+            <div className='hidden md:flex items-center gap-4'>
+              {user && profile ? (
+                   <Link href="/profile" className='flex items-center gap-2'>
+                        <Avatar className="h-8 w-8">
+                            <AvatarImage src={user.photoURL ?? undefined} alt={profile.nombre} />
+                            <AvatarFallback>{getInitials(profile.nombre)}</AvatarFallback>
+                        </Avatar>
+                        <span className="text-sm font-medium text-foreground hover:text-primary">{profile.nombre}</span>
+                   </Link>
               ) : (
                   <>
                       <Button asChild variant="ghost" size="sm">
