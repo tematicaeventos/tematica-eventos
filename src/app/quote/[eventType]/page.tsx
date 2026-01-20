@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import {
   Accordion,
   AccordionContent,
@@ -39,8 +40,9 @@ import { es } from 'date-fns/locale';
 
 type SelectedExtras = { [key: string]: boolean };
 
-export default function PackagedQuotePage({ params }: { params: { eventType: string } }) {
-  const eventType = useMemo(() => eventTypes.find(e => e.id === params.eventType), [params.eventType]);
+export default function PackagedQuotePage() {
+  const params = useParams<{ eventType: string }>();
+  const eventType = useMemo(() => eventTypes.find(e => e.id === params.eventType), [params]);
 
   const [personas, setPersonas] = useState<number>(50);
   const [comida, setComida] = useState<string>('2-carnes');
