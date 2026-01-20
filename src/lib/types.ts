@@ -18,6 +18,40 @@ export type IndividualService = {
   tipoCobro: 'unidad' | 'persona' | 'paquete';
 };
 
+// --- Packaged Quote Data ---
+export type PlanBase = {
+  personas: number;
+  precio: number;
+};
+
+export type ComidaOption = {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  precioPorPersona: number;
+};
+
+export type BebidaOption = {
+  id: string;
+  nombre: string;
+  precioPorPersona: number;
+};
+
+export type LicorOption = {
+  id: string;
+  nombre: string;
+  precioPorBotella: number;
+  botellasSugeridas: { [key: number]: number };
+};
+
+export type ExtraOption = {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+};
+
+
 // --- User and Quote ---
 export type UserProfile = {
   id: string;

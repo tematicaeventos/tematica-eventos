@@ -66,6 +66,53 @@
             "userId": { "type": "string" }
         },
         "required": ["fecha", "horaInicio", "horaFin", "quoteId", "userId"]
+    },
+    "PlanBase": {
+      "title": "Plan Base",
+      "description": "Pricing for the base package based on number of people.",
+      "type": "object",
+      "properties": {
+        "eventoTipo": { "type": "string" },
+        "personas": { "type": "number" },
+        "precio": { "type": "number" }
+      }
+    },
+    "Comida": {
+      "title": "Comida",
+      "description": "Catering options.",
+      "type": "object",
+      "properties": {
+        "tipo": { "type": "string", "enum": ["2Carnes", "3Carnes"] },
+        "precioPorPersona": { "type": "number" }
+      }
+    },
+    "Bebida": {
+      "title": "Bebida",
+      "description": "Non-alcoholic beverage options.",
+      "type": "object",
+      "properties": {
+        "nombre": { "type": "string" },
+        "precioPorPersona": { "type": "number" }
+      }
+    },
+    "Licor": {
+      "title": "Licor",
+      "description": "Alcoholic beverage options.",
+      "type": "object",
+      "properties": {
+        "nombre": { "type": "string" },
+        "precioPorBotella": { "type": "number" }
+      }
+    },
+    "Extra": {
+      "title": "Extra",
+      "description": "Additional items or services for an event.",
+      "type": "object",
+      "properties": {
+        "nombre": { "type": "string" },
+        "descripcion": { "type": "string" },
+        "precio": { "type": "number" }
+      }
     }
   },
   "auth": {
@@ -112,7 +159,7 @@
         "definition": {
             "entityName": "IndividualService",
             "schema": { "$ref": "#/entities/IndividualService" },
-            "description": "Publicly readable list of all individual services offered."
+            "description": "Publicly readable list of all individual services offered for the modular builder."
         }
       },
       {
@@ -121,6 +168,46 @@
             "entityName": "Reservation",
             "schema": { "$ref": "#/entities/Reservation" },
             "description": "Publicly readable event agenda to check for availability."
+        }
+      },
+      {
+        "path": "/planesBase/{planId}",
+        "definition": {
+          "entityName": "PlanBase",
+          "schema": { "$ref": "#/entities/PlanBase" },
+          "description": "Stores base plan pricing for packaged quotes."
+        }
+      },
+      {
+        "path": "/comidas/{comidaId}",
+        "definition": {
+          "entityName": "Comida",
+          "schema": { "$ref": "#/entities/Comida" },
+          "description": "Stores food options for packaged quotes."
+        }
+      },
+      {
+        "path": "/bebidas/{bebidaId}",
+        "definition": {
+          "entityName": "Bebida",
+          "schema": { "$ref": "#/entities/Bebida" },
+          "description": "Stores drink options for packaged quotes."
+        }
+      },
+      {
+        "path": "/licores/{licorId}",
+        "definition": {
+          "entityName": "Licor",
+          "schema": { "$ref": "#/entities/Licor" },
+          "description": "Stores liquor options for packaged quotes."
+        }
+      },
+      {
+        "path": "/extras/{extraId}",
+        "definition": {
+          "entityName": "Extra",
+          "schema": { "$ref": "#/entities/Extra" },
+          "description": "Stores extra service options for packaged quotes."
         }
       }
     ]

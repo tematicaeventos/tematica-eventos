@@ -54,7 +54,7 @@ export function EventTypeCard({ eventType, className }: EventTypeCardProps) {
         </CardContent>
         <CardFooter className="p-0 pt-6">
           <Button asChild className="w-full group/button bg-primary text-primary-foreground hover:bg-primary/90">
-            <Link href={`/quotes?event=${eventType.id}`}>
+            <Link href={`/quote/${eventType.id}`}>
               Cotizar <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover/button:translate-x-1" />
             </Link>
           </Button>
