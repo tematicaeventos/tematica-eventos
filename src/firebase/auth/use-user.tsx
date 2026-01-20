@@ -32,7 +32,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
-    const userDocRef = doc(firestore, `usuarios/${user.uid}`);
+    const userDocRef = doc(firestore, `users/${user.uid}`);
     const unsubscribe = onSnapshot(userDocRef, (doc) => {
       if (doc.exists()) {
         setProfile(doc.data() as UserProfile);

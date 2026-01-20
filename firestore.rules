@@ -108,6 +108,29 @@ service cloud.firestore {
     }
 
     /**
+     * @description   Manages user-generated quotes. Users can create quotes
+     *                and read/update their own quotes. Listing all quotes is disallowed.
+     * @path          /cotizaciones/{quoteId}
+     * @principle     Secures user data by checking for ownership via a `usuarioId` field.
+     */
+    match /cotizaciones/{quoteId} {
+      allow get, update: if isSignedIn() && resource.data.usuarioId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.usuarioId == request.auth.uid;
+      allow list, delete: if false;
+    }
+
+    /**
+     * @description   Internal tracking for quotes. A user can create this when
+     *                they generate a quote, but they cannot read or modify it.
+     * @path          /seguimiento/{quoteId}
+     * @principle     Allows creation by the user for workflow triggers, but protects data from client reads/writes.
+     */
+    match /seguimiento/{quoteId} {
+      allow create: if isSignedIn() && request.resource.data.usuarioId == request.auth.uid;
+      allow get, list, update, delete: if false;
+    }
+
+    /**
      * @description   Publicly readable collection of event categories.
      *                This data is considered global and is not writable by clients.
      * @path          /categories/{categoryId}

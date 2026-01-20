@@ -30,7 +30,7 @@ export type SelectedService = ServiceItem & {
 };
 
 export type UserProfile = {
-  uid: string;
+  id: string;
   nombre: string;
   correo: string;
   telefono: string;

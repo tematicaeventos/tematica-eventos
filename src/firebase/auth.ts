@@ -18,14 +18,14 @@ export async function signUp(email: string, password: string, nombre: string, te
 
   if (user) {
     const userProfile = {
-      uid: user.uid,
+      id: user.uid,
       nombre,
       correo: user.email,
       telefono,
       fechaRegistro: new Date().toISOString(),
       estado: 'activo',
     };
-    await setDoc(doc(firestore, 'usuarios', user.uid), userProfile);
+    await setDoc(doc(firestore, 'users', user.uid), userProfile);
   }
   return userCredential;
 }
