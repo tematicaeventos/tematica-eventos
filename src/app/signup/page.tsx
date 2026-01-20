@@ -1,9 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
+import { Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -31,6 +33,7 @@ type SignupFormValues = z.infer<typeof signupFormSchema>;
 export default function SignupPage() {
   const router = useRouter();
   const { toast } = useToast();
+  const [showPassword, setShowPassword] = useState(false);
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupFormSchema),
     defaultValues: { nombre: '', email: '', telefono: '', password: '' },
@@ -116,7 +119,29 @@ export default function SignupPage() {
                   <FormItem>
                     <FormLabel>Contraseña</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} />
+                      <div className="relative">
+                        <Input
+                          type={showPassword ? 'text' : 'password'}
+                          placeholder="••••••••"
+                          {...field}
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          className="absolute inset-y-0 right-0 h-full px-3"
+                          onClick={() => setShowPassword((prev) => !prev)}
+                        >
+                          {showPassword ? (
+                            <EyeOff className="h-5 w-5 text-muted-foreground" />
+                          ) : (
+                            <Eye className="h-5 w-5 text-muted-foreground" />
+                          )}
+                          <span className="sr-only">
+                            {showPassword ? 'Ocultar' : 'Mostrar'} contraseña
+                          </span>
+                        </Button>
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
