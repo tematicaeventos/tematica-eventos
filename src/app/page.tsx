@@ -13,7 +13,7 @@ export default function Home() {
             <h2 className="text-4xl font-bold font-headline text-foreground">
               Nuestros Eventos
             </h2>
-            <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="mt-4 text-lg text-foreground/90 max-w-3xl mx-auto">
               Expertos en eventos y en rapidez.
               <br />
               Diseña tu evento y obtén tu cotización al instante.
