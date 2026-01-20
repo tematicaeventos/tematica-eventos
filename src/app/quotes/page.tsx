@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -24,11 +24,16 @@ import { useToast } from '@/hooks/use-toast';
 import QuotePDFDocument from '@/components/QuotePDFDocument';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { eventTypes } from '@/lib/data';
 
 export default function QuotesPage() {
   const { user, profile } = useUser();
   const router = useRouter();
   const { toast } = useToast();
+  
+  const searchParams = useSearchParams();
+  const eventId = searchParams.get('event');
+  const eventType = useMemo(() => (eventId ? eventTypes.find((e) => e.id === eventId) : null), [eventId]);
 
   const [selectedServices, setSelectedServices] = useState<SelectedService[]>([]);
   const [quoteId, setQuoteId] = useState<string | null>(null);
@@ -164,7 +169,7 @@ Teléfono: ${profile.telefono}`;
     window.open(url, '_blank');
   };
 
-  if (!user) {
+  if (user === undefined || (user && profile === undefined)) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
         <p>Cargando...</p>
@@ -184,10 +189,10 @@ Teléfono: ${profile.telefono}`;
 
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold tracking-tight font-headline">
-          Arma tu Evento a Medida
+          {eventType ? `Cotizador para ${eventType.title}` : 'Arma tu Evento a Medida'}
         </h1>
         <p className="mt-2 text-lg text-muted-foreground">
-          Selecciona los servicios que necesitas. El valor se calcula automáticamente.
+          {eventType ? eventType.description : 'Selecciona los servicios que necesitas. El valor se calcula automáticamente.'}
         </p>
       </div>
 
