@@ -21,7 +21,7 @@ export function BottomNav() {
     {
       href: '/quotes',
       icon: Puzzle,
-      label: 'Cotizar',
+      label: 'Arma tu Evento',
       isActive: pathname.startsWith('/quotes') || pathname.startsWith('/quote/'),
     },
   ];
