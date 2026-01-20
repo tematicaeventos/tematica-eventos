@@ -43,7 +43,7 @@ export default function SignupPage() {
         title: '¡Registro exitoso!',
         description: 'Hemos creado tu cuenta. ¡Bienvenido!',
       });
-      router.push('/build');
+      router.push('/quotes');
     } catch (error: any) {
       let description = 'No se pudo crear tu cuenta. Intenta de nuevo.';
       if (error.code === 'auth/email-already-in-use') {

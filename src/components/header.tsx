@@ -12,6 +12,7 @@ import {
   SheetContent,
   SheetTrigger,
   SheetClose,
+  SheetTitle,
 } from '@/components/ui/sheet';
 import { useUser } from '@/firebase/auth/use-user';
 import { signOut } from '@/firebase/auth';
@@ -19,7 +20,7 @@ import { Separator } from '@/components/ui/separator';
 
 const navLinks = [
   { href: '/', label: 'Inicio' },
-  { href: '/build', label: 'Arma tu Evento' },
+  { href: '/quotes', label: 'Arma tu Evento' },
 ];
 
 const NavLinksContent = ({
@@ -112,6 +113,7 @@ export function Header() {
                 </Button>
                 </SheetTrigger>
                 <SheetContent side="right" className="bg-background text-foreground">
+                    <SheetTitle className="sr-only">Menú de navegación</SheetTitle>
                     <div className="flex flex-col p-6 pt-12">
                         <NavLinksContent isMobile pathname={currentPathname} />
                          <Separator className="my-4" />

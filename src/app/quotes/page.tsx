@@ -25,7 +25,7 @@ import QuotePDFDocument from '@/components/QuotePDFDocument';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
-export default function BuildEventPage() {
+export default function QuotesPage() {
   const { user, profile } = useUser();
   const router = useRouter();
   const { toast } = useToast();

@@ -40,7 +40,7 @@ export default function LoginPage() {
       toast({
         title: '¡Bienvenido de vuelta!',
       });
-      router.push('/build');
+      router.push('/quotes');
     } catch (error: any) {
       toast({
         variant: 'destructive',
