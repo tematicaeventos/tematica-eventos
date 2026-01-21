@@ -20,7 +20,7 @@ import {
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 
-const includedServices = [
+const baseIncludedServices = [
   { service: 'Salón de eventos', description: 'Uso del salón y logística' },
   { service: 'Alimentación', description: 'Entrada, plato fuerte y bebida' },
   { service: 'Bebidas Adicionales', description: 'Gaseosa, agua, cóctel ilimitado, champaña y whisky' },
@@ -41,6 +41,46 @@ export default function PackagedQuotePage() {
   const [personas, setPersonas] = useState<number>(100);
   const [fecha, setFecha] = useState<Date | undefined>(new Date());
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+
+  const includedServices = useMemo(() => {
+    if (!eventType) return baseIncludedServices;
+
+    const services = JSON.parse(JSON.stringify(baseIncludedServices));
+
+    if (eventType.id === 'matrimonios') {
+        const kitIndex = services.findIndex((s: {service: string}) => s.service === 'Kit quinceañera');
+        if (kitIndex !== -1) {
+            services[kitIndex] = { service: 'Kit de matrimonio', description: 'Champaña para el brindis, copas decoradas' };
+        }
+        
+        const decoracionIndex = services.findIndex((s: {service: string}) => s.service === 'Decoración');
+        if (decoracionIndex !== -1) {
+            services[decoracionIndex].description = 'Centros de mesa, arco de bodas y tapete';
+        }
+
+        const ponqueIndex = services.findIndex((s: {service: string}) => s.service === 'Ponqué');
+        if (ponqueIndex !== -1) {
+            services[ponqueIndex].description = 'Ponqué de matrimonio decorado';
+        }
+    } else if (eventType.id !== '15-anos') {
+        const kitIndex = services.findIndex((s: {service: string}) => s.service === 'Kit quinceañera');
+        if (kitIndex !== -1) {
+            services.splice(kitIndex, 1);
+        }
+        
+        const decoracionIndex = services.findIndex((s: {service: string}) => s.service === 'Decoración');
+        if (decoracionIndex !== -1) {
+            services[decoracionIndex].description = 'Centros de mesa, arco y tapete temático';
+        }
+
+        const ponqueIndex = services.findIndex((s: {service: string}) => s.service === 'Ponqué');
+        if (ponqueIndex !== -1) {
+            services[ponqueIndex].description = `Ponqué de ${eventType.title.toLowerCase()} decorado`;
+        }
+    }
+
+    return services;
+  }, [eventType]);
 
   const planBase = useMemo(() => {
       let plan = PLANES_BASE.find(p => p.personas === personas);
