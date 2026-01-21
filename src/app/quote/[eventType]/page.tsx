@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useState, useMemo } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -17,11 +17,17 @@ import {
   PartyPopper,
   CheckCircle2,
   Building,
+  ArrowRight,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useUser } from '@/firebase/auth/use-user';
+import { useToast } from '@/hooks/use-toast';
+import { saveQuote } from '@/firebase/firestore';
+import type { Quote, QuoteItem } from '@/lib/types';
+
 
 const PRECIO_SALON = 1500000;
 
@@ -51,10 +57,17 @@ export default function PackagedQuotePage() {
   const params = useParams<{ eventType: string }>();
   const eventType = useMemo(() => eventTypes.find(e => e.id === params.eventType), [params]);
 
+  const { user, profile } = useUser();
+  const router = useRouter();
+  const { toast } = useToast();
+
   const [personas, setPersonas] = useState<number>(100);
   const [fecha, setFecha] = useState<Date | undefined>(new Date());
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [incluirSalon, setIncluirSalon] = useState<boolean>(true);
+  const [horaInicio, setHoraInicio] = useState('19:00');
+  const [horaFin, setHoraFin] = useState('02:00');
+  const [isSaving, setIsSaving] = useState(false);
 
   const includedServices = useMemo(() => {
     if (!eventType) return baseIncludedServices;
@@ -122,6 +135,84 @@ export default function PackagedQuotePage() {
       maximumFractionDigits: 0,
     }).format(value);
   };
+
+  async function handleSaveAndRedirect() {
+    if (!user || !profile) {
+      toast({
+        variant: 'destructive',
+        title: 'Inicia sesión para continuar',
+        description: 'Debes iniciar sesión para poder guardar tu cotización y continuar.',
+      });
+      router.push(`/login?redirect=/quote/${params.eventType}`);
+      return;
+    }
+
+    if (!eventType) return;
+
+    setIsSaving(true);
+    
+    const quoteItems: QuoteItem[] = [{
+        categoria: `Paquete ${eventType.title}`,
+        nombre: `Paquete todo incluido para ${personas} personas`,
+        cantidad: 1,
+        precioUnitario: total,
+        subtotal: total,
+    }];
+
+
+    const quoteData: Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> = {
+      usuarioId: user.uid,
+      nombreCliente: profile.nombre,
+      correo: profile.correo,
+      telefono: profile.telefono,
+      items: quoteItems,
+      total,
+      estado: 'pendiente',
+      origen: 'web-paquete',
+      tipoEvento: eventType.title,
+      personas: personas,
+      fechaEvento: fecha ? format(fecha, 'yyyy-MM-dd') : new Date().toISOString().split('T')[0],
+      horaInicio,
+      horaFin,
+    };
+
+    try {
+      const newQuoteId = await saveQuote(quoteData);
+      toast({
+        title: 'Cotización Guardada',
+        description: `Tu cotización #${newQuoteId} ha sido guardada. Serás redirigido a WhatsApp para enviarla.`,
+      });
+      
+      let message = `*Nueva Cotización de Paquete - ${eventType.title}*\n\n`;
+      message += `*Cliente:* ${profile.nombre}\n`;
+      message += `*Teléfono:* ${profile.telefono}\n\n`;
+      message += `*Cotización ID:* ${newQuoteId}\n`;
+      message += `*Fecha del Evento:* ${fecha ? format(fecha, "PPP", { locale: es }) : 'No especificada'}\n`;
+      message += `*Horario:* De ${horaInicio} a ${horaFin}\n`;
+      message += `*Número de personas:* ${personas}\n\n`;
+      message += `*INCLUYE:*\n`;
+      includedServices.forEach((item: any) => {
+          message += `• ${item.service}${item.description ? `: ${item.description}` : ''}\n`;
+      });
+      message += `\n*Salón de eventos:* ${incluirSalon ? 'Sí, incluido en el precio' : 'No incluido'}\n\n`;
+      message += `*TOTAL: ${formatCurrency(total)}*\n\n`;
+      message += `_Cotización generada desde la web._`;
+
+      const whatsappUrl = `https://wa.me/573045295251?text=${encodeURIComponent(message)}`;
+      
+      window.location.href = whatsappUrl;
+
+    } catch (e) {
+      console.error(e);
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'No se pudo guardar la cotización.',
+      });
+    } finally {
+      setIsSaving(false);
+    }
+}
   
   if (!eventType) {
     return <div>Evento no encontrado</div>;
@@ -253,11 +344,11 @@ export default function PackagedQuotePage() {
               <div className="flex gap-4">
                 <div className="w-1/2">
                    <Label htmlFor="hora-inicio">Hora de inicio</Label>
-                    <input type="time" id="hora-inicio" className="w-full bg-input border border-border rounded-md p-3 mt-2 text-sm h-12" defaultValue="19:00" />
+                    <input type="time" id="hora-inicio" className="w-full bg-input border border-border rounded-md p-3 mt-2 text-sm h-12" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
                 </div>
                  <div className="w-1/2">
                    <Label htmlFor="hora-fin">Hora de finalización</Label>
-                    <input type="time" id="hora-fin" className="w-full bg-input border border-border rounded-md p-3 mt-2 text-sm h-12" defaultValue="02:00" />
+                    <input type="time" id="hora-fin" className="w-full bg-input border border-border rounded-md p-3 mt-2 text-sm h-12" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
                 </div>
               </div>
             </CardContent>
@@ -284,8 +375,9 @@ export default function PackagedQuotePage() {
                 <span>TOTAL</span>
                 <span>{formatCurrency(total)}</span>
               </div>
-              <Button size="lg" className="w-full group">
-                Continuar con Reserva
+              <Button size="lg" className="w-full group" onClick={handleSaveAndRedirect} disabled={isSaving}>
+                {isSaving ? 'Guardando...' : 'Enviar Cotización por WhatsApp'}
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
                <p className="text-xs text-muted-foreground pt-2">El siguiente paso es iniciar sesión o registrarte para guardar tu cotización y proceder con la reserva.</p>
             </CardFooter>

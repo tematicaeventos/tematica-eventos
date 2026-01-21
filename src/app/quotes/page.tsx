@@ -68,7 +68,6 @@ export default function ModularQuotePage() {
   const router = useRouter();
   const { toast } = useToast();
   const [isSaving, setIsSaving] = useState(false);
-  const [quoteId, setQuoteId] = useState<string | null>(null);
 
   const [selectedServices, setSelectedServices] = useState<SelectedServices>(
     {}
@@ -163,8 +162,10 @@ export default function ModularQuotePage() {
     }
 
     setIsSaving(true);
-    // This is a placeholder for the actual reservation flow
-    // For now, we'll just save the quote.
+    
+    const personasItem = Object.values(selectedServices).find(({service}) => service.tipoCobro === 'persona');
+    const personasCount = personasItem ? personasItem.quantity : 1;
+    
     const quoteData: Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> = {
       usuarioId: user.uid,
       nombreCliente: profile.nombre,
@@ -174,8 +175,8 @@ export default function ModularQuotePage() {
       total,
       estado: 'pendiente',
       origen: 'web-modular',
-      tipoEvento: 'Modular', // It's a modular quote, not tied to a specific event type from the home page
-      personas: 1, // This is not a top-level selection anymore, so we use a placeholder.
+      tipoEvento: 'Modular',
+      personas: personasCount,
       fechaEvento: new Date().toISOString().split('T')[0], // Placeholder
       horaInicio: '00:00', // Placeholder
       horaFin: '00:00', // Placeholder
@@ -183,12 +184,29 @@ export default function ModularQuotePage() {
 
     try {
       const newQuoteId = await saveQuote(quoteData);
-      setQuoteId(newQuoteId);
       toast({
         title: 'Cotización Guardada',
-        description: `Tu cotización #${newQuoteId} ha sido guardada. El siguiente paso es la reserva.`,
+        description: `Tu cotización #${newQuoteId} ha sido guardada. Serás redirigido a WhatsApp para enviarla.`,
       });
-      // Here you would redirect to a reservation/payment page
+      
+      let message = `*Nueva Cotización - Arma Tu Evento*\n\n`;
+      message += `*Cliente:* ${profile.nombre}\n`;
+      message += `*Correo:* ${profile.correo}\n`;
+      message += `*Teléfono:* ${profile.telefono}\n\n`;
+      message += `*Cotización ID:* ${newQuoteId}\n---\n`;
+      
+      quoteItems.forEach(item => {
+        message += `*${item.nombre}*\n`;
+        message += `_Cant: ${item.cantidad} x ${formatCurrency(item.precioUnitario)} = ${formatCurrency(item.subtotal)}_\n\n`;
+      });
+
+      message += `---\n*TOTAL: ${formatCurrency(total)}*\n\n`;
+      message += `_Cotización generada desde la web._`;
+
+      const whatsappUrl = `https://wa.me/573045295251?text=${encodeURIComponent(message)}`;
+      
+      window.location.href = whatsappUrl;
+
     } catch (e) {
       console.error(e);
       toast({
@@ -370,15 +388,9 @@ export default function ModularQuotePage() {
                   className="w-full group"
                   disabled={isSaving}
                 >
-                  {isSaving ? 'Guardando...' : 'Continuar con Reserva'}
+                  {isSaving ? 'Guardando...' : 'Continuar y Enviar por WhatsApp'}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
-                {quoteId && (
-                  <p className="text-sm text-center w-full">
-                    ¡Cotización guardada! Código:{' '}
-                    <span className="font-bold text-primary">{quoteId}</span>
-                  </p>
-                )}
               </CardFooter>
             </Card>
           </div>
