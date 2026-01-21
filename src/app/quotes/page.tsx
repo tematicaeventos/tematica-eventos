@@ -428,7 +428,7 @@ export default function ModularQuotePage() {
                       className="w-full group"
                       disabled={isSaving}
                     >
-                      {isSaving ? 'Guardando...' : 'Continuar y Enviar por WhatsApp'}
+                      {isSaving ? 'Guardando...' : 'continua, envia por WhastsApp y regresa a descargar tu pdf'}
                       <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                     </Button>
                   ) : (
