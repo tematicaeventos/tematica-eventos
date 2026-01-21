@@ -16,13 +16,16 @@ import {
   ShoppingCart,
   PartyPopper,
   CheckCircle2,
+  Building,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Checkbox } from '@/components/ui/checkbox';
+
+const PRECIO_SALON = 1500000;
 
 const baseIncludedServices = [
-  { service: 'Salón de eventos', description: 'Uso del salón y logística' },
   {
     service: 'MENU Plato Tres Carnes',
     description: 'Menú completo servido en la mesa.',
@@ -51,6 +54,7 @@ export default function PackagedQuotePage() {
   const [personas, setPersonas] = useState<number>(100);
   const [fecha, setFecha] = useState<Date | undefined>(new Date());
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [incluirSalon, setIncluirSalon] = useState<boolean>(true);
 
   const includedServices = useMemo(() => {
     if (!eventType) return baseIncludedServices;
@@ -103,8 +107,12 @@ export default function PackagedQuotePage() {
   }, [personas]);
   
   const total = useMemo(() => {
-    return planBase.precio;
-  }, [planBase]);
+    let currentTotal = planBase.precio;
+    if (!incluirSalon) {
+        currentTotal -= PRECIO_SALON;
+    }
+    return currentTotal;
+  }, [planBase, incluirSalon]);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('es-CO', {
@@ -147,6 +155,25 @@ export default function PackagedQuotePage() {
                   </Label>
                 ))}
               </RadioGroup>
+            </CardContent>
+          </Card>
+
+          {/* Salon Selection */}
+          <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-3"><Building className="text-primary"/> Salón de Eventos</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div 
+                    className="flex items-center space-x-3 p-4 rounded-md border border-input bg-card/50 cursor-pointer hover:bg-accent/50"
+                    onClick={() => setIncluirSalon(!incluirSalon)}
+                >
+                    <Checkbox id="incluir-salon" checked={incluirSalon} onCheckedChange={(checked) => setIncluirSalon(!!checked)} />
+                    <Label htmlFor="incluir-salon" className="cursor-pointer flex-1">
+                        <p className="font-semibold">Incluir salón de eventos en el paquete</p>
+                        <p className="text-sm text-muted-foreground">Uso del salón y logística completa. Desmárcalo si ya tienes un lugar.</p>
+                    </Label>
+                </div>
             </CardContent>
           </Card>
 
@@ -248,6 +275,9 @@ export default function PackagedQuotePage() {
             </CardHeader>
             <CardContent>
                <p className="text-muted-foreground">Paquete todo incluido para <span className="font-bold text-foreground">{personas} personas</span>.</p>
+               {!incluirSalon && (
+                <p className="text-sm text-primary/90 mt-2">No se incluye el salón de eventos.</p>
+             )}
             </CardContent>
             <CardFooter className="flex-col gap-4 items-start">
               <div className="w-full flex justify-between font-bold text-2xl text-primary">
