@@ -53,6 +53,9 @@ const QuotePDFDocument: React.FC<QuotePDFDocumentProps> = ({ quoteId, quote }) =
           )}
           <p className="text-gray-600">De {quote.horaInicio} a {quote.horaFin}</p>
           <p className="text-gray-600">{quote.personas} personas</p>
+          {quote.direccionSalon && (
+            <p className="text-gray-600 mt-2"><b>Lugar:</b> {quote.direccionSalon}</p>
+          )}
         </div>
       </section>
 
@@ -91,10 +94,10 @@ const QuotePDFDocument: React.FC<QuotePDFDocumentProps> = ({ quoteId, quote }) =
         </div>
       </section>
 
-      <footer className="mt-16 pt-6 border-t-2 border-gray-200 text-center text-xs text-gray-500 absolute bottom-10 left-12 right-12">
+      <footer className="absolute bottom-10 left-12 right-12 mt-16 pt-6 border-t-2 border-gray-200 text-center text-xs text-gray-500">
         <div className="mb-4">
           <p className="font-bold">Hernan Ramirez Sanchez - Gerente General</p>
-          <p>Calle 18 # 5-17, Soacha, Cundinamarca | Teléfono: 304 529 5251</p>
+          <p>3045295251 | Calle 18 # 5-17, Soacha, Cundinamarca</p>
         </div>
         <p>Temática Eventos &copy; {new Date().getFullYear()}. Todos los derechos reservados.</p>
         <p className="mt-1">Esta es una cotización y no una confirmación de reserva. Precios válidos por 15 días.</p>

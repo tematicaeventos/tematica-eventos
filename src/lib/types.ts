@@ -87,6 +87,7 @@ export type Quote = {
     fechaEvento: string;
     horaInicio: string;
     horaFin: string;
+    direccionSalon?: string;
 }
 
 export type UserContextType = {

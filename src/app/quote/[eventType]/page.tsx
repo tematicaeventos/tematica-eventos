@@ -18,7 +18,8 @@ import {
   CheckCircle2,
   Building,
   ArrowRight,
-  Download
+  Download,
+  MapPin,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -29,6 +30,7 @@ import { useToast } from '@/hooks/use-toast';
 import { saveQuote } from '@/firebase/firestore';
 import type { Quote, QuoteItem } from '@/lib/types';
 import QuotePDFDocument from '@/components/QuotePDFDocument';
+import { Input } from '@/components/ui/input';
 
 
 const PRECIO_SALON = 1500000;
@@ -68,6 +70,7 @@ export default function PackagedQuotePage() {
   const [fecha, setFecha] = useState<Date | undefined>();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [incluirSalon, setIncluirSalon] = useState<boolean>(true);
+  const [direccionSalon, setDireccionSalon] = useState('');
   const [horaInicio, setHoraInicio] = useState('19:00');
   const [horaFin, setHoraFin] = useState('02:00');
   const [isSaving, setIsSaving] = useState(false);
@@ -163,6 +166,15 @@ export default function PackagedQuotePage() {
       return;
     }
 
+    if (!incluirSalon && !direccionSalon.trim()) {
+      toast({
+        variant: 'destructive',
+        title: 'Dirección requerida',
+        description: 'Por favor, introduce la dirección del lugar del evento.',
+      });
+      return;
+    }
+
     if (!eventType) return;
 
     setIsSaving(true);
@@ -190,6 +202,7 @@ export default function PackagedQuotePage() {
       fechaEvento: format(fecha, 'yyyy-MM-dd'),
       horaInicio,
       horaFin,
+      direccionSalon: !incluirSalon ? direccionSalon : undefined,
     };
 
     try {
@@ -213,7 +226,11 @@ export default function PackagedQuotePage() {
       includedServices.forEach((item: any) => {
           message += `• ${item.service}${item.description ? `: ${item.description}` : ''}\n`;
       });
-      message += `\n*Salón de eventos:* ${incluirSalon ? 'Sí, incluido en el precio' : 'No incluido'}\n\n`;
+      if (incluirSalon) {
+        message += `\n*Salón de eventos:* Sí, incluido en el precio\n\n`;
+      } else {
+        message += `\n*Lugar del evento:* ${direccionSalon}\n\n`;
+      }
       message += `*TOTAL: ${formatCurrency(total)}*\n\n`;
       message += `_Cotización generada desde la web._`;
 
@@ -291,7 +308,7 @@ export default function PackagedQuotePage() {
               <CardContent>
                 <RadioGroup value={personas.toString()} onValueChange={(val) => setPersonas(parseInt(val))} className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {PLANES_BASE.map(plan => (
-                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 text-black hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:bg-primary [&:has([data-state=checked])]:border-primary [&:has([data-state=checked])]:text-primary-foreground">
+                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary-foreground has-[[data-state=checked]]:bg-primary has-[[data-state=checked]]:text-primary-foreground">
                       <RadioGroupItem value={plan.personas.toString()} id={`personas-${plan.personas}`} className="sr-only" />
                       <span className="text-2xl font-bold">{plan.personas}</span>
                       <span className="text-sm opacity-80">personas</span>
@@ -308,15 +325,30 @@ export default function PackagedQuotePage() {
               </CardHeader>
               <CardContent>
                   <div 
-                      className="flex items-center space-x-3 p-4 rounded-md bg-primary cursor-pointer hover:bg-primary/90"
+                      className="flex items-center space-x-3 p-4 rounded-md border bg-card cursor-pointer hover:bg-secondary/50"
                       onClick={() => setIncluirSalon(!incluirSalon)}
                   >
-                      <Checkbox id="incluir-salon" checked={incluirSalon} onCheckedChange={(checked) => setIncluirSalon(!!checked)} className="border-primary-foreground bg-primary-foreground text-primary data-[state=checked]:bg-primary-foreground data-[state=checked]:text-primary" />
-                      <Label htmlFor="incluir-salon" className="cursor-pointer flex-1 text-primary-foreground">
-                          <p className="font-semibold text-black">Incluir salón de eventos en el paquete</p>
-                          <p className="text-sm opacity-90 text-black">Uso del salón y logística completa. Desmárcalo si ya tienes un lugar.</p>
+                      <Checkbox id="incluir-salon" checked={incluirSalon} onCheckedChange={(checked) => setIncluirSalon(!!checked)} />
+                      <Label htmlFor="incluir-salon" className="cursor-pointer flex-1">
+                          <p className="font-semibold">Incluir salón de eventos en el paquete</p>
+                          <p className="text-sm text-muted-foreground">Uso del salón y logística completa. Desmárcalo si ya tienes un lugar.</p>
                       </Label>
                   </div>
+                   {!incluirSalon && (
+                    <div className="mt-6 space-y-2">
+                        <Label htmlFor="direccion-salon" className="flex items-center gap-2 font-semibold">
+                            <MapPin className="h-4 w-4 text-primary" />
+                            Dirección del lugar del evento
+                        </Label>
+                        <Input 
+                            id="direccion-salon" 
+                            placeholder="Ej: Calle 5 # 10-20, Bogotá"
+                            value={direccionSalon}
+                            onChange={(e) => setDireccionSalon(e.target.value)}
+                        />
+                        <p className="text-xs text-muted-foreground">Este campo es obligatorio si no incluyes nuestro salón.</p>
+                    </div>
+                  )}
               </CardContent>
             </Card>
 
@@ -379,7 +411,7 @@ export default function PackagedQuotePage() {
                       {fecha ? format(fecha, "PPP", { locale: es }) : <span>Selecciona una fecha</span>}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0 bg-white">
+                  <PopoverContent className="w-auto p-0">
                     <Calendar
                       mode="single"
                       selected={fecha}
@@ -432,7 +464,7 @@ export default function PackagedQuotePage() {
                 </div>
                 
                 {!generatedQuoteId ? (
-                  <Button size="lg" className="w-full group whitespace-normal h-auto py-3" onClick={handleSaveAndRedirect} disabled={isSaving}>
+                  <Button size="lg" className="w-full group h-auto py-3 whitespace-normal" onClick={handleSaveAndRedirect} disabled={isSaving}>
                     {isSaving ? 'Guardando...' : 'continua, envia por WhastsApp y regresa a descargar tu pdf'}
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>

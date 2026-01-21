@@ -35,6 +35,7 @@ import {
   ArrowRight,
   Download,
   CalendarIcon,
+  MapPin,
 } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -85,6 +86,7 @@ export default function ModularQuotePage() {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [horaInicio, setHoraInicio] = useState('19:00');
   const [horaFin, setHoraFin] = useState('02:00');
+  const [direccionSalon, setDireccionSalon] = useState('');
 
   const currentYear = new Date().getFullYear();
 
@@ -204,6 +206,7 @@ export default function ModularQuotePage() {
       fechaEvento: format(fecha, 'yyyy-MM-dd'),
       horaInicio,
       horaFin,
+      direccionSalon: direccionSalon || undefined,
     };
 
     try {
@@ -222,7 +225,11 @@ export default function ModularQuotePage() {
       message += `*Teléfono:* ${profile.telefono}\n\n`;
       message += `*Cotización ID:* ${newQuoteId}\n`;
       message += `*Fecha del Evento:* ${format(fecha, "PPP", { locale: es })}\n`;
-      message += `*Horario:* De ${horaInicio} a ${horaFin}\n---\n`;
+      message += `*Horario:* De ${horaInicio} a ${horaFin}\n`;
+      if (direccionSalon.trim()) {
+        message += `*Lugar del Evento:* ${direccionSalon.trim()}\n`;
+      }
+      message += `---\n`;
       
       quoteItems.forEach(item => {
         message += `*${item.nombre}*\n`;
@@ -452,6 +459,22 @@ export default function ModularQuotePage() {
                   </CardContent>
                 </Card>
 
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3"><MapPin className="text-primary"/> Lugar del Evento</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                      <Label htmlFor="direccion-salon">Si ya tienes un lugar, introduce la dirección</Label>
+                      <Input 
+                          id="direccion-salon" 
+                          className="mt-2"
+                          placeholder="Ej: Calle 5 # 10-20, Bogotá"
+                          value={direccionSalon}
+                          onChange={(e) => setDireccionSalon(e.target.value)}
+                      />
+                  </CardContent>
+                </Card>
+
               <Card className="sticky top-24">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3">
@@ -493,7 +516,7 @@ export default function ModularQuotePage() {
                     <Button
                       onClick={handleContinueToReservation}
                       size="lg"
-                      className="w-full group whitespace-normal h-auto py-3"
+                      className="w-full group h-auto py-3 whitespace-normal"
                       disabled={isSaving}
                     >
                       {isSaving ? 'Guardando...' : 'continua, envia por WhastsApp y regresa a descargar tu pdf'}
