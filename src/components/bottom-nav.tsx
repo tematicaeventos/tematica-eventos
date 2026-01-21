@@ -6,7 +6,7 @@ import { Home, Puzzle, User, Paintbrush2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/firebase/auth/use-user';
 
-const navItems = [
+const baseNavItems = [
   {
     href: '/',
     icon: Home,
@@ -28,7 +28,7 @@ export function BottomNav() {
   const pathname = usePathname();
   const { user } = useUser();
 
-  const navLinks = navItems.map((item) => {
+  const navLinks = baseNavItems.map((item) => {
     let isActive = false;
     if (item.href === '/') {
       isActive = pathname === '/';
@@ -43,9 +43,9 @@ export function BottomNav() {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden">
       <nav className="flex h-16 items-stretch justify-around">
-        {navLinks.map((item, index) => (
+        {navLinks.map((item) => (
           <Link
-            key={index}
+            key={item.href}
             href={item.href}
             className={cn(
               'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
