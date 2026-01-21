@@ -1,6 +1,6 @@
 import type { Quote, UserProfile } from '@/lib/types';
 
-const LOGO_URL = 'https://i.imgur.com/GzQ4e6J.png';
+const LOGO_URL = 'https://i.imgur.com/xT5LV1a.png';
 
 type QuotePDFDocumentProps = {
   quote: Omit<Quote, 'cotizacionId' | 'fechaCotizacion' | 'estado' | 'origen'>;
