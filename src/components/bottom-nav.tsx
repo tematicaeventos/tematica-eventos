@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Puzzle, User } from 'lucide-react';
+import { Home, Puzzle, User, Paintbrush2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/firebase/auth/use-user';
 
@@ -18,12 +18,23 @@ export function BottomNav() {
       isActive: pathname === '/',
     },
     {
+      href: '/themes',
+      icon: Paintbrush2,
+      label: 'Temáticas',
+      isActive: pathname === '/themes',
+    },
+    {
       href: '/quotes',
       icon: Puzzle,
-      label: 'Arma tu Evento',
+      label: 'Cotizar',
       isActive: pathname.startsWith('/quotes') || pathname.startsWith('/quote/'),
     },
   ];
+  
+  const labelForQuotes = navLinks.find(link => link.href === '/quotes');
+  if (labelForQuotes) {
+      labelForQuotes.label = 'Cotizar';
+  }
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden">
