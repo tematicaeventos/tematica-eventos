@@ -12,8 +12,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const navLinks = [
   { href: '/', label: 'Inicio', icon: Home },
-  { href: '/themes', label: 'Temáticas', icon: Paintbrush2 },
   { href: '/quotes', label: 'Arma tu Evento', icon: Puzzle },
+  { href: '/themes', label: 'Temáticas', icon: Paintbrush2 },
 ];
 
 const NavLinksContent = ({
