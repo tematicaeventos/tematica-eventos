@@ -256,13 +256,13 @@ export default function PackagedQuotePage() {
             </CardHeader>
             <CardContent>
                 <div 
-                    className="flex items-center space-x-3 p-4 rounded-md border border-input bg-card/50 cursor-pointer hover:bg-accent/50"
+                    className="flex items-center space-x-3 p-4 rounded-md bg-primary cursor-pointer hover:bg-primary/90"
                     onClick={() => setIncluirSalon(!incluirSalon)}
                 >
-                    <Checkbox id="incluir-salon" checked={incluirSalon} onCheckedChange={(checked) => setIncluirSalon(!!checked)} />
-                    <Label htmlFor="incluir-salon" className="cursor-pointer flex-1">
+                    <Checkbox id="incluir-salon" checked={incluirSalon} onCheckedChange={(checked) => setIncluirSalon(!!checked)} className="border-foreground data-[state=checked]:bg-primary-foreground data-[state=checked]:text-primary" />
+                    <Label htmlFor="incluir-salon" className="cursor-pointer flex-1 text-primary-foreground">
                         <p className="font-semibold">Incluir salón de eventos en el paquete</p>
-                        <p className="text-sm text-muted-foreground">Uso del salón y logística completa. Desmárcalo si ya tienes un lugar.</p>
+                        <p className="text-sm opacity-90">Uso del salón y logística completa. Desmárcalo si ya tienes un lugar.</p>
                     </Label>
                 </div>
             </CardContent>
