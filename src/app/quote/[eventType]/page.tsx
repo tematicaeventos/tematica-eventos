@@ -26,7 +26,12 @@ const baseIncludedServices = [
   {
     service: 'Plato Tres Carnes',
     description: 'Menú completo servido en la mesa.',
-    details: ['Entrada', 'Plato fuerte con tres carnes', 'Bebida'],
+    details: [
+      'Entrada: Ensalada o creeps',
+      'Carnes: Cerdo, pollo, carne de res',
+      'Acompañamiento',
+      'Bebida: Jugo natural o gaseosa',
+    ],
   },
   { service: 'Bebidas Adicionales', description: 'Gaseosa, agua, cóctel ilimitado, champaña y whisky' },
   { service: 'Personal', description: 'Meseros, chef, barman y maestro de ceremonias' },
