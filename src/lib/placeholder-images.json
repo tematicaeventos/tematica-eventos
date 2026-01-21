@@ -8,9 +8,9 @@
     },
     {
       "id": "event-type-15-anos",
-      "description": "Una elegante decoración para fiesta de 15 años con un letrero luminoso.",
-      "imageUrl": "https://images.unsplash.com/photo-1598132742918-a690c5f1c93a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      "imageHint": "quinceanera celebration"
+      "description": "Una quinceañera elegante con un vestido rosa.",
+      "imageUrl": "https://images.unsplash.com/photo-1611705643039-b5f7a4358895?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxxdWluY2VhbmVyYSUyMGRyZXNzfGVufDB8fHx8MTc3MTU1NjM4N3ww&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "quinceanera dress"
     },
     {
       "id": "event-type-matrimonio",
