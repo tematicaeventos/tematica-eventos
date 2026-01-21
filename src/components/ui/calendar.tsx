@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker, useDayPicker, useNavigation } from "react-day-picker"
+import { DayPicker } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -30,7 +30,7 @@ function Calendar({
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
         caption: "flex justify-center pt-1 relative items-center",
-        caption_label: "text-sm font-medium hidden", // Hide default label
+        caption_label: "text-sm font-medium hidden",
         caption_dropdowns: "flex justify-center gap-1",
         nav: "space-x-1 flex items-center",
         nav_button: cn(
@@ -40,7 +40,7 @@ function Calendar({
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
         table: "w-full border-collapse space-y-1",
-        head_row: "flex",
+        head_row: "flex w-full",
         head_cell:
           "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
@@ -62,68 +62,41 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Dropdown: (props) => {
-          const { fromYear, fromMonth, fromDate, toYear, toMonth, toDate } = useDayPicker();
-          const { goToMonth, month } = useNavigation();
-
-          if (props.name === "months") {
-            const months = Array.from({ length: 12 }, (_, i) => ({
-                value: i.toString(),
-                label: props.locale?.localize?.month(i, { width: 'wide' }) || ''
-            }));
-            
-            return (
-              <Select
-                onValueChange={(newValue) => {
-                  const newDate = new Date(month);
-                  newDate.setMonth(parseInt(newValue));
-                  goToMonth(newDate);
-                }}
-                value={month.getMonth().toString()}
-              >
-                <SelectTrigger>{props.locale?.localize?.month(month.getMonth(), { width: 'wide' })}</SelectTrigger>
-                <SelectContent>
-                  {months.map((m) => (
-                    <SelectItem key={m.value} value={m.value}>
-                      {m.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )
+        Dropdown: ({ value, onChange, children, ...props }) => {
+          const options = React.Children.toArray(
+            children
+          ) as React.ReactElement<React.HTMLProps<HTMLOptionElement>>[]
+          const selected = options.find((child) => child.props.value === value)
+          const handleChange = (value: string) => {
+            const changeEvent = {
+              target: { value },
+            } as React.ChangeEvent<HTMLSelectElement>
+            onChange?.(changeEvent)
           }
-
-          if (props.name === "years") {
-            const earliestYear = fromYear || fromDate?.getFullYear() || new Date().getFullYear() - 100;
-            const latestYear = toYear || toDate?.getFullYear() || new Date().getFullYear();
-            
-            const years = Array.from({ length: latestYear - earliestYear + 1 }, (_, i) => ({
-                value: (earliestYear + i).toString(),
-                label: (earliestYear + i).toString()
-            }));
-
-            return (
-              <Select
-                onValueChange={(newValue) => {
-                  const newDate = new Date(month);
-                  newDate.setFullYear(parseInt(newValue));
-                  goToMonth(newDate);
-                }}
-                value={month.getFullYear().toString()}
-              >
-                <SelectTrigger>{month.getFullYear()}</SelectTrigger>
-                <SelectContent>
-                  {years.map((y) => (
-                    <SelectItem key={y.value} value={y.value}>
-                      {y.label}
+          return (
+            <Select
+              value={value?.toString()}
+              onValueChange={(value) => {
+                handleChange(value)
+              }}
+            >
+              <SelectTrigger className="pr-1.5 focus:ring-0">
+                <SelectValue>{selected?.props?.children}</SelectValue>
+              </SelectTrigger>
+              <SelectContent position="popper">
+                <div className="max-h-60 overflow-y-auto">
+                    {options.map((option, id: number) => (
+                    <SelectItem
+                        key={`${option.props.value}-${id}`}
+                        value={option.props.value?.toString() ?? ""}
+                    >
+                        {option.props.children}
                     </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )
-          }
-
-          return null;
+                    ))}
+                </div>
+              </SelectContent>
+            </Select>
+          )
         },
         IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
