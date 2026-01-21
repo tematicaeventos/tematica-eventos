@@ -34,7 +34,12 @@ import {
   Plus,
   ArrowRight,
   Download,
+  CalendarIcon,
 } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 import { useUser } from '@/firebase/auth/use-user';
 import { saveQuote } from '@/firebase/firestore';
@@ -75,6 +80,11 @@ export default function ModularQuotePage() {
   const [selectedServices, setSelectedServices] = useState<SelectedServices>({});
   const [generatedQuote, setGeneratedQuote] = useState<Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> | null>(null);
   const [generatedQuoteId, setGeneratedQuoteId] = useState<string | null>(null);
+  
+  const [fecha, setFecha] = useState<Date | undefined>();
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [horaInicio, setHoraInicio] = useState('19:00');
+  const [horaFin, setHoraFin] = useState('02:00');
 
   const bannerImage = useMemo(() => PlaceHolderImages.find(img => img.id === 'build-event-banner'), []);
 
@@ -164,6 +174,15 @@ export default function ModularQuotePage() {
       return;
     }
 
+    if (!fecha) {
+      toast({
+        variant: 'destructive',
+        title: 'Fecha requerida',
+        description: 'Por favor, elige una fecha para tu evento.',
+      });
+      return;
+    }
+
     setIsSaving(true);
     
     const personasItem = Object.values(selectedServices).find(({service}) => service.tipoCobro === 'persona');
@@ -180,9 +199,9 @@ export default function ModularQuotePage() {
       origen: 'web-modular',
       tipoEvento: 'Modular',
       personas: personasCount,
-      fechaEvento: new Date().toISOString().split('T')[0], // Placeholder
-      horaInicio: '00:00', // Placeholder
-      horaFin: '00:00', // Placeholder
+      fechaEvento: format(fecha, 'yyyy-MM-dd'),
+      horaInicio,
+      horaFin,
     };
 
     try {
@@ -199,7 +218,9 @@ export default function ModularQuotePage() {
       message += `*Cliente:* ${profile.nombre}\n`;
       message += `*Correo:* ${profile.correo}\n`;
       message += `*Teléfono:* ${profile.telefono}\n\n`;
-      message += `*Cotización ID:* ${newQuoteId}\n---\n`;
+      message += `*Cotización ID:* ${newQuoteId}\n`;
+      message += `*Fecha del Evento:* ${format(fecha, "PPP", { locale: es })}\n`;
+      message += `*Horario:* De ${horaInicio} a ${horaFin}\n---\n`;
       
       quoteItems.forEach(item => {
         message += `*${item.nombre}*\n`;
@@ -382,8 +403,50 @@ export default function ModularQuotePage() {
               </Accordion>
             </div>
 
-            {/* Quote Summary */}
-            <div className="lg:col-span-1">
+            {/* Date and Quote Summary */}
+            <div className="lg:col-span-1 space-y-8">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3"><CalendarIcon className="text-primary"/> Elige una Fecha</CardTitle>
+                  </CardHeader>
+                  <CardContent className="grid grid-cols-1 gap-4">
+                    <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant={"outline"}
+                          className="w-full justify-start text-left font-normal h-12"
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {fecha ? format(fecha, "PPP", { locale: es }) : <span>Selecciona una fecha</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={fecha}
+                          onSelect={(day) => {
+                            setFecha(day);
+                            setIsCalendarOpen(false);
+                          }}
+                          initialFocus
+                          locale={es}
+                          disabled={(date) => date < new Date(new Date().setDate(new Date().getDate() - 1))}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <div className="flex gap-4">
+                      <div className="w-1/2">
+                        <Label htmlFor="hora-inicio">Hora de inicio</Label>
+                          <input type="time" id="hora-inicio" className="w-full bg-input border border-border rounded-md p-3 mt-2 text-sm h-12" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
+                      </div>
+                      <div className="w-1/2">
+                        <Label htmlFor="hora-fin">Hora de finalización</Label>
+                          <input type="time" id="hora-fin" className="w-full bg-input border border-border rounded-md p-3 mt-2 text-sm h-12" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
               <Card className="sticky top-24">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3">

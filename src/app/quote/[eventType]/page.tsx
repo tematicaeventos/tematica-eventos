@@ -65,7 +65,7 @@ export default function PackagedQuotePage() {
   const pdfRef = useRef<HTMLDivElement>(null);
 
   const [personas, setPersonas] = useState<number>(100);
-  const [fecha, setFecha] = useState<Date | undefined>(new Date());
+  const [fecha, setFecha] = useState<Date | undefined>();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [incluirSalon, setIncluirSalon] = useState<boolean>(true);
   const [horaInicio, setHoraInicio] = useState('19:00');
@@ -152,6 +152,15 @@ export default function PackagedQuotePage() {
       router.push(`/login?redirect=/quote/${params.eventType}`);
       return;
     }
+    
+    if (!fecha) {
+      toast({
+        variant: 'destructive',
+        title: 'Fecha requerida',
+        description: 'Por favor, elige una fecha para tu evento.',
+      });
+      return;
+    }
 
     if (!eventType) return;
 
@@ -177,7 +186,7 @@ export default function PackagedQuotePage() {
       origen: 'web-paquete',
       tipoEvento: eventType.title,
       personas: personas,
-      fechaEvento: fecha ? format(fecha, 'yyyy-MM-dd') : new Date().toISOString().split('T')[0],
+      fechaEvento: format(fecha, 'yyyy-MM-dd'),
       horaInicio,
       horaFin,
     };
@@ -196,7 +205,7 @@ export default function PackagedQuotePage() {
       message += `*Cliente:* ${profile.nombre}\n`;
       message += `*Teléfono:* ${profile.telefono}\n\n`;
       message += `*Cotización ID:* ${newQuoteId}\n`;
-      message += `*Fecha del Evento:* ${fecha ? format(fecha, "PPP", { locale: es }) : 'No especificada'}\n`;
+      message += `*Fecha del Evento:* ${format(fecha, "PPP", { locale: es })}\n`;
       message += `*Horario:* De ${horaInicio} a ${horaFin}\n`;
       message += `*Número de personas:* ${personas}\n\n`;
       message += `*INCLUYE:*\n`;
