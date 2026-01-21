@@ -86,6 +86,8 @@ export default function ModularQuotePage() {
   const [horaInicio, setHoraInicio] = useState('19:00');
   const [horaFin, setHoraFin] = useState('02:00');
 
+  const currentYear = new Date().getFullYear();
+
   const bannerImage = useMemo(() => PlaceHolderImages.find(img => img.id === 'build-event-banner'), []);
 
   const servicesByCategory = useMemo(() => {
@@ -431,6 +433,9 @@ export default function ModularQuotePage() {
                           initialFocus
                           locale={es}
                           disabled={(date) => date < new Date(new Date().setDate(new Date().getDate() - 1))}
+                          captionLayout="dropdown-buttons"
+                          fromYear={currentYear}
+                          toYear={currentYear + 5}
                         />
                       </PopoverContent>
                     </Popover>

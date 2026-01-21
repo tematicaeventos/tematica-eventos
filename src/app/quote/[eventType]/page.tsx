@@ -74,6 +74,7 @@ export default function PackagedQuotePage() {
   const [generatedQuote, setGeneratedQuote] = useState<Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> | null>(null);
   const [generatedQuoteId, setGeneratedQuoteId] = useState<string | null>(null);
 
+  const currentYear = new Date().getFullYear();
 
   const includedServices = useMemo(() => {
     if (!eventType) return baseIncludedServices;
@@ -389,6 +390,9 @@ export default function PackagedQuotePage() {
                       initialFocus
                       locale={es}
                       disabled={(date) => date < new Date(new Date().setDate(new Date().getDate() - 1))}
+                      captionLayout="dropdown-buttons"
+                      fromYear={currentYear}
+                      toYear={currentYear + 5}
                     />
                   </PopoverContent>
                 </Popover>
