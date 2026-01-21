@@ -6,30 +6,39 @@ import { Home, Puzzle, User, Paintbrush2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/firebase/auth/use-user';
 
+const navItems = [
+  {
+    href: '/',
+    icon: Home,
+    label: 'Inicio',
+  },
+  {
+    href: '/quotes',
+    icon: Puzzle,
+    label: 'Arma tu Evento',
+  },
+  {
+    href: '/themes',
+    icon: Paintbrush2,
+    label: 'Temáticas',
+  },
+];
+
 export function BottomNav() {
   const pathname = usePathname();
   const { user } = useUser();
 
-  const navLinks = [
-    {
-      href: '/',
-      icon: Home,
-      label: 'Inicio',
-      isActive: pathname === '/',
-    },
-    {
-      href: '/quotes',
-      icon: Puzzle,
-      label: 'Arma tu Evento',
-      isActive: pathname.startsWith('/quotes') || pathname.startsWith('/quote/'),
-    },
-    {
-      href: '/themes',
-      icon: Paintbrush2,
-      label: 'Temáticas',
-      isActive: pathname === '/themes',
-    },
-  ];
+  const navLinks = navItems.map((item) => {
+    let isActive = false;
+    if (item.href === '/') {
+      isActive = pathname === '/';
+    } else if (item.href === '/quotes') {
+      isActive = pathname.startsWith('/quotes') || pathname.startsWith('/quote/');
+    } else {
+      isActive = pathname === item.href;
+    }
+    return { ...item, isActive };
+  });
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden">
