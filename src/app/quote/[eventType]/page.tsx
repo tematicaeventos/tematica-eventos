@@ -24,7 +24,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 const baseIncludedServices = [
   { service: 'Salón de eventos', description: 'Uso del salón y logística' },
   {
-    service: 'Plato Tres Carnes',
+    service: 'MENU Plato Tres Carnes',
     description: 'Menú completo servido en la mesa.',
     details: [
       'Entrada: Ensalada o creeps',
