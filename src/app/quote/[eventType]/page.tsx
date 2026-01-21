@@ -419,7 +419,7 @@ export default function PackagedQuotePage() {
                 </div>
                 
                 {!generatedQuoteId ? (
-                  <Button size="lg" className="w-full group" onClick={handleSaveAndRedirect} disabled={isSaving}>
+                  <Button size="lg" className="w-full group whitespace-normal h-auto py-3" onClick={handleSaveAndRedirect} disabled={isSaving}>
                     {isSaving ? 'Guardando...' : 'continua, envia por WhastsApp y regresa a descargar tu pdf'}
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>

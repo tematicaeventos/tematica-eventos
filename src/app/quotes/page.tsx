@@ -425,7 +425,7 @@ export default function ModularQuotePage() {
                     <Button
                       onClick={handleContinueToReservation}
                       size="lg"
-                      className="w-full group"
+                      className="w-full group whitespace-normal h-auto py-3"
                       disabled={isSaving}
                     >
                       {isSaving ? 'Guardando...' : 'continua, envia por WhastsApp y regresa a descargar tu pdf'}
