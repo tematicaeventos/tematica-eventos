@@ -2,79 +2,59 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { eventTypes } from '@/lib/data';
-import { 
-    PLANES_BASE, 
-    COMIDA_OPTIONS, 
-    BEBIDAS_OPTIONS, 
-    LICORES_OPTIONS, 
-    EXTRAS_OPTIONS 
-} from '@/lib/packaged-quote-data';
-
+import { PLANES_BASE } from '@/lib/packaged-quote-data';
 import {
   Users,
-  UtensilsCrossed,
-  GlassWater,
-  PlusCircle,
   CalendarIcon,
-  Clock,
   ShoppingCart,
-  PartyPopper
+  PartyPopper,
+  CheckCircle2,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 
-type SelectedExtras = { [key: string]: boolean };
+const includedServices = [
+  { service: 'Salón de eventos', description: 'Uso del salón y logística' },
+  { service: 'Alimentación', description: 'Entrada, plato fuerte y bebida' },
+  { service: 'Bebidas Adicionales', description: 'Gaseosa, agua, cóctel ilimitado, champaña y whisky' },
+  { service: 'Personal', description: 'Meseros, chef, barman y maestro de ceremonias' },
+  { service: 'Menaje y mobiliario', description: 'Vajilla, mesas, sillas y mantelería' },
+  { service: 'Sonido y DJ', description: 'Cabinas, luces, DJ y hora loca' },
+  { service: 'Decoración', description: 'Centros de mesa, arco, silla quinceañera y tapete' },
+  { service: 'Ponqué', description: 'Ponqué de 15 años decorado' },
+  { service: 'Kit quinceañera', description: 'Cupcakes, rosas, cofre y cuadro' },
+  { service: 'Fotografía y video', description: '50 fotos y video editado' },
+  { service: 'Administración', description: 'Planeación, coordinación y montaje del evento' },
+];
 
 export default function PackagedQuotePage() {
   const params = useParams<{ eventType: string }>();
   const eventType = useMemo(() => eventTypes.find(e => e.id === params.eventType), [params]);
 
-  const [personas, setPersonas] = useState<number>(50);
-  const [comida, setComida] = useState<string>('2-carnes');
-  const [extras, setExtras] = useState<SelectedExtras>({});
+  const [personas, setPersonas] = useState<number>(100);
   const [fecha, setFecha] = useState<Date | undefined>(new Date());
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
-  const planBase = useMemo(() => PLANES_BASE.find(p => p.personas === personas) || PLANES_BASE[0], [personas]);
-  const comidaSeleccionada = useMemo(() => COMIDA_OPTIONS.find(c => c.id === comida) || COMIDA_OPTIONS[0], [comida]);
-  const bebidasNoAlcoholicas = useMemo(() => BEBIDAS_OPTIONS, []);
-  const licor = useMemo(() => LICORES_OPTIONS[0], []);
+  const planBase = useMemo(() => {
+      let plan = PLANES_BASE.find(p => p.personas === personas);
+      if (!plan) {
+          plan = PLANES_BASE[0];
+          // This effect will update the state in the next render cycle
+          setTimeout(() => setPersonas(PLANES_BASE[0].personas), 0);
+      }
+      return plan;
+  }, [personas]);
   
-  const botellasSugeridas = useMemo(() => {
-    return licor.botellasSugeridas[personas] || 0;
-  }, [personas, licor]);
-
   const total = useMemo(() => {
-    const costoPlanBase = planBase.precio;
-    const costoComida = comidaSeleccionada.precioPorPersona * personas;
-    const costoBebidas = bebidasNoAlcoholicas.reduce((acc, b) => acc + (b.precioPorPersona * personas), 0);
-    const costoLicor = botellasSugeridas * licor.precioPorBotella;
-    const costoExtras = EXTRAS_OPTIONS.reduce((acc, extra) => {
-      return extras[extra.id] ? acc + extra.precio : acc;
-    }, 0);
-    
-    return costoPlanBase + costoComida + costoBebidas + costoLicor + costoExtras;
-  }, [personas, planBase, comidaSeleccionada, bebidasNoAlcoholicas, botellasSugeridas, licor, extras]);
-
-
-  const handleExtraChange = (id: string) => {
-    setExtras(prev => ({ ...prev, [id]: !prev[id] }));
-  };
+    return planBase.precio;
+  }, [planBase]);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('es-CO', {
@@ -93,10 +73,10 @@ export default function PackagedQuotePage() {
     <div className="container mx-auto px-4 py-8">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold tracking-tight font-headline">
-          Cotizador para {eventType.title}
+          Cotizador de Paquetes para {eventType.title}
         </h1>
         <p className="mt-2 text-lg text-muted-foreground max-w-3xl mx-auto">
-          Temática Eventos te ofrece una experiencia completa: salón, sonido, luces, comida, bebidas, decoración y extras personalizables. Cotiza rápida y visualmente según tus necesidades.
+          Nuestros paquetes todo incluido están diseñados para que no te preocupes por nada. Selecciona el número de invitados y reserva tu fecha.
         </p>
       </div>
 
@@ -108,7 +88,7 @@ export default function PackagedQuotePage() {
               <CardTitle className="flex items-center gap-3"><Users className="text-primary"/> Número de Personas</CardTitle>
             </CardHeader>
             <CardContent>
-              <RadioGroup value={personas.toString()} onValueChange={(val) => setPersonas(parseInt(val))} className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <RadioGroup value={personas.toString()} onValueChange={(val) => setPersonas(parseInt(val))} className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {PLANES_BASE.map(plan => (
                   <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
                     <RadioGroupItem value={plan.personas.toString()} id={`personas-${plan.personas}`} className="sr-only" />
@@ -120,87 +100,26 @@ export default function PackagedQuotePage() {
             </CardContent>
           </Card>
 
-          {/* Base Plan */}
+          {/* Included Services */}
           <Card>
               <CardHeader>
-                  <CardTitle className="flex items-center gap-3"><PartyPopper className="text-primary"/> Plan Base (Incluido)</CardTitle>
+                  <CardTitle className="flex items-center gap-3"><PartyPopper className="text-primary"/> Paquete Todo Incluido</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Incluye salón, sonido profesional y luces para <span className="font-bold text-foreground">{personas} personas</span>.</p>
-                <p className="text-3xl font-bold text-primary mt-2">{formatCurrency(planBase.precio)}</p>
+              <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                {includedServices.map(item => (
+                  <div key={item.service} className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
+                    <div>
+                      <p className="font-semibold">{item.service}</p>
+                      <p className="text-sm text-muted-foreground">{item.description}</p>
+                    </div>
+                  </div>
+                ))}
               </CardContent>
           </Card>
 
 
-          {/* Food and Drinks */}
-          <Accordion type="multiple" defaultValue={['comida', 'bebidas', 'extras']} className="w-full">
-            <AccordionItem value="comida">
-              <AccordionTrigger className="text-xl font-semibold hover:no-underline">
-                <div className="flex items-center gap-3 text-primary"><UtensilsCrossed/> Comida</div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <RadioGroup value={comida} onValueChange={setComida} className="space-y-2 pt-2">
-                  {COMIDA_OPTIONS.map(opt => (
-                     <Label key={opt.id} htmlFor={opt.id} className="flex justify-between items-center cursor-pointer rounded-lg border p-4 [&:has([data-state=checked])]:border-primary">
-                        <div>
-                          <p className="font-semibold">{opt.nombre}</p>
-                          <p className="text-sm text-muted-foreground">{opt.descripcion}</p>
-                          <p className="text-sm font-bold text-primary mt-1">{formatCurrency(opt.precioPorPersona)} / persona</p>
-                        </div>
-                        <RadioGroupItem value={opt.id} id={opt.id} />
-                    </Label>
-                  ))}
-                </RadioGroup>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="bebidas">
-              <AccordionTrigger className="text-xl font-semibold hover:no-underline">
-                <div className="flex items-center gap-3 text-primary"><GlassWater/> Bebidas</div>
-              </AccordionTrigger>
-              <AccordionContent className="pt-4 space-y-4">
-                  <div>
-                    <h4 className="font-semibold mb-2">Bebidas no alcohólicas (Incluidas)</h4>
-                    {bebidasNoAlcoholicas.map(bebida => (
-                      <div key={bebida.id} className="flex justify-between items-center text-sm p-2 rounded-md bg-muted/50">
-                        <span>{bebida.nombre}</span>
-                        <span className="font-medium">{formatCurrency(bebida.precioPorPersona)} / persona</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-2">Licores (Opcional)</h4>
-                     <div className="flex justify-between items-center text-sm p-2 rounded-md bg-muted/50">
-                        <div>
-                          <p>{licor.nombre}</p>
-                          <p className="text-xs text-muted-foreground">Sugerido para {personas} personas: <span className="font-bold text-primary">{botellasSugeridas} botellas</span></p>
-                        </div>
-                        <span className="font-medium">{formatCurrency(licor.precioPorBotella)} / botella</span>
-                      </div>
-                  </div>
-              </AccordionContent>
-            </AccordionItem>
-
-             <AccordionItem value="extras">
-              <AccordionTrigger className="text-xl font-semibold hover:no-underline">
-                <div className="flex items-center gap-3 text-primary"><PlusCircle/> Extras Adicionales</div>
-              </AccordionTrigger>
-              <AccordionContent className="pt-2 space-y-2">
-                 {EXTRAS_OPTIONS.map(extra => (
-                    <Label key={extra.id} htmlFor={extra.id} className="flex justify-between items-center cursor-pointer rounded-lg border p-4 [&:has([data-state=checked])]:border-primary">
-                        <div>
-                           <p className="font-semibold">{extra.nombre}</p>
-                           <p className="text-sm text-muted-foreground">{extra.descripcion}</p>
-                           <p className="text-sm font-bold text-primary mt-1">{formatCurrency(extra.precio)}</p>
-                        </div>
-                        <Checkbox id={extra.id} checked={extras[extra.id]} onCheckedChange={() => handleExtraChange(extra.id)} />
-                    </Label>
-                 ))}
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-
-            {/* Date and Time */}
+         {/* Date and Time */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-3"><CalendarIcon className="text-primary"/> Elige una Fecha</CardTitle>
@@ -226,6 +145,7 @@ export default function PackagedQuotePage() {
                     }}
                     initialFocus
                     locale={es}
+                    disabled={(date) => date < new Date(new Date().setDate(new Date().getDate() - 1))}
                   />
                 </PopoverContent>
               </Popover>
@@ -249,47 +169,21 @@ export default function PackagedQuotePage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
                 <ShoppingCart className="text-primary" />
-                Resumen de tu Cotización
+                Resumen de tu Paquete
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between items-center text-sm">
-                <p className="font-medium">Plan Base ({personas} personas)</p>
-                <p className="font-semibold">{formatCurrency(planBase.precio)}</p>
-              </div>
-               <div className="flex justify-between items-center text-sm">
-                <p className="font-medium">Comida: {comidaSeleccionada.nombre}</p>
-                <p className="font-semibold">{formatCurrency(comidaSeleccionada.precioPorPersona * personas)}</p>
-              </div>
-              <div className="flex justify-between items-center text-sm">
-                <p className="font-medium">Bebidas no alcohólicas</p>
-                <p className="font-semibold">{formatCurrency(bebidasNoAlcoholicas.reduce((acc, b) => acc + (b.precioPorPersona * personas), 0))}</p>
-              </div>
-               <div className="flex justify-between items-center text-sm">
-                <p className="font-medium">Whisky ({botellasSugeridas} botellas)</p>
-                <p className="font-semibold">{formatCurrency(botellasSugeridas * licor.precioPorBotella)}</p>
-              </div>
-              <Separator className="my-2" />
-               {Object.keys(extras).filter(k => extras[k]).length > 0 && (
-                 <>
-                    {EXTRAS_OPTIONS.filter(e => extras[e.id]).map(extra => (
-                        <div key={extra.id} className="flex justify-between items-center text-sm">
-                            <p className="font-medium">{extra.nombre}</p>
-                            <p className="font-semibold">{formatCurrency(extra.precio)}</p>
-                        </div>
-                    ))}
-                    <Separator className="my-2" />
-                 </>
-               )}
+            <CardContent>
+               <p className="text-muted-foreground">Paquete todo incluido para <span className="font-bold text-foreground">{personas} personas</span>.</p>
             </CardContent>
-            <CardFooter className="flex-col gap-4">
-              <div className="w-full flex justify-between font-bold text-xl">
+            <CardFooter className="flex-col gap-4 items-start">
+              <div className="w-full flex justify-between font-bold text-2xl text-primary">
                 <span>TOTAL</span>
                 <span>{formatCurrency(total)}</span>
               </div>
               <Button size="lg" className="w-full group">
                 Continuar con Reserva
               </Button>
+               <p className="text-xs text-muted-foreground pt-2">El siguiente paso es iniciar sesión o registrarte para guardar tu cotización y proceder con la reserva.</p>
             </CardFooter>
           </Card>
         </div>
