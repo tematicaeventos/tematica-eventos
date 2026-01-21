@@ -29,7 +29,7 @@ const baseIncludedServices = [
     details: [
       'Entrada: Ensalada o creeps',
       'Carnes: Cerdo, pollo, carne de res',
-      'Acompañamiento',
+      'Acompañamiento: Papa y arroz',
       'Bebida: Jugo natural o gaseosa',
     ],
   },
