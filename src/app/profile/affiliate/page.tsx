@@ -269,7 +269,6 @@ const Step4 = ({ affiliateCode, profile }: { affiliateCode: string; profile: Use
                 url: shareUrl,
             });
           } catch (error) {
-            console.error('Error al compartir:', error);
             navigator.clipboard.writeText(shareUrl);
             toast({ title: '¡Enlace copiado!', description: 'No se pudo abrir el diálogo para compartir, pero hemos copiado el enlace a tu portapapeles.' });
           }
