@@ -67,3 +67,24 @@ export async function saveAffiliateData(userId: string, affiliateData: Omit<Affi
 
   return affiliateCode;
 }
+
+type AffiliateUpdatePayload = Omit<Affiliate, 'userId' | 'createdAt' | 'affiliateCode'>;
+
+export async function updateAffiliateData(userId: string, data: AffiliateUpdatePayload) {
+  const affiliateRef = doc(firestore, 'affiliates', userId);
+  const userRef = doc(firestore, 'users', userId);
+
+  const batch = writeBatch(firestore);
+
+  // Update affiliate document with all fields from the form
+  batch.update(affiliateRef, { ...data });
+
+  // Update corresponding fields in user profile document to keep them in sync
+  batch.update(userRef, {
+    nombre: `${data.firstName} ${data.lastName}`,
+    correo: data.email,
+    telefono: data.phone,
+  });
+
+  await batch.commit();
+}

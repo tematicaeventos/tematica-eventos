@@ -2,11 +2,12 @@
 
 import { useUser } from '@/firebase/auth/use-user';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { signOut } from '@/firebase/auth';
-import { LogOut, User as UserIcon, Mail, Phone, Handshake, Copy, Share2 } from 'lucide-react';
+import { LogOut, User as UserIcon, Mail, Phone, Handshake, Copy, Share2, FilePenLine } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
@@ -132,10 +133,16 @@ export default function ProfilePage() {
                     </div>
                     <p className="text-xs text-muted-foreground">Comparte este código y gana el 5 % por cada evento cerrado.</p>
                   </CardContent>
-                  <CardFooter>
+                  <CardFooter className="flex-col gap-2 pt-4">
                       <Button className="w-full" onClick={() => handleShareLink(profile.affiliateCode!)}>
                           <Share2 className="mr-2 h-4 w-4"/>
                           Compartir Enlace
+                      </Button>
+                       <Button asChild variant="outline" className="w-full">
+                          <Link href="/profile/affiliate/edit">
+                              <FilePenLine className="mr-2 h-4 w-4" />
+                              Ver y Editar mis Datos
+                          </Link>
                       </Button>
                   </CardFooter>
                 </Card>
