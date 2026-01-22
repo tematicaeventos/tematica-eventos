@@ -3,16 +3,20 @@
 import { useUser } from '@/firebase/auth/use-user';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { signOut } from '@/firebase/auth';
-import { LogOut, User as UserIcon, Mail, Phone, Handshake } from 'lucide-react';
+import { LogOut, User as UserIcon, Mail, Phone, Handshake, Copy, Share2 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useEffect } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export default function ProfilePage() {
   const { user, profile, isUserLoading } = useUser();
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (!isUserLoading && !user) {
@@ -37,18 +41,34 @@ export default function ProfilePage() {
   };
 
   const handleAffiliateClick = () => {
-    if (!profile) return;
-    const message = `¡Hola! 👋 Estoy interesado/a en el programa de afiliados de Temática Eventos.\n\nMi nombre es *${profile.nombre}* y mi correo es *${profile.correo}*.`;
-    const whatsappUrl = `https://wa.me/573045295251?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    router.push('/profile/affiliate');
   };
+
+  const handleCopyCode = (code: string) => {
+    navigator.clipboard.writeText(code);
+    toast({ title: '¡Copiado!', description: 'Tu código de afiliado ha sido copiado al portapapeles.' });
+  };
+  
+  const handleShareLink = (code: string) => {
+    const shareUrl = `${window.location.origin}?ref=${code}`;
+    if (navigator.share) {
+        navigator.share({
+            title: 'Únete a Temática Eventos con mi código',
+            text: `¡Usa mi código de afiliado ${code} al cotizar en Temática Eventos!`,
+            url: shareUrl,
+        });
+    } else {
+        navigator.clipboard.writeText(shareUrl);
+        toast({ title: '¡Enlace copiado!', description: 'El enlace de referido ha sido copiado.' });
+    }
+  };
+
 
   return (
     <div className="container mx-auto max-w-2xl py-8 md:py-12">
       <Card className="border-border/60">
         <CardHeader className="items-center text-center">
             <Avatar className="h-24 w-24 mb-4 border-2 border-primary/50">
-              {/* The user object from firebase auth might have a photoURL */}
               <AvatarImage src={user.photoURL ?? undefined} alt={profile.nombre} />
               <AvatarFallback className="text-3xl bg-muted">
                 {getInitials(profile.nombre)}
@@ -81,10 +101,40 @@ export default function ProfilePage() {
             </div>
            
             <div className="pt-4 space-y-4">
-              <Button onClick={handleAffiliateClick} size="lg" className="w-full h-12 text-lg">
-                <Handshake className="mr-3 h-6 w-6" />
-                Quiero ser Afiliado
-              </Button>
+              {!profile.isAffiliate ? (
+                <Button onClick={handleAffiliateClick} size="lg" className="w-full h-12 text-lg">
+                  <Handshake className="mr-3 h-6 w-6" />
+                  Quiero ser Afiliado
+                </Button>
+              ) : (
+                <Card className="bg-card border-primary/20">
+                  <CardHeader>
+                    <CardTitle className="text-xl flex items-center gap-2">
+                      <Handshake className="text-primary"/>
+                      Mi Afiliación
+                    </CardTitle>
+                    <CardDescription>Estado: Afiliado Activo</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <Label>Tu código de afiliado</Label>
+                      <div className="flex items-center gap-2 mt-1">
+                        <Input readOnly value={profile.affiliateCode || ''} className="font-mono text-lg tracking-widest" />
+                        <Button variant="outline" size="icon" onClick={() => handleCopyCode(profile.affiliateCode!)}>
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Comparte este código y gana el 5 % por cada evento cerrado.</p>
+                  </CardContent>
+                  <CardFooter>
+                      <Button className="w-full" onClick={() => handleShareLink(profile.affiliateCode!)}>
+                          <Share2 className="mr-2 h-4 w-4"/>
+                          Compartir Enlace
+                      </Button>
+                  </CardFooter>
+                </Card>
+              )}
               <Button onClick={() => signOut()} variant="destructive" className="w-full">
                 <LogOut className="mr-2 h-4 w-4" />
                 Cerrar Sesión

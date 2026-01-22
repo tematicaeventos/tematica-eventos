@@ -10,9 +10,50 @@
         "correo": { "type": "string", "format": "email" },
         "telefono": { "type": "string" },
         "fechaRegistro": { "type": "string", "format": "date-time" },
-        "estado": { "type": "string", "enum": ["activo", "inactivo"] }
+        "estado": { "type": "string", "enum": ["activo", "inactivo"] },
+        "isAffiliate": { "type": "boolean" },
+        "affiliateCode": { "type": "string" }
       },
       "required": ["id", "nombre", "correo", "telefono"]
+    },
+    "Affiliate": {
+      "title": "Affiliate",
+      "description": "Represents an affiliate user who can refer clients.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "documentId": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "country": { "type": "string" },
+        "city": { "type": "string" },
+        "address": { "type": "string" },
+        "paymentAccountHolder": { "type": "string" },
+        "paymentAccountType": { "type": "string", "enum": ["ahorros", "corriente"] },
+        "paymentBank": { "type": "string" },
+        "paymentAccountNumber": { "type": "string" },
+        "paymentAlternative": { "type": "string" },
+        "affiliateCode": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "userId",
+        "firstName",
+        "lastName",
+        "documentId",
+        "email",
+        "phone",
+        "country",
+        "city",
+        "address",
+        "paymentAccountHolder",
+        "paymentAccountType",
+        "paymentBank",
+        "paymentAccountNumber",
+        "affiliateCode"
+      ]
     },
     "IndividualService": {
       "title": "Individual Service",
@@ -156,6 +197,14 @@
           "entityName": "User",
           "schema": { "$ref": "#/entities/User" },
           "description": "Stores user profiles."
+        }
+      },
+      {
+        "path": "/affiliates/{userId}",
+        "definition": {
+          "entityName": "Affiliate",
+          "schema": { "$ref": "#/entities/Affiliate" },
+          "description": "Stores data for affiliate users."
         }
       },
       {

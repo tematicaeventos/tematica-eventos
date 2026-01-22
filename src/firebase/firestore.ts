@@ -7,9 +7,10 @@ import {
   updateDoc,
   doc,
   setDoc,
+  writeBatch,
 } from 'firebase/firestore';
 import { initializeFirebase } from '.';
-import type { Quote } from '@/lib/types';
+import type { Quote, Affiliate } from '@/lib/types';
 
 const { firebaseApp } = initializeFirebase();
 const firestore = getFirestore(firebaseApp);
@@ -41,4 +42,28 @@ export async function saveQuote(quoteData: Omit<Quote, 'cotizacionId' | 'fechaCo
   });
 
   return cotizacionId;
+}
+
+export async function saveAffiliateData(userId: string, affiliateData: Omit<Affiliate, 'userId' | 'createdAt' | 'affiliateCode'>) {
+  const affiliateRef = doc(firestore, 'affiliates', userId);
+  const userRef = doc(firestore, 'users', userId);
+
+  const firstNamePart = affiliateData.firstName.replace(/\s/g, '').substring(0, 4).toUpperCase();
+  const affiliateCode = `${firstNamePart}${userId.substring(0, 4).toUpperCase()}`;
+
+  const finalAffiliateData = {
+      ...affiliateData,
+      userId,
+      affiliateCode,
+      createdAt: new Date().toISOString(),
+  };
+
+  const batch = writeBatch(firestore);
+
+  batch.set(affiliateRef, finalAffiliateData);
+  batch.update(userRef, { isAffiliate: true, affiliateCode });
+
+  await batch.commit();
+
+  return affiliateCode;
 }

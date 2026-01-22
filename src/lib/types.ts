@@ -60,7 +60,29 @@ export type UserProfile = {
   telefono: string;
   fechaRegistro: string;
   estado: 'activo' | 'inactivo';
+  isAffiliate?: boolean;
+  affiliateCode?: string;
 };
+
+export type Affiliate = {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  documentId: string;
+  email: string;
+  phone: string;
+  country: string;
+  city: string;
+  address: string;
+  paymentAccountHolder: string;
+  paymentAccountType: 'ahorros' | 'corriente';
+  paymentBank: string;
+  paymentAccountNumber: string;
+  paymentAlternative?: string;
+  affiliateCode: string;
+  createdAt: string;
+};
+
 
 export type QuoteItem = {
     categoria: string;
@@ -97,4 +119,5 @@ export type Quote = {
 export type UserContextType = {
     user: FirebaseUser | null | undefined;
     profile: UserProfile | null | undefined;
+    affiliate: Affiliate | null | undefined;
 }
