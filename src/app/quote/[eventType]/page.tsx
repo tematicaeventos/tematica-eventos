@@ -228,7 +228,7 @@ export default function PackagedQuotePage() {
       fechaEvento: format(fecha, 'yyyy-MM-dd'),
       horaInicio,
       horaFin,
-      ...(direccionSalon.trim() && !incluirSalon ? { direccionSalon: direccionSalon.trim() } : {}),
+      ...(!incluirSalon && direccionSalon.trim() ? { direccionSalon: direccionSalon.trim() } : {}),
       ...(direccion.trim() ? { direccion: direccion.trim() } : {}),
       ...(barrio.trim() ? { barrio: barrio.trim() } : {}),
     };
@@ -338,10 +338,10 @@ export default function PackagedQuotePage() {
               <CardContent>
                 <RadioGroup value={personas.toString()} onValueChange={(val) => setPersonas(parseInt(val))} className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {PLANES_BASE.map(plan => (
-                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground has-[[data-state=checked]]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground">
+                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 text-black hover:bg-accent hover:text-accent-foreground has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary has-[[data-state=checked]]:text-primary-foreground">
                       <RadioGroupItem value={plan.personas.toString()} id={`personas-${plan.personas}`} className="sr-only" />
                       <span className="text-2xl font-bold">{plan.personas}</span>
-                      <span className="text-sm opacity-80 data-[state=checked]:text-primary-foreground">personas</span>
+                      <span className="text-sm opacity-80">personas</span>
                     </Label>
                   ))}
                 </RadioGroup>
@@ -380,6 +380,48 @@ export default function PackagedQuotePage() {
                     </div>
                   )}
               </CardContent>
+            </Card>
+            
+            {/* Included Services */}
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-3"><PartyPopper className="text-primary"/> Paquete Todo Incluido</CardTitle>
+                </CardHeader>
+                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                  {includedServices.map((item: any) => {
+                    if (item.details) {
+                      return (
+                        <div key={item.service} className="flex items-start gap-3">
+                          <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
+                          <Accordion type="single" collapsible className="w-full -mt-1.5">
+                            <AccordionItem value={item.service} className="border-b-0">
+                              <AccordionTrigger className="p-0 py-1.5 text-left hover:no-underline">
+                                <div>
+                                  <p className="font-semibold">{item.service}</p>
+                                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                                </div>
+                              </AccordionTrigger>
+                              <AccordionContent>
+                                <ul className="list-disc pl-5 mt-2 space-y-1 text-sm text-muted-foreground">
+                                  {item.details.map((detail: string, i: number) => <li key={i}>{detail}</li>)}
+                                </ul>
+                              </AccordionContent>
+                            </AccordionItem>
+                          </Accordion>
+                        </div>
+                      );
+                    }
+                    return (
+                      <div key={item.service} className="flex items-start gap-3">
+                        <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
+                        <div>
+                          <p className="font-semibold">{item.service}</p>
+                          <p className="text-sm text-muted-foreground">{item.description}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </CardContent>
             </Card>
 
             {/* Client Details */}
@@ -455,48 +497,6 @@ export default function PackagedQuotePage() {
                   </div>
                 </div>
               </CardContent>
-            </Card>
-            
-            {/* Included Services */}
-            <Card>
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-3"><PartyPopper className="text-primary"/> Paquete Todo Incluido</CardTitle>
-                </CardHeader>
-                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                  {includedServices.map((item: any) => {
-                    if (item.details) {
-                      return (
-                        <div key={item.service} className="flex items-start gap-3">
-                          <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
-                          <Accordion type="single" collapsible className="w-full -mt-1.5">
-                            <AccordionItem value={item.service} className="border-b-0">
-                              <AccordionTrigger className="p-0 py-1.5 text-left hover:no-underline">
-                                <div>
-                                  <p className="font-semibold">{item.service}</p>
-                                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                                </div>
-                              </AccordionTrigger>
-                              <AccordionContent>
-                                <ul className="list-disc pl-5 mt-2 space-y-1 text-sm text-muted-foreground">
-                                  {item.details.map((detail: string, i: number) => <li key={i}>{detail}</li>)}
-                                </ul>
-                              </AccordionContent>
-                            </AccordionItem>
-                          </Accordion>
-                        </div>
-                      );
-                    }
-                    return (
-                      <div key={item.service} className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
-                        <div>
-                          <p className="font-semibold">{item.service}</p>
-                          <p className="text-sm text-muted-foreground">{item.description}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </CardContent>
             </Card>
           </div>
 
