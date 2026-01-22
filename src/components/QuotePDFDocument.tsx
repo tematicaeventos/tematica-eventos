@@ -44,6 +44,11 @@ const QuotePDFDocument: React.FC<QuotePDFDocumentProps> = ({ quoteId, quote }) =
           <p className="font-bold text-gray-900">{quote.nombreCliente}</p>
           <p className="text-gray-600">{quote.correo}</p>
           <p className="text-gray-600">{quote.telefono}</p>
+          {(quote.direccion || quote.barrio) && (
+            <p className="text-gray-600 mt-2">
+                {quote.direccion}{quote.direccion && quote.barrio ? ', ' : ''}{quote.barrio}
+            </p>
+          )}
         </div>
         <div className="text-right">
           <h3 className="font-semibold text-gray-500 uppercase tracking-wider text-xs mb-2">Detalles del Evento</h3>

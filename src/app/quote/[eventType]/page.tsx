@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
@@ -20,6 +20,7 @@ import {
   ArrowRight,
   Download,
   MapPin,
+  User,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -66,18 +67,36 @@ export default function PackagedQuotePage() {
   const { toast } = useToast();
   const pdfRef = useRef<HTMLDivElement>(null);
 
+  // Quote State
   const [personas, setPersonas] = useState<number>(100);
-  const [fecha, setFecha] = useState<Date | undefined>();
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [incluirSalon, setIncluirSalon] = useState<boolean>(true);
   const [direccionSalon, setDireccionSalon] = useState('');
+  
+  // Client & Event Details State
+  const [nombreCliente, setNombreCliente] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [barrio, setBarrio] = useState('');
+  const [fecha, setFecha] = useState<Date | undefined>();
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [horaInicio, setHoraInicio] = useState('20:00');
   const [horaFin, setHoraFin] = useState('03:00');
+
+  // Control State
   const [isSaving, setIsSaving] = useState(false);
   const [generatedQuote, setGeneratedQuote] = useState<Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> | null>(null);
   const [generatedQuoteId, setGeneratedQuoteId] = useState<string | null>(null);
-
+  
   const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    if (profile) {
+      setNombreCliente(profile.nombre);
+      setTelefono(profile.telefono);
+      setCorreo(profile.correo);
+    }
+  }, [profile]);
 
   const includedServices = useMemo(() => {
     if (!eventType) return baseIncludedServices;
@@ -123,7 +142,6 @@ export default function PackagedQuotePage() {
       let plan = PLANES_BASE.find(p => p.personas === personas);
       if (!plan) {
           plan = PLANES_BASE[0];
-          // This effect will update the state in the next render cycle
           setTimeout(() => setPersonas(PLANES_BASE[0].personas), 0);
       }
       return plan;
@@ -147,7 +165,7 @@ export default function PackagedQuotePage() {
   };
 
   async function handleSaveAndRedirect() {
-    if (!user || !profile) {
+    if (!user) {
       toast({
         variant: 'destructive',
         title: 'Inicia sesión para continuar',
@@ -157,6 +175,15 @@ export default function PackagedQuotePage() {
       return;
     }
     
+    if (!nombreCliente || !telefono || !correo) {
+      toast({
+        variant: 'destructive',
+        title: 'Datos de contacto requeridos',
+        description: 'Por favor, completa los campos de nombre, teléfono y correo.',
+      });
+      return;
+    }
+
     if (!fecha) {
       toast({
         variant: 'destructive',
@@ -187,12 +214,11 @@ export default function PackagedQuotePage() {
         subtotal: total,
     }];
 
-
     const quoteData: Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> = {
       usuarioId: user.uid,
-      nombreCliente: profile.nombre,
-      correo: profile.correo,
-      telefono: profile.telefono,
+      nombreCliente,
+      correo,
+      telefono,
       items: quoteItems,
       total,
       estado: 'pendiente',
@@ -203,6 +229,8 @@ export default function PackagedQuotePage() {
       horaInicio,
       horaFin,
       ...(direccionSalon.trim() && !incluirSalon ? { direccionSalon: direccionSalon.trim() } : {}),
+      ...(direccion.trim() ? { direccion: direccion.trim() } : {}),
+      ...(barrio.trim() ? { barrio: barrio.trim() } : {}),
     };
 
     try {
@@ -216,9 +244,11 @@ export default function PackagedQuotePage() {
       setGeneratedQuoteId(newQuoteId);
 
       let message = `*Nueva Cotización de Paquete - ${eventType.title}*\n\n`;
-      message += `*Cliente:* ${profile.nombre}\n`;
-      message += `*Teléfono:* ${profile.telefono}\n\n`;
-      message += `*Cotización ID:* ${newQuoteId}\n`;
+      message += `*Cliente:* ${nombreCliente}\n`;
+      message += `*Teléfono:* ${telefono}\n`;
+      message += `*Correo:* ${correo}\n`;
+      if (direccion) message += `*Dirección:* ${direccion}${barrio ? `, ${barrio}` : ''}\n`;
+      message += `\n*Cotización ID:* ${newQuoteId}\n`;
       message += `*Fecha del Evento:* ${format(fecha, "PPP", { locale: es })}\n`;
       message += `*Horario:* De ${horaInicio} a ${horaFin}\n`;
       message += `*Número de personas:* ${personas}\n\n`;
@@ -308,10 +338,10 @@ export default function PackagedQuotePage() {
               <CardContent>
                 <RadioGroup value={personas.toString()} onValueChange={(val) => setPersonas(parseInt(val))} className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {PLANES_BASE.map(plan => (
-                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover text-popover-foreground p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary-foreground has-[[data-state=checked]]:bg-primary has-[[data-state=checked]]:text-primary-foreground">
+                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground has-[[data-state=checked]]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground">
                       <RadioGroupItem value={plan.personas.toString()} id={`personas-${plan.personas}`} className="sr-only" />
                       <span className="text-2xl font-bold">{plan.personas}</span>
-                      <span className="text-sm opacity-80">personas</span>
+                      <span className="text-sm opacity-80 data-[state=checked]:text-primary-foreground">personas</span>
                     </Label>
                   ))}
                 </RadioGroup>
@@ -352,50 +382,36 @@ export default function PackagedQuotePage() {
               </CardContent>
             </Card>
 
-            {/* Included Services */}
+            {/* Client Details */}
             <Card>
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-3"><PartyPopper className="text-primary"/> Paquete Todo Incluido</CardTitle>
-                </CardHeader>
-                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                  {includedServices.map((item: any) => {
-                    if (item.details) {
-                      return (
-                        <div key={item.service} className="flex items-start gap-3">
-                          <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
-                          <Accordion type="single" collapsible className="w-full -mt-1.5">
-                            <AccordionItem value={item.service} className="border-b-0">
-                              <AccordionTrigger className="p-0 py-1.5 text-left hover:no-underline">
-                                <div>
-                                  <p className="font-semibold">{item.service}</p>
-                                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                                </div>
-                              </AccordionTrigger>
-                              <AccordionContent>
-                                <ul className="list-disc pl-5 mt-2 space-y-1 text-sm text-muted-foreground">
-                                  {item.details.map((detail: string, i: number) => <li key={i}>{detail}</li>)}
-                                </ul>
-                              </AccordionContent>
-                            </AccordionItem>
-                          </Accordion>
-                        </div>
-                      );
-                    }
-                    return (
-                      <div key={item.service} className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
-                        <div>
-                          <p className="font-semibold">{item.service}</p>
-                          <p className="text-sm text-muted-foreground">{item.description}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </CardContent>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
+              </CardHeader>
+              <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                    <Label htmlFor="nombre-cliente">Nombre de contacto</Label>
+                    <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="telefono-cliente">Teléfono (WhatsApp)</Label>
+                    <Input id="telefono-cliente" type="tel" placeholder="3001234567" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+                </div>
+                 <div className="space-y-2 md:col-span-2">
+                    <Label htmlFor="correo-cliente">Correo electrónico</Label>
+                    <Input id="correo-cliente" type="email" placeholder="tu@correo.com" value={correo} onChange={(e) => setCorreo(e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="direccion-cliente">Dirección</Label>
+                    <Input id="direccion-cliente" placeholder="Carrera 5 # 10-20" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="barrio-cliente">Barrio</Label>
+                    <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} />
+                </div>
+              </CardContent>
             </Card>
 
-
-          {/* Date and Time */}
+            {/* Date and Time */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-3"><CalendarIcon className="text-primary"/> Elige una Fecha</CardTitle>
@@ -439,6 +455,48 @@ export default function PackagedQuotePage() {
                   </div>
                 </div>
               </CardContent>
+            </Card>
+            
+            {/* Included Services */}
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-3"><PartyPopper className="text-primary"/> Paquete Todo Incluido</CardTitle>
+                </CardHeader>
+                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                  {includedServices.map((item: any) => {
+                    if (item.details) {
+                      return (
+                        <div key={item.service} className="flex items-start gap-3">
+                          <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
+                          <Accordion type="single" collapsible className="w-full -mt-1.5">
+                            <AccordionItem value={item.service} className="border-b-0">
+                              <AccordionTrigger className="p-0 py-1.5 text-left hover:no-underline">
+                                <div>
+                                  <p className="font-semibold">{item.service}</p>
+                                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                                </div>
+                              </AccordionTrigger>
+                              <AccordionContent>
+                                <ul className="list-disc pl-5 mt-2 space-y-1 text-sm text-muted-foreground">
+                                  {item.details.map((detail: string, i: number) => <li key={i}>{detail}</li>)}
+                                </ul>
+                              </AccordionContent>
+                            </AccordionItem>
+                          </Accordion>
+                        </div>
+                      );
+                    }
+                    return (
+                      <div key={item.service} className="flex items-start gap-3">
+                        <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
+                        <div>
+                          <p className="font-semibold">{item.service}</p>
+                          <p className="text-sm text-muted-foreground">{item.description}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </CardContent>
             </Card>
           </div>
 

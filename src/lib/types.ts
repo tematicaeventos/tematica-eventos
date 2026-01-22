@@ -88,6 +88,8 @@ export type Quote = {
     horaInicio: string;
     horaFin: string;
     direccionSalon?: string;
+    direccion?: string;
+    barrio?: string;
 }
 
 export type UserContextType = {

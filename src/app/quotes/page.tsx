@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import {
@@ -36,6 +36,7 @@ import {
   Download,
   CalendarIcon,
   MapPin,
+  User,
 } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -77,20 +78,36 @@ export default function ModularQuotePage() {
   const { toast } = useToast();
   const pdfRef = useRef<HTMLDivElement>(null);
 
-  const [isSaving, setIsSaving] = useState(false);
+  // Quote State
   const [selectedServices, setSelectedServices] = useState<SelectedServices>({});
-  const [generatedQuote, setGeneratedQuote] = useState<Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> | null>(null);
-  const [generatedQuoteId, setGeneratedQuoteId] = useState<string | null>(null);
   
+  // Client & Event Details State
+  const [nombreCliente, setNombreCliente] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [barrio, setBarrio] = useState('');
+  const [direccionSalon, setDireccionSalon] = useState('');
   const [fecha, setFecha] = useState<Date | undefined>();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [horaInicio, setHoraInicio] = useState('20:00');
   const [horaFin, setHoraFin] = useState('03:00');
-  const [direccionSalon, setDireccionSalon] = useState('');
+  
+  // Control State
+  const [isSaving, setIsSaving] = useState(false);
+  const [generatedQuote, setGeneratedQuote] = useState<Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> | null>(null);
+  const [generatedQuoteId, setGeneratedQuoteId] = useState<string | null>(null);
 
   const currentYear = new Date().getFullYear();
-
   const bannerImage = useMemo(() => PlaceHolderImages.find(img => img.id === 'build-event-banner'), []);
+
+  useEffect(() => {
+    if (profile) {
+      setNombreCliente(profile.nombre);
+      setTelefono(profile.telefono);
+      setCorreo(profile.correo);
+    }
+  }, [profile]);
 
   const servicesByCategory = useMemo(() => {
     return allServices.reduce((acc, service) => {
@@ -158,7 +175,7 @@ export default function ModularQuotePage() {
   );
 
   async function handleContinueToReservation() {
-    if (!user || !profile) {
+    if (!user) {
       toast({
         variant: 'destructive',
         title: 'Inicia sesión para continuar',
@@ -166,6 +183,15 @@ export default function ModularQuotePage() {
           'Debes iniciar sesión para poder guardar tu cotización y continuar.',
       });
       router.push('/login?redirect=/quotes');
+      return;
+    }
+
+    if (!nombreCliente || !telefono || !correo) {
+      toast({
+        variant: 'destructive',
+        title: 'Datos de contacto requeridos',
+        description: 'Por favor, completa los campos de nombre, teléfono y correo.',
+      });
       return;
     }
 
@@ -194,9 +220,9 @@ export default function ModularQuotePage() {
     
     const quoteData: Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> = {
       usuarioId: user.uid,
-      nombreCliente: profile.nombre,
-      correo: profile.correo,
-      telefono: profile.telefono,
+      nombreCliente,
+      correo,
+      telefono,
       items: quoteItems,
       total,
       estado: 'pendiente',
@@ -207,6 +233,8 @@ export default function ModularQuotePage() {
       horaInicio,
       horaFin,
       ...(direccionSalon.trim() ? { direccionSalon: direccionSalon.trim() } : {}),
+      ...(direccion.trim() ? { direccion: direccion.trim() } : {}),
+      ...(barrio.trim() ? { barrio: barrio.trim() } : {}),
     };
 
     try {
@@ -220,10 +248,12 @@ export default function ModularQuotePage() {
       setGeneratedQuoteId(newQuoteId);
       
       let message = `*Nueva Cotización - Arma Tu Evento*\n\n`;
-      message += `*Cliente:* ${profile.nombre}\n`;
-      message += `*Correo:* ${profile.correo}\n`;
-      message += `*Teléfono:* ${profile.telefono}\n\n`;
-      message += `*Cotización ID:* ${newQuoteId}\n`;
+      message += `*Cliente:* ${nombreCliente}\n`;
+      message += `*Correo:* ${correo}\n`;
+      message += `*Teléfono:* ${telefono}\n`;
+      if (direccion) message += `*Dirección:* ${direccion}${barrio ? `, ${barrio}` : ''}\n`;
+      
+      message += `\n*Cotización ID:* ${newQuoteId}\n`;
       message += `*Fecha del Evento:* ${format(fecha, "PPP", { locale: es })}\n`;
       message += `*Horario:* De ${horaInicio} a ${horaFin}\n`;
       if (direccionSalon.trim()) {
@@ -414,6 +444,34 @@ export default function ModularQuotePage() {
 
             {/* Date and Quote Summary */}
             <div className="lg:col-span-1 space-y-8">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
+                  </CardHeader>
+                  <CardContent className="grid grid-cols-1 gap-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="nombre-cliente">Nombre de contacto</Label>
+                        <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="telefono-cliente">Teléfono (WhatsApp)</Label>
+                        <Input id="telefono-cliente" type="tel" placeholder="3001234567" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="correo-cliente">Correo electrónico</Label>
+                        <Input id="correo-cliente" type="email" placeholder="tu@correo.com" value={correo} onChange={(e) => setCorreo(e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="direccion-cliente">Dirección</Label>
+                        <Input id="direccion-cliente" placeholder="Carrera 5 # 10-20" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="barrio-cliente">Barrio</Label>
+                        <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} />
+                    </div>
+                  </CardContent>
+                </Card>
+
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3"><CalendarIcon className="text-primary"/> Elige una Fecha</CardTitle>
