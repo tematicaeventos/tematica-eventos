@@ -37,6 +37,7 @@ import { saveQuote } from '@/firebase/firestore';
 import type { Quote, QuoteItem } from '@/lib/types';
 import QuotePDFDocument from '@/components/QuotePDFDocument';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 
 const PRECIO_SALON = 1500000;
@@ -84,6 +85,7 @@ export default function PackagedQuotePage() {
   const [correo, setCorreo] = useState('');
   const [direccion, setDireccion] = useState('');
   const [barrio, setBarrio] = useState('');
+  const [observaciones, setObservaciones] = useState('');
   const [fecha, setFecha] = useState<Date | undefined>();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [horaInicio, setHoraInicio] = useState('20:00');
@@ -254,6 +256,7 @@ export default function PackagedQuotePage() {
       ...(!incluirSalon && direccionSalon.trim() ? { direccionSalon: direccionSalon.trim() } : {}),
       ...(direccion.trim() ? { direccion: direccion.trim() } : {}),
       ...(barrio.trim() ? { barrio: barrio.trim() } : {}),
+      ...(observaciones.trim() ? { observaciones: observaciones.trim() } : {}),
     };
 
     try {
@@ -271,6 +274,7 @@ export default function PackagedQuotePage() {
       message += `*Teléfono:* ${telefono}\n`;
       message += `*Correo:* ${correo}\n`;
       if (direccion) message += `*Dirección:* ${direccion}${barrio ? `, ${barrio}` : ''}\n`;
+      if (observaciones.trim()) message += `*Observaciones:* ${observaciones.trim()}\n`;
       message += `\n*Cotización ID:* ${newQuoteId}\n`;
       message += `*Fecha del Evento:* ${format(fecha, "PPP", { locale: es })}\n`;
       message += `*Horario:* De ${horaInicio} a ${horaFin}\n`;
@@ -362,7 +366,7 @@ export default function PackagedQuotePage() {
               <CardContent>
                 <RadioGroup value={personas.toString()} onValueChange={(val) => setPersonas(parseInt(val))} className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {PLANES_BASE.map(plan => (
-                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 text-black hover:bg-accent hover:text-accent-foreground has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary has-[[data-state=checked]]:text-primary-foreground">
+                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary has-[[data-state=checked]]:text-primary-foreground">
                       <RadioGroupItem value={plan.personas.toString()} id={`personas-${plan.personas}`} className="sr-only" />
                       <span className="text-2xl font-bold">{plan.personas}</span>
                       <span className="text-sm opacity-80">personas</span>
@@ -525,6 +529,10 @@ export default function PackagedQuotePage() {
                 <div className="space-y-2">
                     <Label htmlFor="barrio-cliente">Barrio</Label>
                     <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} />
+                </div>
+                <div className="space-y-2 md:col-span-2">
+                  <Label htmlFor="observaciones-cliente">Observaciones (opcional)</Label>
+                  <Textarea id="observaciones-cliente" placeholder="Ej: alergias, preferencias especiales, etc." value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
                 </div>
               </CardContent>
             </Card>

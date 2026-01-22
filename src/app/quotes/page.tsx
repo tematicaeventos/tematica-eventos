@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -87,6 +88,7 @@ export default function ModularQuotePage() {
   const [correo, setCorreo] = useState('');
   const [direccion, setDireccion] = useState('');
   const [barrio, setBarrio] = useState('');
+  const [observaciones, setObservaciones] = useState('');
   const [direccionSalon, setDireccionSalon] = useState('');
   const [fecha, setFecha] = useState<Date | undefined>();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
@@ -235,6 +237,7 @@ export default function ModularQuotePage() {
       ...(direccionSalon.trim() ? { direccionSalon: direccionSalon.trim() } : {}),
       ...(direccion.trim() ? { direccion: direccion.trim() } : {}),
       ...(barrio.trim() ? { barrio: barrio.trim() } : {}),
+      ...(observaciones.trim() ? { observaciones: observaciones.trim() } : {}),
     };
 
     try {
@@ -252,6 +255,7 @@ export default function ModularQuotePage() {
       message += `*Correo:* ${correo}\n`;
       message += `*Teléfono:* ${telefono}\n`;
       if (direccion) message += `*Dirección:* ${direccion}${barrio ? `, ${barrio}` : ''}\n`;
+      if (observaciones.trim()) message += `*Observaciones:* ${observaciones.trim()}\n`;
       
       message += `\n*Cotización ID:* ${newQuoteId}\n`;
       message += `*Fecha del Evento:* ${format(fecha, "PPP", { locale: es })}\n`;
@@ -468,6 +472,10 @@ export default function ModularQuotePage() {
                     <div className="space-y-2">
                         <Label htmlFor="barrio-cliente">Barrio</Label>
                         <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} />
+                    </div>
+                     <div className="space-y-2">
+                        <Label htmlFor="observaciones-modular">Observaciones (opcional)</Label>
+                        <Textarea id="observaciones-modular" placeholder="Ej: alergias, preferencias especiales, etc." value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
                     </div>
                   </CardContent>
                 </Card>

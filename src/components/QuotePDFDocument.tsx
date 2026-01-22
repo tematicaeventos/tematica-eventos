@@ -102,6 +102,13 @@ const QuotePDFDocument: React.FC<QuotePDFDocumentProps> = ({ quoteId, quote }) =
         </div>
       </section>
 
+      {quote.observaciones && (
+        <section className="mt-6">
+          <h3 className="font-semibold text-gray-500 uppercase tracking-wider text-xs mb-2">Observaciones</h3>
+          <p className="text-gray-600 text-sm">{quote.observaciones}</p>
+        </section>
+      )}
+
       <footer className="absolute bottom-10 left-12 right-12 mt-16 pt-6 border-t-2 border-gray-200 text-center text-xs text-gray-500">
         <div className="mb-4">
           <p className="font-bold">Hernan Ramirez Sanchez - Gerente General</p>

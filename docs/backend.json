@@ -51,6 +51,7 @@
         "direccion": { "type": "string" },
         "barrio": { "type": "string" },
         "tema": { "type": "string" },
+        "observaciones": { "type": "string" },
         "items": {
           "type": "array",
           "items": {
