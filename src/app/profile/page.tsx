@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { signOut } from '@/firebase/auth';
-import { LogOut, User as UserIcon, Mail, Phone } from 'lucide-react';
+import { LogOut, User as UserIcon, Mail, Phone, Handshake } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useEffect } from 'react';
 
@@ -36,6 +36,12 @@ export default function ProfilePage() {
     return name.toUpperCase();
   };
 
+  const handleAffiliateClick = () => {
+    if (!profile) return;
+    const message = `¡Hola! 👋 Estoy interesado/a en el programa de afiliados de Temática Eventos.\n\nMi nombre es *${profile.nombre}* y mi correo es *${profile.correo}*.`;
+    const whatsappUrl = `https://wa.me/573045295251?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
   return (
     <div className="container mx-auto max-w-2xl py-8 md:py-12">
@@ -74,10 +80,16 @@ export default function ProfilePage() {
                 </div>
             </div>
            
-            <Button onClick={() => signOut()} variant="destructive" className="w-full mt-6">
-              <LogOut className="mr-2 h-4 w-4" />
-              Cerrar Sesión
-            </Button>
+            <div className="pt-4 space-y-4">
+              <Button onClick={handleAffiliateClick} size="lg" className="w-full h-12 text-lg">
+                <Handshake className="mr-3 h-6 w-6" />
+                Quiero ser Afiliado
+              </Button>
+              <Button onClick={() => signOut()} variant="destructive" className="w-full">
+                <LogOut className="mr-2 h-4 w-4" />
+                Cerrar Sesión
+              </Button>
+            </div>
         </CardContent>
       </Card>
     </div>
@@ -115,7 +127,10 @@ function ProfileSkeleton() {
                            <Skeleton className="h-5 w-2/3" />
                         </div>
                     </div>
-                    <Skeleton className="h-10 w-full mt-6" />
+                    <div className="pt-4 space-y-4">
+                        <Skeleton className="h-12 w-full" />
+                        <Skeleton className="h-10 w-full" />
+                    </div>
                 </CardContent>
             </Card>
         </div>
