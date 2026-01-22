@@ -154,6 +154,13 @@ const Step3 = ({ onSuccess, setIsLoading, user, profile }: Step3Props) => {
             email: profile.correo || '',
             phone: profile.telefono || '',
             country: 'Colombia',
+            documentId: '',
+            city: '',
+            address: '',
+            paymentAccountHolder: '',
+            paymentBank: '',
+            paymentAccountNumber: '',
+            paymentAlternative: '',
             confirmInfo: false,
         },
     });
@@ -193,11 +200,11 @@ const Step3 = ({ onSuccess, setIsLoading, user, profile }: Step3Props) => {
                         <section className="space-y-4">
                             <h3 className="text-lg font-semibold flex items-center gap-2"><UserIcon className="text-primary h-5 w-5"/> Datos Personales</h3>
                             <div className="grid md:grid-cols-2 gap-4">
-                                <FormField control={form.control} name="firstName" render={({ field }) => (<FormItem><FormLabel>Nombre</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                                <FormField control={form.control} name="lastName" render={({ field }) => (<FormItem><FormLabel>Apellidos</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                                <FormField control={form.control} name="documentId" render={({ field }) => (<FormItem><FormLabel>Documento de identidad</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                                <FormField control={form.control} name="email" render={({ field }) => (<FormItem><FormLabel>Correo electrónico</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                                <FormField control={form.control} name="phone" render={({ field }) => (<FormItem><FormLabel>Teléfono</FormLabel><FormControl><Input type="tel" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                                <FormField control={form.control} name="firstName" render={({ field }) => <FormItem><FormLabel>Nombre</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField control={form.control} name="lastName" render={({ field }) => <FormItem><FormLabel>Apellidos</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField control={form.control} name="documentId" render={({ field }) => <FormItem><FormLabel>Documento de identidad</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField control={form.control} name="email" render={({ field }) => <FormItem><FormLabel>Correo electrónico</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField control={form.control} name="phone" render={({ field }) => <FormItem><FormLabel>Teléfono</FormLabel><FormControl><Input type="tel" {...field} /></FormControl><FormMessage /></FormItem>} />
                             </div>
                         </section>
 
@@ -205,10 +212,10 @@ const Step3 = ({ onSuccess, setIsLoading, user, profile }: Step3Props) => {
                         <section className="space-y-4">
                              <h3 className="text-lg font-semibold flex items-center gap-2"><Home className="text-primary h-5 w-5"/> Dirección</h3>
                              <div className="grid md:grid-cols-2 gap-4">
-                                <FormField control={form.control} name="country" render={({ field }) => (<FormItem><FormLabel>País</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                                <FormField control={form.control} name="city" render={({ field }) => (<FormItem><FormLabel>Ciudad</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                                <FormField control={form.control} name="country" render={({ field }) => <FormItem><FormLabel>País</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField control={form.control} name="city" render={({ field }) => <FormItem><FormLabel>Ciudad</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
                                 <div className="md:col-span-2">
-                                  <FormField control={form.control} name="address" render={({ field }) => (<FormItem><FormLabel>Dirección completa</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                                  <FormField control={form.control} name="address" render={({ field }) => <FormItem><FormLabel>Dirección completa</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
                                 </div>
                              </div>
                         </section>
@@ -218,19 +225,19 @@ const Step3 = ({ onSuccess, setIsLoading, user, profile }: Step3Props) => {
                              <h3 className="text-lg font-semibold flex items-center gap-2"><Banknote className="text-primary h-5 w-5"/> Datos de Pago</h3>
                              <p className="text-sm text-muted-foreground">Estos datos solo se usarán para el pago de comisiones.</p>
                              <div className="grid md:grid-cols-2 gap-4">
-                                <FormField control={form.control} name="paymentAccountHolder" render={({ field }) => (<FormItem><FormLabel>Nombre del titular de la cuenta</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                                <FormField control={form.control} name="paymentAccountType" render={({ field }) => (<FormItem><FormLabel>Tipo de cuenta</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Selecciona..." /></SelectTrigger></FormControl><SelectContent><SelectItem value="ahorros">Ahorros</SelectItem><SelectItem value="corriente">Corriente</SelectItem></SelectContent></Select><FormMessage /></FormItem>)} />
-                                <FormField control={form.control} name="paymentBank" render={({ field }) => (<FormItem><FormLabel>Banco</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
-                                <FormField control={form.control} name="paymentAccountNumber" render={({ field }) => (<FormItem><FormLabel>Número de cuenta</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>)} />
+                                <FormField control={form.control} name="paymentAccountHolder" render={({ field }) => <FormItem><FormLabel>Nombre del titular de la cuenta</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField control={form.control} name="paymentAccountType" render={({ field }) => <FormItem><FormLabel>Tipo de cuenta</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Selecciona..." /></SelectTrigger></FormControl><SelectContent><SelectItem value="ahorros">Ahorros</SelectItem><SelectItem value="corriente">Corriente</SelectItem></SelectContent></Select><FormMessage /></FormItem>} />
+                                <FormField control={form.control} name="paymentBank" render={({ field }) => <FormItem><FormLabel>Banco</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField control={form.control} name="paymentAccountNumber" render={({ field }) => <FormItem><FormLabel>Número de cuenta</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
                                 <div className="md:col-span-2">
-                                   <FormField control={form.control} name="paymentAlternative" render={({ field }) => (<FormItem><FormLabel>Medio de pago alternativo (opcional)</FormLabel><FormControl><Input placeholder="Ej: Nequi 3001234567" {...field} /></FormControl><FormMessage /></FormItem>)} />
+                                   <FormField control={form.control} name="paymentAlternative" render={({ field }) => <FormItem><FormLabel>Medio de pago alternativo (opcional)</FormLabel><FormControl><Input placeholder="Ej: Nequi 3001234567" {...field} /></FormControl><FormMessage /></FormItem>} />
                                 </div>
                              </div>
                         </section>
 
                         {/* Section 4 */}
                         <section>
-                            <FormField control={form.control} name="confirmInfo" render={({ field }) => (<FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4"><FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel>Confirmo que la información suministrada es correcta</FormLabel><FormMessage /></div></FormItem>)} />
+                            <FormField control={form.control} name="confirmInfo" render={({ field }) => <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4"><FormControl><Checkbox checked={field.value} onCheckedChange={field.onChange} /></FormControl><div className="space-y-1 leading-none"><FormLabel>Confirmo que la información suministrada es correcta</FormLabel><FormMessage /></div></FormItem>} />
                         </section>
 
                         <Button type="submit" size="lg" className="w-full">Finalizar afiliación</Button>
