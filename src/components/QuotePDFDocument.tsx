@@ -5,7 +5,7 @@ import { es } from 'date-fns/locale';
 const LOGO_URL = 'https://i.imgur.com/xT5LV1a.png';
 
 type QuotePDFDocumentProps = {
-  quote: Omit<Quote, 'cotizacionId' | 'fechaCotizacion' | 'estado' | 'origen'>;
+  quote: Quote;
   quoteId: string;
 };
 

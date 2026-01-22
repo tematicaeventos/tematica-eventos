@@ -192,7 +192,7 @@ export default function ModularQuotePage() {
     const personasItem = Object.values(selectedServices).find(({service}) => service.tipoCobro === 'persona');
     const personasCount = personasItem ? personasItem.quantity : 1;
     
-    const quoteData: Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> = {
+    const quoteData = {
       usuarioId: user.uid,
       nombreCliente: profile.nombre,
       correo: profile.correo,
@@ -206,7 +206,7 @@ export default function ModularQuotePage() {
       fechaEvento: format(fecha, 'yyyy-MM-dd'),
       horaInicio,
       horaFin,
-      direccionSalon: direccionSalon || undefined,
+      ...(direccionSalon.trim() ? { direccionSalon: direccionSalon.trim() } : {}),
     };
 
     try {
@@ -256,7 +256,7 @@ export default function ModularQuotePage() {
   };
 
   async function handleDownloadPDF() {
-    if (!pdfRef.current || !generatedQuoteId) return;
+    if (!pdfRef.current || !generatedQuoteId || !generatedQuote) return;
 
     const { jsPDF } = await import('jspdf');
     const html2canvas = (await import('html2canvas')).default;
@@ -286,7 +286,7 @@ export default function ModularQuotePage() {
     <>
        <div ref={pdfRef} className="fixed -left-[9999px] top-0 z-[-1]">
         {generatedQuote && generatedQuoteId && (
-          <QuotePDFDocument quoteId={generatedQuoteId} quote={generatedQuote} />
+          <QuotePDFDocument quoteId={generatedQuoteId} quote={generatedQuote as Quote} />
         )}
       </div>
       <div>

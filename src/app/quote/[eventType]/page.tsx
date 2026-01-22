@@ -188,7 +188,7 @@ export default function PackagedQuotePage() {
     }];
 
 
-    const quoteData: Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> = {
+    const quoteData = {
       usuarioId: user.uid,
       nombreCliente: profile.nombre,
       correo: profile.correo,
@@ -202,7 +202,7 @@ export default function PackagedQuotePage() {
       fechaEvento: format(fecha, 'yyyy-MM-dd'),
       horaInicio,
       horaFin,
-      direccionSalon: !incluirSalon ? direccionSalon : undefined,
+      ...(!incluirSalon && direccionSalon.trim() ? { direccionSalon: direccionSalon.trim() } : {}),
     };
 
     try {
@@ -251,7 +251,7 @@ export default function PackagedQuotePage() {
 }
 
   async function handleDownloadPDF() {
-    if (!pdfRef.current || !generatedQuoteId) return;
+    if (!pdfRef.current || !generatedQuoteId || !generatedQuote) return;
 
     const { jsPDF } = await import('jspdf');
     const html2canvas = (await import('html2canvas')).default;
@@ -285,7 +285,7 @@ export default function PackagedQuotePage() {
     <>
       <div ref={pdfRef} className="fixed -left-[9999px] top-0 z-[-1]">
         {generatedQuote && generatedQuoteId && (
-          <QuotePDFDocument quoteId={generatedQuoteId} quote={generatedQuote} />
+          <QuotePDFDocument quoteId={generatedQuoteId} quote={generatedQuote as Quote} />
         )}
       </div>
       <div className="container mx-auto px-4 py-8">
@@ -308,7 +308,7 @@ export default function PackagedQuotePage() {
               <CardContent>
                 <RadioGroup value={personas.toString()} onValueChange={(val) => setPersonas(parseInt(val))} className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {PLANES_BASE.map(plan => (
-                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover text-popover-foreground p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary-foreground has-[[data-state=checked]]:bg-primary has-[[data-state=checked]]:text-primary-foreground">
+                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary-foreground has-[[data-state=checked]]:bg-primary has-[[data-state=checked]]:text-primary-foreground">
                       <RadioGroupItem value={plan.personas.toString()} id={`personas-${plan.personas}`} className="sr-only" />
                       <span className="text-2xl font-bold">{plan.personas}</span>
                       <span className="text-sm opacity-80">personas</span>
