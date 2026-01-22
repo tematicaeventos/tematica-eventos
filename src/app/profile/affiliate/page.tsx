@@ -259,14 +259,20 @@ const Step4 = ({ affiliateCode, profile }: { affiliateCode: string; profile: Use
         toast({ title: '¡Copiado!', description: 'Tu código de afiliado ha sido copiado al portapapeles.' });
     };
 
-    const handleShareLink = (code: string) => {
+    const handleShareLink = async (code: string) => {
         const shareUrl = `${window.location.origin}?ref=${code}`;
         if (navigator.share) {
-            navigator.share({
+          try {
+            await navigator.share({
                 title: 'Conviértete en mi referido en Temática Eventos',
                 text: `¡Usa mi código ${code} al registrarte en Temática Eventos!`,
                 url: shareUrl,
             });
+          } catch (error) {
+            console.error('Error al compartir:', error);
+            navigator.clipboard.writeText(shareUrl);
+            toast({ title: '¡Enlace copiado!', description: 'No se pudo abrir el diálogo para compartir, pero hemos copiado el enlace a tu portapapeles.' });
+          }
         } else {
             navigator.clipboard.writeText(shareUrl);
             toast({ title: '¡Enlace copiado!', description: 'El enlace de referido ha sido copiado.' });

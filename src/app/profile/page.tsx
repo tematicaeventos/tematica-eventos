@@ -49,14 +49,20 @@ export default function ProfilePage() {
     toast({ title: '¡Copiado!', description: 'Tu código de afiliado ha sido copiado al portapapeles.' });
   };
   
-  const handleShareLink = (code: string) => {
+  const handleShareLink = async (code: string) => {
     const shareUrl = `${window.location.origin}?ref=${code}`;
     if (navigator.share) {
-        navigator.share({
+      try {
+        await navigator.share({
             title: 'Únete a Temática Eventos con mi código',
             text: `¡Usa mi código de afiliado ${code} al cotizar en Temática Eventos!`,
             url: shareUrl,
         });
+      } catch (error) {
+        console.error('Error al compartir:', error);
+        navigator.clipboard.writeText(shareUrl);
+        toast({ title: '¡Enlace copiado!', description: 'No se pudo abrir el diálogo para compartir, pero hemos copiado el enlace a tu portapapeles.' });
+      }
     } else {
         navigator.clipboard.writeText(shareUrl);
         toast({ title: '¡Enlace copiado!', description: 'El enlace de referido ha sido copiado.' });
