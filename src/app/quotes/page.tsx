@@ -84,8 +84,8 @@ export default function ModularQuotePage() {
   
   const [fecha, setFecha] = useState<Date | undefined>();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [horaInicio, setHoraInicio] = useState('19:00');
-  const [horaFin, setHoraFin] = useState('02:00');
+  const [horaInicio, setHoraInicio] = useState('20:00');
+  const [horaFin, setHoraFin] = useState('03:00');
   const [direccionSalon, setDireccionSalon] = useState('');
 
   const currentYear = new Date().getFullYear();
@@ -192,7 +192,7 @@ export default function ModularQuotePage() {
     const personasItem = Object.values(selectedServices).find(({service}) => service.tipoCobro === 'persona');
     const personasCount = personasItem ? personasItem.quantity : 1;
     
-    const quoteData = {
+    const quoteData: Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> = {
       usuarioId: user.uid,
       nombreCliente: profile.nombre,
       correo: profile.correo,

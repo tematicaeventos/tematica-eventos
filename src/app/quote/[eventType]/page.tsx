@@ -71,8 +71,8 @@ export default function PackagedQuotePage() {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [incluirSalon, setIncluirSalon] = useState<boolean>(true);
   const [direccionSalon, setDireccionSalon] = useState('');
-  const [horaInicio, setHoraInicio] = useState('19:00');
-  const [horaFin, setHoraFin] = useState('02:00');
+  const [horaInicio, setHoraInicio] = useState('20:00');
+  const [horaFin, setHoraFin] = useState('03:00');
   const [isSaving, setIsSaving] = useState(false);
   const [generatedQuote, setGeneratedQuote] = useState<Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> | null>(null);
   const [generatedQuoteId, setGeneratedQuoteId] = useState<string | null>(null);
@@ -228,7 +228,7 @@ export default function PackagedQuotePage() {
       });
       if (incluirSalon) {
         message += `\n*Salón de eventos:* Sí, incluido en el precio\n\n`;
-      } else {
+      } else if (direccionSalon.trim()) {
         message += `\n*Lugar del evento:* ${direccionSalon}\n\n`;
       }
       message += `*TOTAL: ${formatCurrency(total)}*\n\n`;
