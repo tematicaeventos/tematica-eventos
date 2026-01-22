@@ -35,9 +35,19 @@
       "properties": {
         "usuarioId": { "type": "string" },
         "cotizacionId": { "type": "string" },
+        "nombreCliente": { "type": "string" },
+        "correo": { "type": "string", "format": "email" },
+        "telefono": { "type": "string" },
         "total": { "type": "number" },
         "fechaCotizacion": { "type": "string", "format": "date-time" },
-        "estado": { "type": "string" },
+        "estado": { "type": "string", "enum": ["pendiente", "enviado", "contactado", "en negociación", "cerrado", "descartado"] },
+        "origen": { "type": "string" },
+        "tipoEvento": { "type": "string" },
+        "personas": { "type": "number" },
+        "fechaEvento": { "type": "string", "format": "date" },
+        "horaInicio": { "type": "string", "format": "time" },
+        "horaFin": { "type": "string", "format": "time" },
+        "direccionSalon": { "type": "string" },
         "items": {
           "type": "array",
           "items": {
@@ -52,7 +62,21 @@
           }
         }
       },
-      "required": ["usuarioId", "total", "items"]
+      "required": ["usuarioId", "nombreCliente", "correo", "telefono", "total", "items", "estado", "origen", "tipoEvento", "personas", "fechaEvento", "horaInicio", "horaFin"]
+    },
+    "Seguimiento": {
+      "title": "Seguimiento",
+      "description": "Internal tracking for a quote.",
+      "type": "object",
+      "properties": {
+        "cotizacionId": { "type": "string" },
+        "usuarioId": { "type": "string" },
+        "estado": { "type": "string" },
+        "contactado": { "type": "boolean" },
+        "fechaUltimoContacto": { "type": "string", "format": "date-time", "description": "Can be null" },
+        "observaciones": { "type": "string" }
+      },
+      "required": ["cotizacionId", "usuarioId", "estado"]
     },
     "Reservation": {
         "title": "Reservation",
@@ -149,9 +173,9 @@
       {
         "path": "/seguimiento/{quoteId}",
         "definition": {
-          "entityName": "Quote",
-          "schema": { "$ref": "#/entities/Quote" },
-          "description": "Legacy quote tracking collection."
+          "entityName": "Seguimiento",
+          "schema": { "$ref": "#/entities/Seguimiento" },
+          "description": "Internal quote tracking collection."
         }
       },
       {

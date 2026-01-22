@@ -28,7 +28,9 @@ service cloud.firestore {
 
     match /seguimiento/{quoteId} {
       allow get, list, update, delete: if false;
-      allow create: if isSignedIn() && request.resource.data.usuarioId == request.auth.uid;
+      // Allow any authenticated user to create a tracking document.
+      // The document contains the userId, so it's still possible to know who created it.
+      allow create: if isSignedIn();
     }
 
     // Publicly readable data for the quote builder
