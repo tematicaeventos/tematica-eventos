@@ -144,9 +144,20 @@ export default function PackagedQuotePage() {
     return services;
   }, [eventType]);
 
-  const quinceAnosThemes = useMemo(() => {
-    if (eventType?.id !== '15-anos') return null;
-    return themeCategories.find(c => c.id === '15-anos')?.themes;
+  const eventThemes = useMemo(() => {
+    if (!eventType) return null;
+
+    const themeCategoryMap: { [key: string]: string } = {
+      '15-anos': '15-anos',
+      matrimonios: 'matrimonios',
+      'reuniones-empresariales': 'empresariales',
+      'despedidas-empresa': 'despedidas',
+    };
+
+    const themeCategoryId = themeCategoryMap[eventType.id];
+    if (!themeCategoryId) return null;
+
+    return themeCategories.find((c) => c.id === themeCategoryId)?.themes;
   }, [eventType]);
 
   const planBase = useMemo(() => {
@@ -351,7 +362,7 @@ export default function PackagedQuotePage() {
               <CardContent>
                 <RadioGroup value={personas.toString()} onValueChange={(val) => setPersonas(parseInt(val))} className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {PLANES_BASE.map(plan => (
-                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary has-[[data-state=checked]]:text-primary-foreground">
+                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 text-black hover:bg-accent hover:text-accent-foreground has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary has-[[data-state=checked]]:text-primary-foreground">
                       <RadioGroupItem value={plan.personas.toString()} id={`personas-${plan.personas}`} className="sr-only" />
                       <span className="text-2xl font-bold">{plan.personas}</span>
                       <span className="text-sm opacity-80">personas</span>
@@ -362,7 +373,7 @@ export default function PackagedQuotePage() {
             </Card>
 
             {/* Theme Selection */}
-            {quinceAnosThemes && (
+            {eventThemes && (
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3">
@@ -371,7 +382,7 @@ export default function PackagedQuotePage() {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {quinceAnosThemes.map((theme) => {
+                    {eventThemes.map((theme) => {
                       const image = PlaceHolderImages.find(
                         (img) => img.id === theme.image
                       );
