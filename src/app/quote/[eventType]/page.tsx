@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -10,6 +11,9 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { eventTypes } from '@/lib/data';
 import { PLANES_BASE } from '@/lib/packaged-quote-data';
+import { themeCategories } from '@/lib/themes-data';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { cn } from '@/lib/utils';
 import {
   Users,
   CalendarIcon,
@@ -21,6 +25,7 @@ import {
   Download,
   MapPin,
   User,
+  Paintbrush,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -71,6 +76,7 @@ export default function PackagedQuotePage() {
   const [personas, setPersonas] = useState<number>(100);
   const [incluirSalon, setIncluirSalon] = useState<boolean>(true);
   const [direccionSalon, setDireccionSalon] = useState('');
+  const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
   
   // Client & Event Details State
   const [nombreCliente, setNombreCliente] = useState('');
@@ -136,6 +142,11 @@ export default function PackagedQuotePage() {
     }
 
     return services;
+  }, [eventType]);
+
+  const quinceAnosThemes = useMemo(() => {
+    if (eventType?.id !== '15-anos') return null;
+    return themeCategories.find(c => c.id === '15-anos')?.themes;
   }, [eventType]);
 
   const planBase = useMemo(() => {
@@ -228,6 +239,7 @@ export default function PackagedQuotePage() {
       fechaEvento: format(fecha, 'yyyy-MM-dd'),
       horaInicio,
       horaFin,
+      ...(selectedTheme && { tema: selectedTheme }),
       ...(!incluirSalon && direccionSalon.trim() ? { direccionSalon: direccionSalon.trim() } : {}),
       ...(direccion.trim() ? { direccion: direccion.trim() } : {}),
       ...(barrio.trim() ? { barrio: barrio.trim() } : {}),
@@ -251,8 +263,9 @@ export default function PackagedQuotePage() {
       message += `\n*Cotización ID:* ${newQuoteId}\n`;
       message += `*Fecha del Evento:* ${format(fecha, "PPP", { locale: es })}\n`;
       message += `*Horario:* De ${horaInicio} a ${horaFin}\n`;
-      message += `*Número de personas:* ${personas}\n\n`;
-      message += `*INCLUYE:*\n`;
+      message += `*Número de personas:* ${personas}\n`;
+      if (selectedTheme) message += `*Temática:* ${selectedTheme}\n`;
+      message += `\n*INCLUYE:*\n`;
       includedServices.forEach((item: any) => {
           message += `• ${item.service}${item.description ? `: ${item.description}` : ''}\n`;
       });
@@ -338,7 +351,7 @@ export default function PackagedQuotePage() {
               <CardContent>
                 <RadioGroup value={personas.toString()} onValueChange={(val) => setPersonas(parseInt(val))} className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {PLANES_BASE.map(plan => (
-                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 text-black hover:bg-accent hover:text-accent-foreground has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary has-[[data-state=checked]]:text-primary-foreground">
+                    <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary has-[[data-state=checked]]:text-primary-foreground">
                       <RadioGroupItem value={plan.personas.toString()} id={`personas-${plan.personas}`} className="sr-only" />
                       <span className="text-2xl font-bold">{plan.personas}</span>
                       <span className="text-sm opacity-80">personas</span>
@@ -348,40 +361,58 @@ export default function PackagedQuotePage() {
               </CardContent>
             </Card>
 
-            {/* Salon Selection */}
-            <Card>
-              <CardHeader>
-                  <CardTitle className="flex items-center gap-3"><Building className="text-primary"/> Salón de Eventos</CardTitle>
-              </CardHeader>
-              <CardContent>
-                  <div 
-                      className="flex items-center space-x-3 p-4 rounded-md border bg-card cursor-pointer hover:bg-secondary/50"
-                      onClick={() => setIncluirSalon(!incluirSalon)}
-                  >
-                      <Checkbox id="incluir-salon" checked={incluirSalon} onCheckedChange={(checked) => setIncluirSalon(!!checked)} />
-                      <Label htmlFor="incluir-salon" className="cursor-pointer flex-1">
-                          <p className="font-semibold">Incluir salón de eventos en el paquete</p>
-                          <p className="text-sm text-muted-foreground">Uso del salón y logística completa. Desmárcalo si ya tienes un lugar.</p>
-                      </Label>
+            {/* Theme Selection */}
+            {quinceAnosThemes && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3">
+                    <Paintbrush className="text-primary" /> Elige una Temática
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {quinceAnosThemes.map((theme) => {
+                      const image = PlaceHolderImages.find(
+                        (img) => img.id === theme.image
+                      );
+                      return (
+                        <div
+                          key={theme.title}
+                          className={cn(
+                            'cursor-pointer rounded-lg border-2 p-2 transition-all hover:border-primary',
+                            selectedTheme === theme.title
+                              ? 'border-primary ring-2 ring-primary ring-offset-2'
+                              : 'border-muted'
+                          )}
+                          onClick={() =>
+                            setSelectedTheme((prev) =>
+                              prev === theme.title ? null : theme.title
+                            )
+                          }
+                        >
+                          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md">
+                            {image && (
+                              <Image
+                                src={image.imageUrl}
+                                alt={theme.title}
+                                fill
+                                className="object-cover"
+                                data-ai-hint={image.imageHint}
+                                sizes="(max-width: 768px) 50vw, 25vw"
+                              />
+                            )}
+                          </div>
+                          <p className="mt-2 text-center text-sm font-medium">
+                            {theme.title}
+                          </p>
+                        </div>
+                      );
+                    })}
                   </div>
-                   {!incluirSalon && (
-                    <div className="mt-6 space-y-2">
-                        <Label htmlFor="direccion-salon" className="flex items-center gap-2 font-semibold">
-                            <MapPin className="h-4 w-4 text-primary" />
-                            Dirección del lugar del evento
-                        </Label>
-                        <Input 
-                            id="direccion-salon" 
-                            placeholder="Ej: Calle 5 # 10-20, Bogotá"
-                            value={direccionSalon}
-                            onChange={(e) => setDireccionSalon(e.target.value)}
-                        />
-                        <p className="text-xs text-muted-foreground">Este campo es obligatorio si no incluyes nuestro salón.</p>
-                    </div>
-                  )}
-              </CardContent>
-            </Card>
-            
+                </CardContent>
+              </Card>
+            )}
+
             {/* Included Services */}
             <Card>
                 <CardHeader>
@@ -423,7 +454,7 @@ export default function PackagedQuotePage() {
                   })}
                 </CardContent>
             </Card>
-
+            
             {/* Client Details */}
             <Card>
               <CardHeader>
@@ -498,6 +529,41 @@ export default function PackagedQuotePage() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Salon Selection */}
+            <Card>
+              <CardHeader>
+                  <CardTitle className="flex items-center gap-3"><Building className="text-primary"/> Salón de Eventos</CardTitle>
+              </CardHeader>
+              <CardContent>
+                  <div 
+                      className="flex items-center space-x-3 p-4 rounded-md border bg-card cursor-pointer hover:bg-secondary/50"
+                      onClick={() => setIncluirSalon(!incluirSalon)}
+                  >
+                      <Checkbox id="incluir-salon" checked={incluirSalon} onCheckedChange={(checked) => setIncluirSalon(!!checked)} />
+                      <Label htmlFor="incluir-salon" className="cursor-pointer flex-1">
+                          <p className="font-semibold">Incluir salón de eventos en el paquete</p>
+                          <p className="text-sm text-muted-foreground">Uso del salón y logística completa. Desmárcalo si ya tienes un lugar.</p>
+                      </Label>
+                  </div>
+                   {!incluirSalon && (
+                    <div className="mt-6 space-y-2">
+                        <Label htmlFor="direccion-salon" className="flex items-center gap-2 font-semibold">
+                            <MapPin className="h-4 w-4 text-primary" />
+                            Dirección del lugar del evento
+                        </Label>
+                        <Input 
+                            id="direccion-salon" 
+                            placeholder="Ej: Calle 5 # 10-20, Bogotá"
+                            value={direccionSalon}
+                            onChange={(e) => setDireccionSalon(e.target.value)}
+                        />
+                        <p className="text-xs text-muted-foreground">Este campo es obligatorio si no incluyes nuestro salón.</p>
+                    </div>
+                  )}
+              </CardContent>
+            </Card>
+
           </div>
 
           {/* Quote Summary */}
@@ -511,6 +577,9 @@ export default function PackagedQuotePage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">Paquete todo incluido para <span className="font-bold text-foreground">{personas} personas</span>.</p>
+                {selectedTheme && (
+                    <p className="mt-2 text-sm">Temática: <span className="font-semibold text-primary">{selectedTheme}</span></p>
+                )}
                 {!incluirSalon && (
                   <p className="text-sm text-primary/90 mt-2">No se incluye el salón de eventos.</p>
               )}

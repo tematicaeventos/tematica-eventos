@@ -90,6 +90,7 @@ export type Quote = {
     direccionSalon?: string;
     direccion?: string;
     barrio?: string;
+    tema?: string;
 }
 
 export type UserContextType = {

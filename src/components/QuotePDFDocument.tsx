@@ -53,6 +53,9 @@ const QuotePDFDocument: React.FC<QuotePDFDocumentProps> = ({ quoteId, quote }) =
         <div className="text-right">
           <h3 className="font-semibold text-gray-500 uppercase tracking-wider text-xs mb-2">Detalles del Evento</h3>
           <p className="font-bold text-gray-900">{quote.tipoEvento}</p>
+          {quote.tema && (
+            <p className="text-gray-600"><b>Tema:</b> {quote.tema}</p>
+          )}
           {quote.fechaEvento && (
             <p className="text-gray-600">{format(new Date(quote.fechaEvento.replace(/-/g, '/')), 'PPP', { locale: es })}</p>
           )}

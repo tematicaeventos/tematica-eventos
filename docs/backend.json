@@ -48,6 +48,9 @@
         "horaInicio": { "type": "string", "format": "time" },
         "horaFin": { "type": "string", "format": "time" },
         "direccionSalon": { "type": "string" },
+        "direccion": { "type": "string" },
+        "barrio": { "type": "string" },
+        "tema": { "type": "string" },
         "items": {
           "type": "array",
           "items": {
