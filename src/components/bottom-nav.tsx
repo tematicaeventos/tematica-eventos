@@ -65,12 +65,13 @@ export function BottomNav() {
           <button
             onClick={promptInstall}
             className={cn(
-              'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
-              'text-muted-foreground hover:text-primary'
+              'flex flex-1 flex-col items-center justify-center gap-1 p-2 font-medium text-primary transition-colors animate-bounce'
             )}
           >
             <Download className="h-5 w-5" />
-            <span className="text-xs tracking-tight">Instalar</span>
+            <span className="text-xs tracking-tight text-center">
+              Descarga tu App Aquí
+            </span>
           </button>
         )}
 
