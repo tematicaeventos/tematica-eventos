@@ -27,8 +27,8 @@ export default function Home() {
             {eventTypes.map((eventType, index) => (
               <div
                 key={eventType.id}
-                className="fade-in"
-                style={{ animationDelay: `${index * 150}ms` }}
+                className="animate-fade-in-up opacity-0"
+                style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'forwards' }}
               >
                 <EventTypeCard eventType={eventType} />
               </div>
