@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Puzzle, User, Paintbrush2 } from 'lucide-react';
+import { Home, Puzzle, User, Paintbrush2, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/firebase/auth/use-user';
+import { usePWA } from '@/hooks/use-pwa';
 
 const baseNavItems = [
   {
@@ -27,6 +28,7 @@ const baseNavItems = [
 export function BottomNav() {
   const pathname = usePathname();
   const { user } = useUser();
+  const { installPromptEvent, promptInstall } = usePWA();
 
   const navLinks = baseNavItems.map((item) => {
     let isActive = false;
@@ -35,7 +37,7 @@ export function BottomNav() {
     } else if (item.href === '/quotes') {
       isActive = pathname.startsWith('/quotes') || pathname.startsWith('/quote/');
     } else {
-      isActive = pathname === item.href;
+      isActive = pathname.startsWith(item.href);
     }
     return { ...item, isActive };
   });
@@ -59,6 +61,19 @@ export function BottomNav() {
           </Link>
         ))}
 
+        {installPromptEvent && (
+          <button
+            onClick={promptInstall}
+            className={cn(
+              'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
+              'text-muted-foreground hover:text-primary'
+            )}
+          >
+            <Download className="h-5 w-5" />
+            <span className="text-xs tracking-tight">Instalar</span>
+          </button>
+        )}
+
         {user ? (
           <Link
             href="/profile"
@@ -77,7 +92,9 @@ export function BottomNav() {
             href="/login"
             className={cn(
               'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
-              (pathname === '/login' || pathname === '/signup' || pathname === '/forgot-password')
+              pathname === '/login' ||
+                pathname === '/signup' ||
+                pathname === '/forgot-password'
                 ? 'text-primary'
                 : 'text-muted-foreground hover:text-primary'
             )}

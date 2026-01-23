@@ -6,6 +6,7 @@ import { Footer } from '@/components/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 import { BottomNav } from '@/components/bottom-nav';
+import { PWAProvider } from '@/hooks/use-pwa';
 
 export const metadata: Metadata = {
   title: 'Temática Eventos',
@@ -34,15 +35,17 @@ export default function RootLayout({
         <meta name="theme-color" content="#f2c03d" />
       </head>
       <body className={cn('font-body antialiased', 'bg-background')}>
-        <FirebaseClientProvider>
-          <div className="relative flex min-h-dvh flex-col">
-            <Header />
-            <main className="flex-1 pb-16 md:pb-0">{children}</main>
-            <Footer />
-            <BottomNav />
-          </div>
-          <Toaster />
-        </FirebaseClientProvider>
+        <PWAProvider>
+          <FirebaseClientProvider>
+            <div className="relative flex min-h-dvh flex-col">
+              <Header />
+              <main className="flex-1 pb-16 md:pb-0">{children}</main>
+              <Footer />
+              <BottomNav />
+            </div>
+            <Toaster />
+          </FirebaseClientProvider>
+        </PWAProvider>
       </body>
     </html>
   );
