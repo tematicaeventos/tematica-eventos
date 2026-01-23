@@ -10,6 +10,7 @@ import { BottomNav } from '@/components/bottom-nav';
 export const metadata: Metadata = {
   title: 'Temática Eventos',
   description: 'Tu evento soñado, a un clic de distancia.',
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
@@ -30,6 +31,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Lato:wght@400;700&display=swap"
           rel="stylesheet"
         />
+        <meta name="theme-color" content="#f2c03d" />
       </head>
       <body className={cn('font-body antialiased', 'bg-background')}>
         <FirebaseClientProvider>
