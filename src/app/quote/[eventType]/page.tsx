@@ -464,7 +464,7 @@ export default function PackagedQuotePage() {
             </Card>
             
             {/* Included Services */}
-            <Card>
+            <Card className="border-primary">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-3"><PartyPopper className="text-primary"/> Paquete Todo Incluido</CardTitle>
                 </CardHeader>
@@ -473,10 +473,10 @@ export default function PackagedQuotePage() {
                     <div key={item.service} className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
                       <div>
-                        <p className="font-semibold">{item.service}</p>
-                        <p className="text-sm text-foreground/90">{item.description}</p>
+                        <p className="font-semibold text-foreground">{item.service}</p>
+                        <p className="text-sm text-foreground">{item.description}</p>
                         {item.details && (
-                          <ul className="list-disc pl-5 mt-2 space-y-1 text-sm text-foreground/90">
+                          <ul className="list-disc pl-5 mt-2 space-y-1 text-sm text-foreground">
                             {item.details.map((detail: string, i: number) => (
                               <li key={i}>{detail}</li>
                             ))}
