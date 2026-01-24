@@ -353,7 +353,7 @@ export default function PackagedQuotePage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           <div className="lg:col-span-2 space-y-6">
             {/* People Selection */}
-            <Card>
+            <Card className="border-primary">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3"><Users className="text-primary"/> Número de Personas</CardTitle>
               </CardHeader>
@@ -372,7 +372,7 @@ export default function PackagedQuotePage() {
 
             {/* Theme Selection */}
             {eventThemes && (
-              <Card className="bg-[hsl(var(--luminous-blue-bg))] border-[hsl(var(--luminous-blue-border))]">
+              <Card className="bg-[hsl(var(--luminous-blue-bg))] border-primary">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3">
                     <Paintbrush className="text-primary" /> Elige una Temática
@@ -423,7 +423,7 @@ export default function PackagedQuotePage() {
             )}
 
             {/* Salon Selection */}
-            <Card className="bg-white text-gray-900">
+            <Card className="bg-white text-gray-900 border-primary">
               <CardHeader>
                   <CardTitle className="flex items-center gap-3"><Building className="text-primary"/> Salón de Eventos</CardTitle>
               </CardHeader>
@@ -467,8 +467,8 @@ export default function PackagedQuotePage() {
                     <div key={item.service} className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
                       <div>
-                        <p className="font-semibold text-foreground">{item.service}</p>
-                        <p className="text-sm text-foreground">{item.description}</p>
+                        <p className="font-semibold text-white">{item.service}</p>
+                        <p className="text-sm text-white">{item.description}</p>
                       </div>
                     </div>
                   ))}
@@ -476,7 +476,7 @@ export default function PackagedQuotePage() {
             </Card>
             
             {/* Client Details */}
-            <Card className="bg-white text-gray-900">
+            <Card className="bg-white text-gray-900 border-primary">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
               </CardHeader>
@@ -509,7 +509,7 @@ export default function PackagedQuotePage() {
             </Card>
 
             {/* Date and Time */}
-            <Card>
+            <Card className="border-primary">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3"><CalendarIcon className="text-primary"/> Elige una Fecha</CardTitle>
               </CardHeader>
@@ -558,7 +558,7 @@ export default function PackagedQuotePage() {
 
           {/* Quote Summary */}
           <div className="lg:col-span-1">
-            <Card className="sticky top-24">
+            <Card className="sticky top-24 border-primary">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3">
                   <ShoppingCart className="text-primary" />
