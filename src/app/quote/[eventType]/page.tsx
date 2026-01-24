@@ -469,39 +469,22 @@ export default function PackagedQuotePage() {
                     <CardTitle className="flex items-center gap-3"><PartyPopper className="text-primary"/> Paquete Todo Incluido</CardTitle>
                 </CardHeader>
                 <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                  {includedServices.map((item: any) => {
-                    if (item.details) {
-                      return (
-                        <div key={item.service} className="flex items-start gap-3">
-                          <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
-                          <Accordion type="single" collapsible className="w-full -mt-1.5">
-                            <AccordionItem value={item.service} className="border-b-0">
-                              <AccordionTrigger className="p-0 py-1.5 text-left hover:no-underline">
-                                <div>
-                                  <p className="font-semibold">{item.service}</p>
-                                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                                </div>
-                              </AccordionTrigger>
-                              <AccordionContent>
-                                <ul className="list-disc pl-5 mt-2 space-y-1 text-sm text-muted-foreground">
-                                  {item.details.map((detail: string, i: number) => <li key={i}>{detail}</li>)}
-                                </ul>
-                              </AccordionContent>
-                            </AccordionItem>
-                          </Accordion>
-                        </div>
-                      );
-                    }
-                    return (
-                      <div key={item.service} className="flex items-start gap-3">
-                        <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
-                        <div>
-                          <p className="font-semibold">{item.service}</p>
-                          <p className="text-sm text-muted-foreground">{item.description}</p>
-                        </div>
+                  {includedServices.map((item: any) => (
+                    <div key={item.service} className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
+                      <div>
+                        <p className="font-semibold">{item.service}</p>
+                        <p className="text-sm text-muted-foreground">{item.description}</p>
+                        {item.details && (
+                          <ul className="list-disc pl-5 mt-2 space-y-1 text-sm text-muted-foreground">
+                            {item.details.map((detail: string, i: number) => (
+                              <li key={i}>{detail}</li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
-                    );
-                  })}
+                    </div>
+                  ))}
                 </CardContent>
             </Card>
             
