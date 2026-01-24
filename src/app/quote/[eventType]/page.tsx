@@ -476,33 +476,33 @@ export default function PackagedQuotePage() {
             </Card>
             
             {/* Client Details */}
-            <Card className="bg-white text-gray-900 border-primary">
+            <Card className="border-primary">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
               </CardHeader>
               <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                    <Label htmlFor="nombre-cliente" className="font-semibold text-gray-800">Nombre de contacto</Label>
+                    <Label htmlFor="nombre-cliente">Nombre de contacto</Label>
                     <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="telefono-cliente" className="font-semibold text-gray-800">Teléfono (WhatsApp)</Label>
+                    <Label htmlFor="telefono-cliente">Teléfono (WhatsApp)</Label>
                     <Input id="telefono-cliente" type="tel" placeholder="3001234567" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                  <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="correo-cliente" className="font-semibold text-gray-800">Correo electrónico</Label>
+                    <Label htmlFor="correo-cliente">Correo electrónico</Label>
                     <Input id="correo-cliente" type="email" placeholder="tu@correo.com" value={correo} onChange={(e) => setCorreo(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="direccion-cliente" className="font-semibold text-gray-800">Dirección</Label>
+                    <Label htmlFor="direccion-cliente">Dirección</Label>
                     <Input id="direccion-cliente" placeholder="Carrera 5 # 10-20" value={direccion} onChange={(e) => setDireccion(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="barrio-cliente" className="font-semibold text-gray-800">Barrio</Label>
+                    <Label htmlFor="barrio-cliente">Barrio</Label>
                     <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="observaciones-cliente" className="font-semibold text-gray-800">Observaciones (opcional)</Label>
+                  <Label htmlFor="observaciones-cliente">Observaciones (opcional)</Label>
                   <Textarea id="observaciones-cliente" placeholder="Ej: alergias, preferencias especiales, etc." value={observaciones} onChange={(e) => setObservaciones(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
               </CardContent>
