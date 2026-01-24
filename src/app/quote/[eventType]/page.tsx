@@ -474,9 +474,9 @@ export default function PackagedQuotePage() {
                       <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
                       <div>
                         <p className="font-semibold">{item.service}</p>
-                        <p className="text-sm text-muted-foreground">{item.description}</p>
+                        <p className="text-sm text-foreground/90">{item.description}</p>
                         {item.details && (
-                          <ul className="list-disc pl-5 mt-2 space-y-1 text-sm text-muted-foreground">
+                          <ul className="list-disc pl-5 mt-2 space-y-1 text-sm text-foreground/90">
                             {item.details.map((detail: string, i: number) => (
                               <li key={i}>{detail}</li>
                             ))}
