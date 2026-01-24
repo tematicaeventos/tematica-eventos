@@ -58,7 +58,7 @@ export function BottomNav() {
         </div>
       )}
 
-      <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden">
+      <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white md:hidden">
         <nav className="flex h-16 items-stretch justify-around">
           {navLinks.map((item) => (
             <Link
@@ -67,8 +67,8 @@ export function BottomNav() {
               className={cn(
                 'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
                 item.isActive
-                  ? 'text-primary'
-                  : 'text-muted-foreground hover:text-primary'
+                  ? 'text-black'
+                  : 'text-gray-500 hover:text-black'
               )}
             >
               <item.icon className="h-5 w-5" />
@@ -82,8 +82,8 @@ export function BottomNav() {
               className={cn(
                 'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
                 pathname === '/profile'
-                  ? 'text-primary'
-                  : 'text-muted-foreground hover:text-primary'
+                  ? 'text-black'
+                  : 'text-gray-500 hover:text-black'
               )}
             >
               <User className="h-5 w-5" />
@@ -97,8 +97,8 @@ export function BottomNav() {
                 pathname === '/login' ||
                   pathname === '/signup' ||
                   pathname === '/forgot-password'
-                  ? 'text-primary'
-                  : 'text-muted-foreground hover:text-primary'
+                  ? 'text-black'
+                  : 'text-gray-500 hover:text-black'
               )}
             >
               <User className="h-5 w-5" />
