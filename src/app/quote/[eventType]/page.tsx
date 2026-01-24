@@ -429,24 +429,24 @@ export default function PackagedQuotePage() {
             )}
 
             {/* Salon Selection */}
-            <Card>
+            <Card className="bg-white text-gray-900">
               <CardHeader>
                   <CardTitle className="flex items-center gap-3"><Building className="text-primary"/> Salón de Eventos</CardTitle>
               </CardHeader>
               <CardContent>
                   <div 
-                      className="flex items-center space-x-3 p-4 rounded-md border bg-card cursor-pointer hover:bg-secondary/50"
+                      className="flex items-center space-x-3 p-4 rounded-md border border-gray-200 bg-slate-50 cursor-pointer hover:bg-slate-100"
                       onClick={() => setIncluirSalon(!incluirSalon)}
                   >
                       <Checkbox id="incluir-salon" checked={incluirSalon} onCheckedChange={(checked) => setIncluirSalon(!!checked)} />
                       <Label htmlFor="incluir-salon" className="cursor-pointer flex-1">
-                          <p className="font-semibold">Incluir salón de eventos en el paquete</p>
-                          <p className="text-sm text-muted-foreground">Uso del salón y logística completa. Desmárcalo si ya tienes un lugar.</p>
+                          <p className="font-semibold text-gray-800">Incluir salón de eventos en el paquete</p>
+                          <p className="text-sm text-gray-600">Uso del salón y logística completa. Desmárcalo si ya tienes un lugar.</p>
                       </Label>
                   </div>
                    {!incluirSalon && (
                     <div className="mt-6 space-y-2">
-                        <Label htmlFor="direccion-salon" className="flex items-center gap-2 font-semibold">
+                        <Label htmlFor="direccion-salon" className="flex items-center gap-2 font-semibold text-gray-800">
                             <MapPin className="h-4 w-4 text-primary" />
                             Dirección del lugar del evento
                         </Label>
@@ -455,8 +455,9 @@ export default function PackagedQuotePage() {
                             placeholder="Ej: Calle 5 # 10-20, Bogotá"
                             value={direccionSalon}
                             onChange={(e) => setDireccionSalon(e.target.value)}
+                            className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500"
                         />
-                        <p className="text-xs text-muted-foreground">Este campo es obligatorio si no incluyes nuestro salón.</p>
+                        <p className="text-xs text-gray-500">Este campo es obligatorio si no incluyes nuestro salón.</p>
                     </div>
                   )}
               </CardContent>
