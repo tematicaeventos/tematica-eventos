@@ -509,7 +509,7 @@ export default function PackagedQuotePage() {
             </Card>
 
             {/* Date and Time */}
-            <Card className="border-primary">
+            <Card className="border-primary bg-white text-gray-900">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3"><CalendarIcon className="text-primary"/> Elige una Fecha</CardTitle>
               </CardHeader>
@@ -518,7 +518,7 @@ export default function PackagedQuotePage() {
                   <PopoverTrigger asChild>
                     <Button
                       variant={"outline"}
-                      className="w-full justify-start text-left font-normal h-12"
+                      className="w-full justify-start text-left font-normal h-12 bg-white border-gray-300 text-gray-900 hover:bg-gray-100 hover:text-gray-900"
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {fecha ? format(fecha, "PPP", { locale: es }) : <span>Selecciona una fecha</span>}
@@ -543,12 +543,12 @@ export default function PackagedQuotePage() {
                 </Popover>
                 <div className="flex gap-4">
                   <div className="w-1/2">
-                    <Label htmlFor="hora-inicio">Hora de inicio</Label>
-                      <input type="time" id="hora-inicio" className="w-full bg-input border border-border rounded-md p-3 mt-2 text-sm h-12" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
+                    <Label htmlFor="hora-inicio" className="font-semibold text-gray-800">Hora de inicio</Label>
+                      <input type="time" id="hora-inicio" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
                   </div>
                   <div className="w-1/2">
-                    <Label htmlFor="hora-fin">Hora de finalización</Label>
-                      <input type="time" id="hora-fin" className="w-full bg-input border border-border rounded-md p-3 mt-2 text-sm h-12" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
+                    <Label htmlFor="hora-fin" className="font-semibold text-gray-800">Hora de finalización</Label>
+                      <input type="time" id="hora-fin" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
                   </div>
                 </div>
               </CardContent>
