@@ -43,68 +43,70 @@ export function BottomNav() {
   });
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden">
-      <nav className="flex h-16 items-stretch justify-around">
-        {navLinks.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={cn(
-              'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
-              item.isActive
-                ? 'text-primary'
-                : 'text-muted-foreground hover:text-primary'
-            )}
-          >
-            <item.icon className="h-5 w-5" />
-            <span className="text-xs tracking-tight">{item.label}</span>
-          </Link>
-        ))}
-
-        {installPromptEvent && (
+    <>
+      {installPromptEvent && (
+        <div className="fixed bottom-20 right-4 z-50 md:hidden">
           <button
             onClick={promptInstall}
             className={cn(
-              'flex flex-1 flex-col items-center justify-center gap-1 p-2 font-medium text-primary transition-colors animate-bounce'
+              'flex items-center justify-center gap-2 rounded-full bg-primary px-4 py-3 font-medium text-primary-foreground shadow-lg transition-transform hover:scale-105 active:scale-95 animate-bounce'
             )}
           >
             <Download className="h-5 w-5" />
-            <span className="text-xs tracking-tight text-center">
-              Descarga tu App Aquí
-            </span>
+            <span className="text-sm tracking-tight">Descarga tu App Aquí</span>
           </button>
-        )}
+        </div>
+      )}
 
-        {user ? (
-          <Link
-            href="/profile"
-            className={cn(
-              'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
-              pathname === '/profile'
-                ? 'text-primary'
-                : 'text-muted-foreground hover:text-primary'
-            )}
-          >
-            <User className="h-5 w-5" />
-            <span className="text-xs tracking-tight">Mi Perfil</span>
-          </Link>
-        ) : (
-          <Link
-            href="/login"
-            className={cn(
-              'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
-              pathname === '/login' ||
-                pathname === '/signup' ||
-                pathname === '/forgot-password'
-                ? 'text-primary'
-                : 'text-muted-foreground hover:text-primary'
-            )}
-          >
-            <User className="h-5 w-5" />
-            <span className="text-xs tracking-tight">Ingresar</span>
-          </Link>
-        )}
-      </nav>
-    </div>
+      <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden">
+        <nav className="flex h-16 items-stretch justify-around">
+          {navLinks.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
+                item.isActive
+                  ? 'text-primary'
+                  : 'text-muted-foreground hover:text-primary'
+              )}
+            >
+              <item.icon className="h-5 w-5" />
+              <span className="text-xs tracking-tight">{item.label}</span>
+            </Link>
+          ))}
+
+          {user ? (
+            <Link
+              href="/profile"
+              className={cn(
+                'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
+                pathname === '/profile'
+                  ? 'text-primary'
+                  : 'text-muted-foreground hover:text-primary'
+              )}
+            >
+              <User className="h-5 w-5" />
+              <span className="text-xs tracking-tight">Mi Perfil</span>
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className={cn(
+                'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
+                pathname === '/login' ||
+                  pathname === '/signup' ||
+                  pathname === '/forgot-password'
+                  ? 'text-primary'
+                  : 'text-muted-foreground hover:text-primary'
+              )}
+            >
+              <User className="h-5 w-5" />
+              <span className="text-xs tracking-tight">Ingresar</span>
+            </Link>
+          )}
+        </nav>
+      </div>
+    </>
   );
 }
