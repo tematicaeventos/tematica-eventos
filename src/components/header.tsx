@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sparkles, Home, Paintbrush2, Puzzle } from 'lucide-react';
+import { Sparkles, Home, Paintbrush2, Puzzle, Handshake } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 import { cn } from '@/lib/utils';
@@ -14,6 +14,7 @@ const navLinks = [
   { href: '/', label: 'Inicio', icon: Home },
   { href: '/quotes', label: 'Arma tu Evento', icon: Puzzle },
   { href: '/themes', label: 'Temáticas', icon: Paintbrush2 },
+  { href: '/profile/affiliate', label: 'Afiliados', icon: Handshake },
 ];
 
 const NavLinksContent = ({
@@ -29,13 +30,22 @@ const NavLinksContent = ({
   >
     {navLinks.map((link) => {
       const Icon = link.icon;
+      let isActive = false;
+      if (link.href === '/') {
+        isActive = pathname === '/';
+      } else if (link.href === '/quotes') {
+        isActive = pathname?.startsWith('/quotes') || pathname?.startsWith('/quote/');
+      } else {
+        isActive = pathname?.startsWith(link.href) ?? false;
+      }
+      
       const linkComponent = (
         <Link
           key={link.href}
           href={link.href}
           className={cn(
             'flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary',
-            pathname === link.href
+            isActive
               ? 'text-foreground'
               : 'text-muted-foreground'
           )}

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Puzzle, User, Paintbrush2, Download } from 'lucide-react';
+import { Home, Puzzle, User, Paintbrush2, Download, Handshake } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useUser } from '@/firebase/auth/use-user';
 import { usePWA } from '@/hooks/use-pwa';
@@ -22,6 +22,11 @@ const baseNavItems = [
     href: '/themes',
     icon: Paintbrush2,
     label: 'Temáticas',
+  },
+  {
+    href: '/profile/affiliate',
+    icon: Handshake,
+    label: 'Afiliado',
   },
 ];
 
