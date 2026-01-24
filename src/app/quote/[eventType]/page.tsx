@@ -509,7 +509,7 @@ export default function PackagedQuotePage() {
             </Card>
 
             {/* Date and Time */}
-            <Card className="border-primary bg-white text-gray-900">
+            <Card className="border-primary">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3"><CalendarIcon className="text-primary"/> Elige una Fecha</CardTitle>
               </CardHeader>
@@ -543,11 +543,11 @@ export default function PackagedQuotePage() {
                 </Popover>
                 <div className="flex gap-4">
                   <div className="w-1/2">
-                    <Label htmlFor="hora-inicio" className="font-semibold text-gray-800">Hora de inicio</Label>
+                    <Label htmlFor="hora-inicio">Hora de inicio</Label>
                       <input type="time" id="hora-inicio" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
                   </div>
                   <div className="w-1/2">
-                    <Label htmlFor="hora-fin" className="font-semibold text-gray-800">Hora de finalización</Label>
+                    <Label htmlFor="hora-fin">Hora de finalización</Label>
                       <input type="time" id="hora-fin" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
                   </div>
                 </div>
