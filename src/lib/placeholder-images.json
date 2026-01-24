@@ -8,9 +8,9 @@
     },
     {
       "id": "event-type-15-anos",
-      "description": "Una espectacular fiesta de 15 años con una joven en su vestido.",
-      "imageUrl": "https://images.unsplash.com/photo-1574345532653-73a745773175?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxxdWluY2VhbmVyYXxlbnwwfHx8fDE3NzI4NjE1MTF8MA&ixlib=rb-4.0.3&q=80&w=1080",
-      "imageHint": "quinceanera dress"
+      "description": "Una espectacular fiesta de 15 años con una decoración festiva.",
+      "imageUrl": "https://images.unsplash.com/photo-1527499252341-3837942d9a4f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxxdWluY2VhbmVyYSUyMHBhcnR5fGVufDB8fHx8MTc3MzgwMjY1OXww&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "quinceanera party"
     },
     {
       "id": "event-type-matrimonio",
@@ -45,7 +45,7 @@
     {
       "id": "theme-15-neon",
       "description": "A neon-themed 15th birthday party.",
-      "imageUrl": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxuZW9uJTIwcGFydHl8ZW58MHx8fHwxNzY4OTQxMTI4fDA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxuZW9uJTIwcGFydHl8ZW58MHx8fHwxNzY4OTQxMTI4fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "neon party"
     },
     {
@@ -63,7 +63,7 @@
     {
       "id": "theme-15-vintage",
       "description": "A vintage-themed 15th birthday party.",
-      "imageUrl": "https://images.unsplash.com/photo-1602123162984-ef1527d860d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx2aW50YWdlJTIwcGFydHl8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1602123162984-ef1527d860d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx2aW50YWdlJTIwcGFydHl8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "vintage party"
     },
     {
@@ -75,19 +75,19 @@
     {
       "id": "theme-15-paris",
       "description": "A Paris-themed 15th birthday party.",
-      "imageUrl": "https://images.unsplash.com/photo-1640693039454-48acf87927e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwYXJpcyUyMHRoZW1lfGVufDB8fHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1640693039454-48acf87927e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwYXJpcyUyMHRoZW1lfGVufDB8fHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "paris theme"
     },
     {
       "id": "theme-15-hawaiian",
       "description": "A Hawaiian-themed 15th birthday party.",
-      "imageUrl": "https://images.unsplash.com/photo-1591843463640-1a44f5641f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxoYXdhaWlhbiUyMHBhcnR5fGVufDB8fHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1591843463640-1a44f5641f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxoYXdhaWlhbiUyMHBhcnR5fGVufDB8fHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "hawaiian party"
     },
     {
       "id": "theme-15-boho",
       "description": "A boho-chic 15th birthday party.",
-      "imageUrl": "https://images.unsplash.com/photo-1620376646319-3090858a3c1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxib2hvJTIwY2hpY3xlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1620376646319-3090858a3c1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxib2hvJTIwY2hpY3xlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "boho chic"
     },
     {
@@ -99,7 +99,7 @@
     {
       "id": "theme-wedding-classic",
       "description": "A classic-themed wedding.",
-      "imageUrl": "https://images.unsplash.com/photo-1765614766650-43c8625ae745?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjbGFzc2ljJTIwd2VkZGluZ3xlbnwwfHx8fDE3Njg5MzMzNDN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1765614766650-43c8625ae745?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjbGFzc2ljJTIwd2VkZGluZ3xlbnwwfHx8fDE3Njg5MzMzNDN8MA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "classic wedding"
     },
     {
@@ -129,7 +129,7 @@
     {
       "id": "theme-wedding-bohemian",
       "description": "A bohemian-themed wedding.",
-      "imageUrl": "https://images.unsplash.com/photo-1695138883398-0d7090fd0d96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Ym9oZW1pYW4lMjB3ZWRkaW5nfGVufDB8fHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1695138883398-0d7090fd0d96?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Ym9oZW1pYW4lMjB3ZWRkaW5nfGVufDB8fHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "bohemian wedding"
     },
     {
@@ -141,7 +141,7 @@
     {
       "id": "theme-corp-casino",
       "description": "A casino night-themed corporate party.",
-      "imageUrl": "https://images.unsplash.com/photo-1726300998553-d398c9b30d59?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FzaW5vJTIwbmlnaHR8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1726300998553-d39p_y_c9b30d59?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FzaW5vJTIwbmlnaHR8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "casino night"
     },
     {
@@ -153,7 +153,7 @@
     {
       "id": "theme-corp-awards",
       "description": "An awards night-themed corporate party.",
-      "imageUrl": "https://images.unsplash.com/photo-1700514077430-3659e38eb5e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhd2FyZHMlMjBuaWdodHxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1700514077430-3659e38eb5e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhd2FyZHMlMjBuaWdodHxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "awards night"
     },
     {
@@ -171,7 +171,7 @@
     {
       "id": "theme-corp-blackwhite",
       "description": "A black and white-themed corporate party.",
-      "imageUrl": "https://images.unsplash.com/photo-1612988952181-c995680479a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxibGFjayUyMHdoaXRlfGVufDB8fHx8fDE3NjkwMDIyNzN8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1612988952181-c995680479a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxibGFjayUyMHdoaXRlfGVufDB8fHx8fDE3NjkwMDIyNzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "black white"
     },
     {
@@ -183,7 +183,7 @@
     {
       "id": "theme-corp-winter",
       "description": "A winter wonderland-themed corporate party.",
-      "imageUrl": "https://images.unsplash.com/photo-1552335270-a1cdfc205557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3aW50ZXIlMjB3b25kZXJsYW5kfGVufDB8fHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1552335270-a1cdfc205557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3aW50ZXIlMjB3b25kZXJsYW5kfGVufDB8fHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "winter wonderland"
     },
     {
@@ -201,7 +201,7 @@
     {
       "id": "theme-farewell-casino",
       "description": "A casino-themed farewell party.",
-      "imageUrl": "https://images.unsplash.com/photo-1617078885011-5f0a62c501eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjYXNpbm8lMjBwYXJ0eXxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1617078885011-5f0a62c501eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjYXNpbm8lMjBwYXJ0eXxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "casino party"
     },
     {
@@ -213,7 +213,7 @@
     {
       "id": "theme-farewell-hollywood",
       "description": "A Hollywood-themed farewell party.",
-      "imageUrl": "https://images.unsplash.com/photo-1740365009005-3a271d73141b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxob2xseXdvb2QlMjBwYXJ0eXxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1740365009005-3a271d73141b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxob2xseXdvb2QlMjBwYXJ0eXxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "hollywood party"
     },
     {
@@ -225,13 +225,13 @@
     {
       "id": "theme-farewell-caribbean",
       "description": "A Caribbean night-themed farewell party.",
-      "imageUrl": "https://images.unsplash.com/photo-1595530368559-ed36c4ebeac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjYXJpYmJlYW4lMjBuaWdodHxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1595530368559-ed36c4ebeac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjYXJpYmJlYW4lMjBuaWdodHxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "caribbean night"
     },
     {
       "id": "theme-farewell-western",
       "description": "A western-themed farewell party.",
-      "imageUrl": "https://images.unsplash.com/photo-1586105449897-20b5efeb3233?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3ZXN0ZXJuJTIwcGFydHl8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1586105449897-20b5efeb3233?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3ZXN0ZXJuJTIwcGFydHl8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "western party"
     }
   ]
