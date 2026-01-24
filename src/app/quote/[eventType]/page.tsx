@@ -385,7 +385,7 @@ export default function PackagedQuotePage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="flex gap-4 overflow-x-auto pb-4">
                     {eventThemes.map((theme) => {
                       const image = PlaceHolderImages.find(
                         (img) => img.id === theme.image
@@ -394,7 +394,7 @@ export default function PackagedQuotePage() {
                         <div
                           key={theme.title}
                           className={cn(
-                            'cursor-pointer rounded-lg border-2 p-2 transition-all hover:border-primary',
+                            'w-40 flex-shrink-0 cursor-pointer rounded-lg border-2 p-2 transition-all hover:border-primary',
                             selectedTheme === theme.title
                               ? 'border-primary ring-2 ring-primary ring-offset-2'
                               : 'border-muted'
@@ -413,7 +413,7 @@ export default function PackagedQuotePage() {
                                 fill
                                 className="object-cover"
                                 data-ai-hint={image.imageHint}
-                                sizes="(max-width: 768px) 50vw, 25vw"
+                                sizes="160px"
                               />
                             )}
                           </div>
