@@ -24,10 +24,10 @@
     --input: 220 20% 15%;
     --ring: 45 85% 60%;
     --radius: 0.5rem;
+    --luminous-blue-bg: 220 50% 12%;
+    --luminous-blue-border: 210 100% 65%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }

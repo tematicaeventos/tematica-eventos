@@ -378,7 +378,7 @@ export default function PackagedQuotePage() {
 
             {/* Theme Selection */}
             {eventThemes && (
-              <Card>
+              <Card className="bg-[hsl(var(--luminous-blue-bg))] border-[hsl(var(--luminous-blue-border))]">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3">
                     <Paintbrush className="text-primary" /> Elige una Temática
