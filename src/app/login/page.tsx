@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -30,6 +30,7 @@ type LoginFormValues = z.infer<typeof loginFormSchema>;
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
   const form = useForm<LoginFormValues>({
@@ -43,7 +44,8 @@ export default function LoginPage() {
       toast({
         title: '¡Bienvenido de vuelta!',
       });
-      router.push('/quotes');
+      const redirectUrl = searchParams.get('redirect');
+      router.push(redirectUrl || '/quotes');
     } catch (error: any) {
       toast({
         variant: 'destructive',

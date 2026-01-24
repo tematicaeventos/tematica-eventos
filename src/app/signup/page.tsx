@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -32,6 +32,7 @@ type SignupFormValues = z.infer<typeof signupFormSchema>;
 
 export default function SignupPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
   const form = useForm<SignupFormValues>({
@@ -46,7 +47,8 @@ export default function SignupPage() {
         title: '¡Registro exitoso!',
         description: 'Hemos creado tu cuenta. ¡Bienvenido!',
       });
-      router.push('/quotes');
+      const redirectUrl = searchParams.get('redirect');
+      router.push(redirectUrl || '/quotes');
     } catch (error: any) {
       let description = 'No se pudo crear tu cuenta. Intenta de nuevo.';
       if (error.code === 'auth/email-already-in-use') {
