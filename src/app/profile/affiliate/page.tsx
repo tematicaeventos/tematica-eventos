@@ -76,7 +76,7 @@ const Step1 = ({ onNext }: { onNext: () => void }) => (
             <p className="text-lg">
                 Recomienda clientes para eventos y gana el <strong>5% del valor del evento</strong> cuando se cierre.
             </p>
-            <p className="text-muted-foreground">No tiene costo ni riesgos. La empresa se encarga de la cotización, el cierre y la ejecución del evento.</p>
+            <p className="text-foreground/90">No tiene costo ni riesgos. La empresa se encarga de la cotización, el cierre y la ejecución del evento.</p>
         </CardContent>
         <CardFooter>
             <Button onClick={onNext} className="w-full md:w-auto mx-auto" size="lg">Aceptar y continuar</Button>
@@ -94,7 +94,7 @@ const Step2 = ({ onNext }: { onNext: () => void }) => {
                 <CardTitle className="text-3xl mt-4">Condiciones del programa</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 max-w-xl mx-auto">
-                <ul className="list-disc space-y-2 pl-5 text-muted-foreground">
+                <ul className="list-disc space-y-2 pl-5 text-foreground">
                     <li>Comisión del <strong>5%</strong> por evento cerrado.</li>
                     <li>Aplica solo para <strong>clientes nuevos</strong> referidos por ti.</li>
                     <li>El afiliado <strong>no debe modificar precios</strong> ni condiciones.</li>
@@ -102,7 +102,7 @@ const Step2 = ({ onNext }: { onNext: () => void }) => {
                 </ul>
                 <div className="flex items-center space-x-2 pt-4">
                     <Checkbox id="accept" checked={accepted} onCheckedChange={(c) => setAccepted(!!c)} />
-                    <Label htmlFor="accept" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    <Label htmlFor="accept" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-foreground">
                         Acepto las condiciones del programa de afiliados
                     </Label>
                 </div>
