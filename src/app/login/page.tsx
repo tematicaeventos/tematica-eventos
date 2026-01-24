@@ -38,13 +38,15 @@ export default function LoginPage() {
     defaultValues: { email: '', password: '' },
   });
 
+  const redirectUrl = searchParams.get('redirect');
+  const signupHref = redirectUrl ? `/signup?redirect=${redirectUrl}` : '/signup';
+
   async function onSubmit(data: LoginFormValues) {
     try {
       await signIn(data.email, data.password);
       toast({
         title: '¡Bienvenido de vuelta!',
       });
-      const redirectUrl = searchParams.get('redirect');
       router.push(redirectUrl || '/quotes');
     } catch (error: any) {
       toast({
@@ -130,7 +132,7 @@ export default function LoginPage() {
           </div>
           <p className="mt-6 text-center text-sm text-muted-foreground">
             ¿No tienes una cuenta?{' '}
-            <Link href="/signup" className="font-medium text-primary hover:underline">
+            <Link href={signupHref} className="font-medium text-primary hover:underline">
               Regístrate aquí
             </Link>
           </p>

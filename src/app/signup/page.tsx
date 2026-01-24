@@ -40,6 +40,10 @@ export default function SignupPage() {
     defaultValues: { nombre: '', email: '', telefono: '', password: '' },
   });
 
+  const redirectUrl = searchParams.get('redirect');
+  const loginHref = redirectUrl ? `/login?redirect=${redirectUrl}` : '/login';
+
+
   async function onSubmit(data: SignupFormValues) {
     try {
       await signUp(data.email, data.password, data.nombre, data.telefono);
@@ -47,7 +51,6 @@ export default function SignupPage() {
         title: '¡Registro exitoso!',
         description: 'Hemos creado tu cuenta. ¡Bienvenido!',
       });
-      const redirectUrl = searchParams.get('redirect');
       router.push(redirectUrl || '/quotes');
     } catch (error: any) {
       let description = 'No se pudo crear tu cuenta. Intenta de nuevo.';
@@ -156,7 +159,7 @@ export default function SignupPage() {
           </Form>
            <p className="mt-6 text-center text-sm text-muted-foreground">
             ¿Ya tienes una cuenta?{' '}
-            <Link href="/login" className="font-medium text-primary hover:underline">
+            <Link href={loginHref} className="font-medium text-primary hover:underline">
               Inicia sesión aquí
             </Link>
           </p>
