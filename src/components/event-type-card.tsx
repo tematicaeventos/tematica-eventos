@@ -25,7 +25,7 @@ export function EventTypeCard({ eventType, className }: EventTypeCardProps) {
   return (
     <Card
       className={cn(
-        'group flex h-full flex-col overflow-hidden transition-all hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2 bg-card border-border/60',
+        'group flex h-full flex-col overflow-hidden transition-all hover:-translate-y-2 bg-card border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20',
         className
       )}
     >
