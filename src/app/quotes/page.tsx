@@ -69,7 +69,7 @@ const categoryIcons: { [key: string]: React.ReactNode } = {
 };
 
 const categoryColors: { [key: string]: string } = {
-    'Sillas y Mesas': 'bg-sky-900/20 border-sky-700/40 shadow-lg shadow-sky-700/20 hover:bg-sky-900/30 hover:-translate-y-1',
+    'Sillas y Mesas': 'bg-[#2d3a34]/20 border-[#dbe0dd]/40 shadow-lg shadow-[#dbe0dd]/20 hover:bg-[#2d3a34]/30 hover:-translate-y-1',
     'Tarimas': 'bg-indigo-900/20 border-indigo-700/40 shadow-lg shadow-indigo-700/20 hover:bg-indigo-900/30 hover:-translate-y-1',
     'Sonido e Iluminación': 'bg-emerald-900/20 border-emerald-700/40 shadow-lg shadow-emerald-700/20 hover:bg-emerald-900/30 hover:-translate-y-1',
     'Música y Animación': 'bg-rose-900/20 border-rose-700/40 shadow-lg shadow-rose-700/20 hover:bg-rose-900/30 hover:-translate-y-1',
