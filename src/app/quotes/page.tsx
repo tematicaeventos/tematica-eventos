@@ -422,7 +422,7 @@ export default function ModularQuotePage() {
                                 <Button
                                   variant="outline"
                                   size="icon"
-                                  className="h-8 w-8"
+                                  className="h-8 w-8 bg-white text-gray-900 hover:bg-gray-200"
                                   onClick={() =>
                                     handleQuantityChange(
                                       service.id,
@@ -447,7 +447,7 @@ export default function ModularQuotePage() {
                                 <Button
                                   variant="outline"
                                   size="icon"
-                                  className="h-8 w-8"
+                                  className="h-8 w-8 bg-white text-gray-900 hover:bg-gray-200"
                                   onClick={() =>
                                     handleQuantityChange(
                                       service.id,
