@@ -61,7 +61,7 @@ export default function PackagedQuotePage() {
     { id: 'decoracion', service: 'Decoración', description: 'Centros de mesa, arco, silla quinceañera y tapete', value: () => 750000, removable: true },
     { id: 'ponque', service: 'Ponqué', description: 'Ponqué temático decorado', value: () => 200000, removable: true },
     { id: 'kit', service: 'Kit especial', description: 'Kit quinceañera (Cupcakes, rosas, cofre, cuadro)', value: () => 150000, removable: true },
-    { id: 'foto', service: 'Fotografía y video', description: '50 fotos y video editado', value: () => 900000, removable: true },
+    { id: 'foto', service: 'Fotografía y video', description: '50 fotos y video editado', value: () => 320000, removable: true },
     { id: 'admin', service: 'Administración', description: 'Planeación, coordinación y montaje del evento', value: () => 0, removable: false },
   ], []);
 
@@ -494,7 +494,7 @@ export default function PackagedQuotePage() {
             </Card>
             
             {/* Included Services */}
-            <Card className="border-primary">
+            <Card className="border-primary/50">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-3"><PartyPopper className="text-primary"/> Paquete Todo Incluido</CardTitle>
                 </CardHeader>
@@ -544,28 +544,28 @@ export default function PackagedQuotePage() {
               </CardHeader>
               <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                    <Label htmlFor="nombre-cliente" className="text-white">Nombre de contacto</Label>
-                    <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
+                    <Label htmlFor="nombre-cliente" className="text-foreground">Nombre de contacto</Label>
+                    <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} className="bg-input border-border text-foreground ring-offset-background focus-visible:ring-ring placeholder:text-muted-foreground" />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="telefono-cliente" className="text-white">Teléfono (WhatsApp)</Label>
-                    <Input id="telefono-cliente" type="tel" placeholder="3001234567" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
+                    <Label htmlFor="telefono-cliente" className="text-foreground">Teléfono (WhatsApp)</Label>
+                    <Input id="telefono-cliente" type="tel" placeholder="3001234567" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="bg-input border-border text-foreground ring-offset-background focus-visible:ring-ring placeholder:text-muted-foreground" />
                 </div>
                  <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="correo-cliente" className="text-white">Correo electrónico</Label>
-                    <Input id="correo-cliente" type="email" placeholder="tu@correo.com" value={correo} onChange={(e) => setCorreo(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
+                    <Label htmlFor="correo-cliente" className="text-foreground">Correo electrónico</Label>
+                    <Input id="correo-cliente" type="email" placeholder="tu@correo.com" value={correo} onChange={(e) => setCorreo(e.target.value)} className="bg-input border-border text-foreground ring-offset-background focus-visible:ring-ring placeholder:text-muted-foreground" />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="direccion-cliente" className="text-white">Dirección</Label>
-                    <Input id="direccion-cliente" placeholder="Carrera 5 # 10-20" value={direccion} onChange={(e) => setDireccion(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
+                    <Label htmlFor="direccion-cliente" className="text-foreground">Dirección</Label>
+                    <Input id="direccion-cliente" placeholder="Carrera 5 # 10-20" value={direccion} onChange={(e) => setDireccion(e.target.value)} className="bg-input border-border text-foreground ring-offset-background focus-visible:ring-ring placeholder:text-muted-foreground" />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="barrio-cliente" className="text-white">Barrio</Label>
-                    <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
+                    <Label htmlFor="barrio-cliente" className="text-foreground">Barrio</Label>
+                    <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} className="bg-input border-border text-foreground ring-offset-background focus-visible:ring-ring placeholder:text-muted-foreground" />
                 </div>
                 <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="observaciones-cliente" className="text-white">Observaciones (opcional)</Label>
-                  <Textarea id="observaciones-cliente" placeholder="Ej: alergias, preferencias especiales, etc." value={observaciones} onChange={(e) => setObservaciones(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
+                  <Label htmlFor="observaciones-cliente" className="text-foreground">Observaciones (opcional)</Label>
+                  <Textarea id="observaciones-cliente" placeholder="Ej: alergias, preferencias especiales, etc." value={observaciones} onChange={(e) => setObservaciones(e.target.value)} className="bg-input border-border text-foreground ring-offset-background focus-visible:ring-ring placeholder:text-muted-foreground" />
                 </div>
               </CardContent>
             </Card>
@@ -580,7 +580,7 @@ export default function PackagedQuotePage() {
                   <PopoverTrigger asChild>
                     <Button
                       variant={"outline"}
-                      className="w-full justify-start text-left font-normal h-12 bg-white border-gray-300 text-gray-900 hover:bg-gray-100 hover:text-gray-900"
+                      className="w-full justify-start text-left font-normal h-12 bg-input border-border text-foreground hover:bg-accent hover:text-accent-foreground"
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {fecha ? format(fecha, "PPP", { locale: es }) : <span>Selecciona una fecha</span>}
@@ -605,12 +605,12 @@ export default function PackagedQuotePage() {
                 </Popover>
                 <div className="flex gap-4">
                   <div className="w-1/2">
-                    <Label htmlFor="hora-inicio" className="text-white">Hora de inicio</Label>
-                      <input type="time" id="hora-inicio" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
+                    <Label htmlFor="hora-inicio" className="text-foreground">Hora de inicio</Label>
+                      <input type="time" id="hora-inicio" className="w-full rounded-md border border-input bg-input p-3 mt-2 text-sm h-12 text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
                   </div>
                   <div className="w-1/2">
-                    <Label htmlFor="hora-fin" className="text-white">Hora de finalización</Label>
-                      <input type="time" id="hora-fin" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
+                    <Label htmlFor="hora-fin" className="text-foreground">Hora de finalización</Label>
+                      <input type="time" id="hora-fin" className="w-full rounded-md border border-input bg-input p-3 mt-2 text-sm h-12 text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
                   </div>
                 </div>
               </CardContent>
