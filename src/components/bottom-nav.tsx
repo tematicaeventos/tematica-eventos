@@ -73,7 +73,7 @@ export function BottomNav() {
                 'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
                 item.isActive
                   ? 'text-primary'
-                  : 'text-muted-foreground hover:text-primary'
+                  : 'text-foreground hover:text-primary'
               )}
             >
               <item.icon className="h-5 w-5" />
@@ -88,7 +88,7 @@ export function BottomNav() {
                 'flex flex-1 flex-col items-center justify-center gap-1 p-2 text-sm font-medium transition-colors',
                 pathname === '/profile'
                   ? 'text-primary'
-                  : 'text-muted-foreground hover:text-primary'
+                  : 'text-foreground hover:text-primary'
               )}
             >
               <User className="h-5 w-5" />
@@ -103,7 +103,7 @@ export function BottomNav() {
                   pathname === '/signup' ||
                   pathname === '/forgot-password'
                   ? 'text-primary'
-                  : 'text-muted-foreground hover:text-primary'
+                  : 'text-foreground hover:text-primary'
               )}
             >
               <User className="h-5 w-5" />

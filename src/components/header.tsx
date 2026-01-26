@@ -46,8 +46,8 @@ const NavLinksContent = ({
           className={cn(
             'flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary',
             isActive
-              ? 'text-foreground'
-              : 'text-muted-foreground'
+              ? 'text-primary'
+              : 'text-foreground'
           )}
           suppressHydrationWarning
         >
