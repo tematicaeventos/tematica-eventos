@@ -83,26 +83,26 @@ export default function ProfilePage() {
             <CardTitle className="text-3xl font-headline">{profile.nombre}</CardTitle>
             <CardDescription>Perfil de Usuario</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6 pt-6">
-            <div className="flex items-center gap-4 p-3 bg-card rounded-md border">
-                <Mail className="h-5 w-5 text-muted-foreground" />
+        <CardContent className="space-y-4 pt-6">
+            <div className="flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-200">
+                <Mail className="h-5 w-5 text-primary" />
                 <div className="text-sm">
-                    <p className="text-muted-foreground">Correo Electrónico</p>
-                    <p className="font-medium">{profile.correo}</p>
+                    <p className="text-gray-500">Correo Electrónico</p>
+                    <p className="font-medium text-gray-900">{profile.correo}</p>
                 </div>
             </div>
-             <div className="flex items-center gap-4 p-3 bg-card rounded-md border">
-                <Phone className="h-5 w-5 text-muted-foreground" />
+             <div className="flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-200">
+                <Phone className="h-5 w-5 text-primary" />
                 <div className="text-sm">
-                    <p className="text-muted-foreground">Teléfono</p>
-                    <p className="font-medium">{profile.telefono}</p>
+                    <p className="text-gray-500">Teléfono</p>
+                    <p className="font-medium text-gray-900">{profile.telefono}</p>
                 </div>
             </div>
-             <div className="flex items-center gap-4 p-3 bg-card rounded-md border">
-                <UserIcon className="h-5 w-5 text-muted-foreground" />
+             <div className="flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-200">
+                <UserIcon className="h-5 w-5 text-primary" />
                  <div className="text-sm">
-                    <p className="text-muted-foreground">Miembro desde</p>
-                    <p className="font-medium">{new Date(profile.fechaRegistro).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p className="text-gray-500">Miembro desde</p>
+                    <p className="font-medium text-gray-900">{new Date(profile.fechaRegistro).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                 </div>
             </div>
            
