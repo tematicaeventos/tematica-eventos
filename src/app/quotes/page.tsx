@@ -69,13 +69,13 @@ const categoryIcons: { [key: string]: React.ReactNode } = {
 };
 
 const categoryColors: { [key: string]: string } = {
-    'Sillas y Mesas': 'bg-sky-900/20 border-sky-700/40 hover:bg-sky-900/30',
-    'Tarimas': 'bg-indigo-900/20 border-indigo-700/40 hover:bg-indigo-900/30',
-    'Sonido e Iluminación': 'bg-emerald-900/20 border-emerald-700/40 hover:bg-emerald-900/30',
-    'Música y Animación': 'bg-rose-900/20 border-rose-700/40 hover:bg-rose-900/30',
-    'Alimentación': 'bg-orange-900/20 border-orange-700/40 hover:bg-orange-900/30',
-    'Bebidas': 'bg-cyan-900/20 border-cyan-700/40 hover:bg-cyan-900/30',
-    'Decoración': 'bg-fuchsia-900/20 border-fuchsia-700/40 hover:bg-fuchsia-900/30',
+    'Sillas y Mesas': 'bg-sky-900/20 border-sky-700/40 shadow-lg shadow-sky-700/20 hover:bg-sky-900/30 hover:-translate-y-1',
+    'Tarimas': 'bg-indigo-900/20 border-indigo-700/40 shadow-lg shadow-indigo-700/20 hover:bg-indigo-900/30 hover:-translate-y-1',
+    'Sonido e Iluminación': 'bg-emerald-900/20 border-emerald-700/40 shadow-lg shadow-emerald-700/20 hover:bg-emerald-900/30 hover:-translate-y-1',
+    'Música y Animación': 'bg-rose-900/20 border-rose-700/40 shadow-lg shadow-rose-700/20 hover:bg-rose-900/30 hover:-translate-y-1',
+    'Alimentación': 'bg-orange-900/20 border-orange-700/40 shadow-lg shadow-orange-700/20 hover:bg-orange-900/30 hover:-translate-y-1',
+    'Bebidas': 'bg-cyan-900/20 border-cyan-700/40 shadow-lg shadow-cyan-700/20 hover:bg-cyan-900/30 hover:-translate-y-1',
+    'Decoración': 'bg-fuchsia-900/20 border-fuchsia-700/40 shadow-lg shadow-fuchsia-700/20 hover:bg-fuchsia-900/30 hover:-translate-y-1',
 };
 
 type SelectedServices = {
@@ -388,7 +388,7 @@ export default function ModularQuotePage() {
                           <div
                             key={service.id}
                             className={cn(
-                              'flex items-center gap-4 p-3 rounded-lg border transition-colors',
+                              'flex items-center gap-4 p-3 rounded-lg border transition-all duration-300',
                               categoryColors[service.categoria] || 'bg-card/50'
                             )}
                           >
