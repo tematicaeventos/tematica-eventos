@@ -42,22 +42,6 @@ import { Textarea } from '@/components/ui/textarea';
 
 const PRECIO_SALON = 1500000;
 
-const baseIncludedServices = [
-  {
-    service: 'MENU Plato Tres Carnes',
-    description: 'Entrada: Ensalada o creeps. Carnes: Cerdo, pollo, carne de res. Acompañamiento: Papa y arroz. Bebida: Jugo natural o gaseosa.',
-  },
-  { service: 'Bebidas Adicionales', description: 'Gaseosa, agua, cóctel ilimitado, champaña y whisky' },
-  { service: 'Personal', description: 'Meseros, chef, barman y maestro de ceremonias' },
-  { service: 'Menaje y mobiliario', description: 'Vajilla, mesas, sillas y mantelería' },
-  { service: 'Sonido y DJ', description: 'Cabinas, luces, DJ y hora loca' },
-  { service: 'Decoración', description: 'Centros de mesa, arco, silla quinceañera y tapete' },
-  { service: 'Ponqué', description: 'Ponqué de 15 años decorado' },
-  { service: 'Kit quinceañera', description: 'Cupcakes, rosas, cofre y cuadro' },
-  { service: 'Fotografía y video', description: '50 fotos y video editado' },
-  { service: 'Administración', description: 'Planeación, coordinación y montaje del evento' },
-];
-
 export default function PackagedQuotePage() {
   const params = useParams<{ eventType: string }>();
   const eventType = useMemo(() => eventTypes.find(e => e.id === params.eventType), [params]);
@@ -66,13 +50,62 @@ export default function PackagedQuotePage() {
   const router = useRouter();
   const { toast } = useToast();
   const pdfRef = useRef<HTMLDivElement>(null);
+  
+  // Services Config
+  const packagedServicesConfig = useMemo(() => [
+    { id: 'menu', service: 'MENU Plato Tres Carnes', description: 'Entrada: Ensalada o creeps. Carnes: Cerdo, pollo, carne de res. Acompañamiento: Papa y arroz. Bebida: Jugo natural o gaseosa.', value: (p: number) => p * 40000, removable: true },
+    { id: 'bebidas', service: 'Bebidas Adicionales', description: 'Gaseosa, agua, cóctel ilimitado, champaña y whisky', value: (p: number) => p * 15000, removable: true },
+    { id: 'personal', service: 'Personal', description: 'Meseros, chef, barman y maestro de ceremonias', value: () => 800000, removable: true },
+    { id: 'menaje', service: 'Menaje y mobiliario', description: 'Vajilla, mesas, sillas y mantelería', value: () => 700000, removable: true },
+    { id: 'sonido', service: 'Sonido y DJ', description: 'Cabinas, luces, DJ y hora loca', value: () => 600000, removable: true },
+    { id: 'decoracion', service: 'Decoración', description: 'Centros de mesa, arco, silla quinceañera y tapete', value: () => 750000, removable: true },
+    { id: 'ponque', service: 'Ponqué', description: 'Ponqué temático decorado', value: () => 200000, removable: true },
+    { id: 'kit', service: 'Kit especial', description: 'Kit quinceañera (Cupcakes, rosas, cofre, cuadro)', value: () => 150000, removable: true },
+    { id: 'foto', service: 'Fotografía y video', description: '50 fotos y video editado', value: () => 900000, removable: true },
+    { id: 'admin', service: 'Administración', description: 'Planeación, coordinación y montaje del evento', value: () => 0, removable: false },
+  ], []);
+
+  const finalPackagedServices = useMemo(() => {
+      if (!eventType) return packagedServicesConfig;
+
+      let services = JSON.parse(JSON.stringify(packagedServicesConfig));
+
+      const kit = services.find((s: any) => s.id === 'kit');
+      const decoracion = services.find((s: any) => s.id === 'decoracion');
+      const ponque = services.find((s: any) => s.id === 'ponque');
+
+      if (eventType.id === 'matrimonios') {
+          if (kit) {
+              kit.service = 'Kit de matrimonio';
+              kit.description = 'Champaña para el brindis, copas decoradas';
+          }
+          if (decoracion) decoracion.description = 'Centros de mesa, arco de bodas y tapete';
+          if (ponque) ponque.description = 'Ponqué de matrimonio decorado';
+      } else if (eventType.id !== '15-anos') {
+          services = services.filter((s: any) => s.id !== 'kit');
+          if (decoracion) decoracion.description = 'Centros de mesa, arco y tapete temático';
+          if (ponque) ponque.description = `Ponqué de ${eventType.title.toLowerCase()} decorado`;
+      }
+      
+      return services;
+  }, [eventType, packagedServicesConfig]);
 
   // Quote State
   const [personas, setPersonas] = useState<number>(100);
   const [incluirSalon, setIncluirSalon] = useState<boolean>(true);
   const [direccionSalon, setDireccionSalon] = useState('');
   const [selectedTheme, setSelectedTheme] = useState<string | null>(null);
+
+  const initialServiceIds = useMemo(() => 
+      new Set(finalPackagedServices.filter(s => s.removable !== false).map(s => s.id))
+  , [finalPackagedServices]);
+
+  const [selectedServices, setSelectedServices] = useState<Set<string>>(initialServiceIds);
   
+  useEffect(() => {
+      setSelectedServices(initialServiceIds);
+  }, [initialServiceIds]);
+
   // Client & Event Details State
   const [nombreCliente, setNombreCliente] = useState('');
   const [telefono, setTelefono] = useState('');
@@ -99,46 +132,6 @@ export default function PackagedQuotePage() {
       setCorreo(profile.correo);
     }
   }, [profile]);
-
-  const includedServices = useMemo(() => {
-    if (!eventType) return baseIncludedServices;
-
-    const services = JSON.parse(JSON.stringify(baseIncludedServices));
-
-    if (eventType.id === 'matrimonios') {
-        const kitIndex = services.findIndex((s: {service: string}) => s.service === 'Kit quinceañera');
-        if (kitIndex !== -1) {
-            services[kitIndex] = { service: 'Kit de matrimonio', description: 'Champaña para el brindis, copas decoradas' };
-        }
-        
-        const decoracionIndex = services.findIndex((s: {service: string}) => s.service === 'Decoración');
-        if (decoracionIndex !== -1) {
-            services[decoracionIndex].description = 'Centros de mesa, arco de bodas y tapete';
-        }
-
-        const ponqueIndex = services.findIndex((s: {service: string}) => s.service === 'Ponqué');
-        if (ponqueIndex !== -1) {
-            services[ponqueIndex].description = 'Ponqué de matrimonio decorado';
-        }
-    } else if (eventType.id !== '15-anos') {
-        const kitIndex = services.findIndex((s: {service: string}) => s.service === 'Kit quinceañera');
-        if (kitIndex !== -1) {
-            services.splice(kitIndex, 1);
-        }
-        
-        const decoracionIndex = services.findIndex((s: {service: string}) => s.service === 'Decoración');
-        if (decoracionIndex !== -1) {
-            services[decoracionIndex].description = 'Centros de mesa, arco y tapete temático';
-        }
-
-        const ponqueIndex = services.findIndex((s: {service: string}) => s.service === 'Ponqué');
-        if (ponqueIndex !== -1) {
-            services[ponqueIndex].description = `Ponqué de ${eventType.title.toLowerCase()} decorado`;
-        }
-    }
-
-    return services;
-  }, [eventType]);
 
   const eventThemes = useMemo(() => {
     if (!eventType) return null;
@@ -170,8 +163,15 @@ export default function PackagedQuotePage() {
     if (!incluirSalon) {
         currentTotal -= PRECIO_SALON;
     }
+
+    finalPackagedServices.forEach(service => {
+        if (service.removable !== false && !selectedServices.has(service.id)) {
+            currentTotal -= service.value(personas);
+        }
+    });
+
     return currentTotal;
-  }, [planBase, incluirSalon]);
+  }, [planBase, incluirSalon, selectedServices, personas, finalPackagedServices]);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('es-CO', {
@@ -224,13 +224,23 @@ export default function PackagedQuotePage() {
 
     setIsSaving(true);
     
+    const deselectedServices = finalPackagedServices
+      .filter(s => s.removable !== false && !selectedServices.has(s.id))
+      .map(s => s.service);
+      
     const quoteItems: QuoteItem[] = [{
         categoria: `Paquete ${eventType.title}`,
-        nombre: `Paquete todo incluido para ${personas} personas`,
+        nombre: `Paquete todo incluido para ${personas} personas ${deselectedServices.length > 0 ? '(con exclusiones)' : ''}`,
         cantidad: 1,
         precioUnitario: total,
         subtotal: total,
     }];
+
+    let finalObservaciones = observaciones.trim();
+    if (deselectedServices.length > 0) {
+      const deselectedString = `Servicios excluidos del paquete: ${deselectedServices.join(', ')}.`;
+      finalObservaciones = finalObservaciones ? `${finalObservaciones}\n${deselectedString}` : deselectedString;
+    }
 
     const quoteData: Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> = {
       usuarioId: user.uid,
@@ -250,7 +260,7 @@ export default function PackagedQuotePage() {
       ...(!incluirSalon && direccionSalon.trim() ? { direccionSalon: direccionSalon.trim() } : {}),
       ...(direccion.trim() ? { direccion: direccion.trim() } : {}),
       ...(barrio.trim() ? { barrio: barrio.trim() } : {}),
-      ...(observaciones.trim() ? { observaciones: observaciones.trim() } : {}),
+      ...(finalObservaciones ? { observaciones: finalObservaciones } : {}),
     };
 
     try {
@@ -268,16 +278,24 @@ export default function PackagedQuotePage() {
       message += `*Teléfono:* ${telefono}\n`;
       message += `*Correo:* ${correo}\n`;
       if (direccion) message += `*Dirección:* ${direccion}${barrio ? `, ${barrio}` : ''}\n`;
-      if (observaciones.trim()) message += `*Observaciones:* ${observaciones.trim()}\n`;
+      if (observaciones.trim()) message += `*Observaciones del cliente:* ${observaciones.trim()}\n`;
       message += `\n*Cotización ID:* ${newQuoteId}\n`;
       message += `*Fecha del Evento:* ${format(fecha, "PPP", { locale: es })}\n`;
       message += `*Horario:* De ${horaInicio} a ${horaFin}\n`;
       message += `*Número de personas:* ${personas}\n`;
       if (selectedTheme) message += `*Temática:* ${selectedTheme}\n`;
+
       message += `\n*INCLUYE:*\n`;
-      includedServices.forEach((item: any) => {
-          message += `• ${item.service}${item.description ? `: ${item.description}` : ''}\n`;
+      finalPackagedServices.forEach((item: any) => {
+          if (selectedServices.has(item.id)) {
+            message += `• ${item.service}\n`;
+          }
       });
+      
+      if(deselectedServices.length > 0) {
+        message += `\n*SERVICIOS EXCLUIDOS:*\n${deselectedServices.map(s => `• ${s}`).join('\n')}\n`;
+      }
+      
       if (incluirSalon) {
         message += `\n*Salón de eventos:* Sí, incluido en el precio\n\n`;
       } else if (direccionSalon.trim()) {
@@ -372,7 +390,7 @@ export default function PackagedQuotePage() {
 
             {/* Theme Selection */}
             {eventThemes && (
-              <Card className="bg-[hsl(var(--luminous-blue-bg))] border-primary">
+              <Card className="border-primary">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3">
                     <Paintbrush className="text-primary" /> Elige una Temática
@@ -462,13 +480,39 @@ export default function PackagedQuotePage() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-3"><PartyPopper className="text-primary"/> Paquete Todo Incluido</CardTitle>
                 </CardHeader>
-                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                  {includedServices.map((item: any) => (
-                    <div key={item.service} className="flex items-start gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-primary mt-1 shrink-0" />
-                      <div>
-                        <p className="font-semibold text-white">{item.service}</p>
-                        <p className="text-sm text-white">{item.description}</p>
+                <CardContent className="space-y-4">
+                  {finalPackagedServices.map((item) => (
+                    <div key={item.id} className="flex items-start gap-4 p-3 rounded-lg border bg-card/50">
+                      <Checkbox
+                        id={`service-${item.id}`}
+                        checked={selectedServices.has(item.id)}
+                        onCheckedChange={(checked) => {
+                          setSelectedServices(prev => {
+                            const newSelection = new Set(prev);
+                            if (checked) {
+                              newSelection.add(item.id);
+                            } else {
+                              newSelection.delete(item.id);
+                            }
+                            return newSelection;
+                          });
+                        }}
+                        disabled={item.removable === false}
+                        className="h-5 w-5 mt-1"
+                      />
+                      <div className="grid gap-1.5 leading-none flex-1">
+                        <Label
+                          htmlFor={`service-${item.id}`}
+                          className="font-semibold text-base cursor-pointer text-white"
+                        >
+                          {item.service}
+                        </Label>
+                        <p className="text-sm text-muted-foreground">{item.description}</p>
+                         {item.removable !== false && !selectedServices.has(item.id) && (
+                            <p className="text-sm font-bold text-red-500">
+                                -{formatCurrency(item.value(personas))}
+                            </p>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -476,40 +520,40 @@ export default function PackagedQuotePage() {
             </Card>
             
             {/* Client Details */}
-            <Card className="border-primary">
+            <Card className="border-primary bg-background">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
               </CardHeader>
               <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                    <Label htmlFor="nombre-cliente">Nombre de contacto</Label>
+                    <Label htmlFor="nombre-cliente" className="text-white">Nombre de contacto</Label>
                     <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="telefono-cliente">Teléfono (WhatsApp)</Label>
+                    <Label htmlFor="telefono-cliente" className="text-white">Teléfono (WhatsApp)</Label>
                     <Input id="telefono-cliente" type="tel" placeholder="3001234567" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                  <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="correo-cliente">Correo electrónico</Label>
+                    <Label htmlFor="correo-cliente" className="text-white">Correo electrónico</Label>
                     <Input id="correo-cliente" type="email" placeholder="tu@correo.com" value={correo} onChange={(e) => setCorreo(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="direccion-cliente">Dirección</Label>
+                    <Label htmlFor="direccion-cliente" className="text-white">Dirección</Label>
                     <Input id="direccion-cliente" placeholder="Carrera 5 # 10-20" value={direccion} onChange={(e) => setDireccion(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="barrio-cliente">Barrio</Label>
+                    <Label htmlFor="barrio-cliente" className="text-white">Barrio</Label>
                     <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="observaciones-cliente">Observaciones (opcional)</Label>
+                  <Label htmlFor="observaciones-cliente" className="text-white">Observaciones (opcional)</Label>
                   <Textarea id="observaciones-cliente" placeholder="Ej: alergias, preferencias especiales, etc." value={observaciones} onChange={(e) => setObservaciones(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
               </CardContent>
             </Card>
 
             {/* Date and Time */}
-            <Card className="border-primary">
+            <Card className="border-primary bg-background">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3"><CalendarIcon className="text-primary"/> Elige una Fecha</CardTitle>
               </CardHeader>
@@ -543,11 +587,11 @@ export default function PackagedQuotePage() {
                 </Popover>
                 <div className="flex gap-4">
                   <div className="w-1/2">
-                    <Label htmlFor="hora-inicio">Hora de inicio</Label>
+                    <Label htmlFor="hora-inicio" className="text-white">Hora de inicio</Label>
                       <input type="time" id="hora-inicio" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
                   </div>
                   <div className="w-1/2">
-                    <Label htmlFor="hora-fin">Hora de finalización</Label>
+                    <Label htmlFor="hora-fin" className="text-white">Hora de finalización</Label>
                       <input type="time" id="hora-fin" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
                   </div>
                 </div>
