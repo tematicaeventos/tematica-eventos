@@ -38,6 +38,7 @@ import type { Quote, QuoteItem } from '@/lib/types';
 import QuotePDFDocument from '@/components/QuotePDFDocument';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { QuoteSummaryBar } from '@/components/quote-summary-bar';
 
 
 const PRECIO_SALON = 1500000;
@@ -50,6 +51,7 @@ export default function PackagedQuotePage() {
   const router = useRouter();
   const { toast } = useToast();
   const pdfRef = useRef<HTMLDivElement>(null);
+  const summaryRef = useRef<HTMLDivElement>(null);
   
   // Services Config
   const packagedServicesConfig = useMemo(() => [
@@ -198,6 +200,10 @@ export default function PackagedQuotePage() {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(value);
+  };
+  
+  const handleScrollToSummary = () => {
+    summaryRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   async function handleSaveAndRedirect() {
@@ -371,12 +377,13 @@ export default function PackagedQuotePage() {
 
   return (
     <>
+      <QuoteSummaryBar total={total} onViewQuoteClick={handleScrollToSummary} />
       <div ref={pdfRef} className="fixed -left-[9999px] top-0 z-[-1]">
         {generatedQuote && generatedQuoteId && (
           <QuotePDFDocument quoteId={generatedQuoteId} quote={generatedQuote as Quote} />
         )}
       </div>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 pt-20 pb-8 md:py-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight font-headline">
             Cotizador de Paquetes para {eventType.title}
@@ -542,7 +549,7 @@ export default function PackagedQuotePage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
               </CardHeader>
-              <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-background">
                 <div className="space-y-2">
                     <Label htmlFor="nombre-cliente" className="text-foreground">Nombre de contacto</Label>
                     <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
@@ -575,7 +582,7 @@ export default function PackagedQuotePage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-3"><CalendarIcon className="text-primary"/> Elige una Fecha</CardTitle>
               </CardHeader>
-              <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-background">
                 <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                   <PopoverTrigger asChild>
                     <Button
@@ -619,7 +626,7 @@ export default function PackagedQuotePage() {
           </div>
 
           {/* Quote Summary */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1" ref={summaryRef}>
             <Card className="sticky top-24 border-primary">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3">

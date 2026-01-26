@@ -55,6 +55,7 @@ import type {
 import { services as allServices } from '@/lib/services-data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import QuotePDFDocument from '@/components/QuotePDFDocument';
+import { QuoteSummaryBar } from '@/components/quote-summary-bar';
 
 const categoryIcons: { [key: string]: React.ReactNode } = {
   'Sillas y Mesas': <Armchair className="h-5 w-5" />,
@@ -78,6 +79,7 @@ export default function ModularQuotePage() {
   const router = useRouter();
   const { toast } = useToast();
   const pdfRef = useRef<HTMLDivElement>(null);
+  const summaryRef = useRef<HTMLDivElement>(null);
 
   // Quote State
   const [selectedServices, setSelectedServices] = useState<SelectedServices>({});
@@ -175,6 +177,11 @@ export default function ModularQuotePage() {
     () => quoteItems.reduce((acc, item) => acc + item.subtotal, 0),
     [quoteItems]
   );
+  
+  const handleScrollToSummary = () => {
+    summaryRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
 
   async function handleContinueToReservation() {
     if (!user) {
@@ -318,12 +325,13 @@ export default function ModularQuotePage() {
 
   return (
     <>
+       <QuoteSummaryBar total={total} onViewQuoteClick={handleScrollToSummary} />
        <div ref={pdfRef} className="fixed -left-[9999px] top-0 z-[-1]">
         {generatedQuote && generatedQuoteId && (
           <QuotePDFDocument quoteId={generatedQuoteId} quote={generatedQuote as Quote} />
         )}
       </div>
-      <div>
+      <div className="pt-16 md:pt-0">
         <section className="relative w-full h-[40vh] bg-black flex flex-col justify-center items-center text-center px-4">
           {bannerImage && (
             <Image
@@ -447,7 +455,7 @@ export default function ModularQuotePage() {
             </div>
 
             {/* Date and Quote Summary */}
-            <div className="lg:col-span-1 space-y-8">
+            <div className="lg:col-span-1 space-y-8" ref={summaryRef}>
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
