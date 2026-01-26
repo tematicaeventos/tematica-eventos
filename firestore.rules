@@ -16,8 +16,8 @@ service cloud.firestore {
     }
 
     match /affiliates/{userId} {
-      allow read, create: if isOwner(userId);
-      allow update, delete: if false;
+      allow read, create, update: if isOwner(userId);
+      allow delete: if false;
     }
 
     match /users/{userId}/quotes/{quoteId} {
@@ -49,6 +49,31 @@ service cloud.firestore {
       // Allow authenticated users to create reservations (to be validated further)
       allow create: if isSignedIn();
       allow update, delete: if false;
+    }
+
+    match /planesBase/{docId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+
+    match /comidas/{docId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+
+    match /bebidas/{docId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+
+    match /licores/{docId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
+    }
+
+    match /extras/{docId} {
+      allow get, list: if true;
+      allow create, update, delete: if false;
     }
   }
 }
