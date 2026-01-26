@@ -66,29 +66,47 @@ export default function PackagedQuotePage() {
   ], []);
 
   const finalPackagedServices = useMemo(() => {
-      if (!eventType) return packagedServicesConfig;
+    if (!eventType) return packagedServicesConfig;
 
-      let services = JSON.parse(JSON.stringify(packagedServicesConfig));
+    // Use map for a shallow copy, preserving functions.
+    const baseServices = packagedServicesConfig.map(s => ({ ...s }));
 
-      const kit = services.find((s: any) => s.id === 'kit');
-      const decoracion = services.find((s: any) => s.id === 'decoracion');
-      const ponque = services.find((s: any) => s.id === 'ponque');
+    if (eventType.id === 'matrimonios') {
+        return baseServices.map(service => {
+            const newService = { ...service };
+            if (newService.id === 'kit') {
+                newService.service = 'Kit de matrimonio';
+                newService.description = 'Champaña para el brindis, copas decoradas';
+            }
+            if (newService.id === 'decoracion') {
+                newService.description = 'Centros de mesa, arco de bodas y tapete';
+            }
+            if (newService.id === 'ponque') {
+                newService.description = 'Ponqué de matrimonio decorado';
+            }
+            return newService;
+        });
+    }
 
-      if (eventType.id === 'matrimonios') {
-          if (kit) {
-              kit.service = 'Kit de matrimonio';
-              kit.description = 'Champaña para el brindis, copas decoradas';
-          }
-          if (decoracion) decoracion.description = 'Centros de mesa, arco de bodas y tapete';
-          if (ponque) ponque.description = 'Ponqué de matrimonio decorado';
-      } else if (eventType.id !== '15-anos') {
-          services = services.filter((s: any) => s.id !== 'kit');
-          if (decoracion) decoracion.description = 'Centros de mesa, arco y tapete temático';
-          if (ponque) ponque.description = `Ponqué de ${eventType.title.toLowerCase()} decorado`;
-      }
-      
-      return services;
-  }, [eventType, packagedServicesConfig]);
+    if (eventType.id !== '15-anos') {
+        // Filter first, then map to modify.
+        return baseServices
+            .filter(s => s.id !== 'kit')
+            .map(service => {
+                const newService = { ...service };
+                if (newService.id === 'decoracion') {
+                    newService.description = 'Centros de mesa, arco y tapete temático';
+                }
+                if (newService.id === 'ponque') {
+                    newService.description = `Ponqué de ${eventType.title.toLowerCase()} decorado`;
+                }
+                return newService;
+            });
+    }
+
+    // For '15-anos', return the original config (or a copy)
+    return baseServices;
+}, [eventType, packagedServicesConfig]);
 
   // Quote State
   const [personas, setPersonas] = useState<number>(100);
@@ -441,7 +459,7 @@ export default function PackagedQuotePage() {
             )}
 
             {/* Salon Selection */}
-            <Card className="bg-white text-gray-900 border-primary">
+            <Card className="border-primary">
               <CardHeader>
                   <CardTitle className="flex items-center gap-3"><Building className="text-primary"/> Salón de Eventos</CardTitle>
               </CardHeader>
@@ -507,7 +525,7 @@ export default function PackagedQuotePage() {
                         >
                           {item.service}
                         </Label>
-                        <p className="text-sm text-muted-foreground">{item.description}</p>
+                        <p className="text-sm text-white">{item.description}</p>
                          {item.removable !== false && !selectedServices.has(item.id) && (
                             <p className="text-sm font-bold text-red-500">
                                 -{formatCurrency(item.value(personas))}
