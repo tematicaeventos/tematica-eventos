@@ -43,6 +43,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { cn } from '@/lib/utils';
 
 import { useUser } from '@/firebase/auth/use-user';
 import { saveQuote } from '@/firebase/firestore';
@@ -65,6 +66,16 @@ const categoryIcons: { [key: string]: React.ReactNode } = {
   Alimentación: <UtensilsCrossed className="h-5 w-5" />,
   Bebidas: <CupSoda className="h-5 w-5" />,
   Decoración: <Sparkles className="h-5 w-5" />,
+};
+
+const categoryColors: { [key: string]: string } = {
+    'Sillas y Mesas': 'bg-sky-900/20 border-sky-700/40 hover:bg-sky-900/30',
+    'Tarimas': 'bg-indigo-900/20 border-indigo-700/40 hover:bg-indigo-900/30',
+    'Sonido e Iluminación': 'bg-emerald-900/20 border-emerald-700/40 hover:bg-emerald-900/30',
+    'Música y Animación': 'bg-rose-900/20 border-rose-700/40 hover:bg-rose-900/30',
+    'Alimentación': 'bg-orange-900/20 border-orange-700/40 hover:bg-orange-900/30',
+    'Bebidas': 'bg-cyan-900/20 border-cyan-700/40 hover:bg-cyan-900/30',
+    'Decoración': 'bg-fuchsia-900/20 border-fuchsia-700/40 hover:bg-fuchsia-900/30',
 };
 
 type SelectedServices = {
@@ -376,7 +387,10 @@ export default function ModularQuotePage() {
                         {services.map((service) => (
                           <div
                             key={service.id}
-                            className="flex items-center gap-4 p-3 rounded-lg border bg-card/50"
+                            className={cn(
+                              'flex items-center gap-4 p-3 rounded-lg border transition-colors',
+                              categoryColors[service.categoria] || 'bg-card/50'
+                            )}
                           >
                             <Checkbox
                               id={service.id}
