@@ -626,8 +626,8 @@ export default function PackagedQuotePage() {
           </div>
 
           {/* Quote Summary */}
-          <div className="lg:col-span-1" ref={summaryRef}>
-            <Card className="sticky top-24 border-primary">
+          <div className="lg:col-span-1 lg:sticky lg:top-24" ref={summaryRef}>
+            <Card className="border-primary">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3">
                   <ShoppingCart className="text-primary" />
