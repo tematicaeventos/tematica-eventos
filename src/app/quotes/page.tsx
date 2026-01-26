@@ -342,7 +342,7 @@ export default function ModularQuotePage() {
           <QuotePDFDocument quoteId={generatedQuoteId} quote={generatedQuote as Quote} />
         )}
       </div>
-      <div className="pt-16 md:pt-0">
+      <div className="pt-16 md:pt-0 bg-white text-gray-900">
         <section className="relative w-full h-[40vh] bg-black flex flex-col justify-center items-center text-center px-4">
           {bannerImage && (
             <Image
@@ -398,7 +398,7 @@ export default function ModularQuotePage() {
                               onCheckedChange={(checked) =>
                                 handleServiceSelection(service, !!checked)
                               }
-                              className="h-5 w-5"
+                              className="h-5 w-5 border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                             />
                             <div className="flex-1 grid gap-1.5 leading-none">
                               <Label
@@ -407,12 +407,12 @@ export default function ModularQuotePage() {
                               >
                                 {service.nombre}
                               </Label>
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-sm text-gray-600">
                                 {service.descripcion}
                               </p>
                               <p className="text-sm font-bold text-primary">
                                 {formatCurrency(service.precioUnitario)}{' '}
-                                <span className="font-normal text-xs text-muted-foreground">
+                                <span className="font-normal text-xs text-gray-500">
                                   / {service.tipoCobro}
                                 </span>
                               </p>
@@ -470,43 +470,43 @@ export default function ModularQuotePage() {
 
             {/* Date and Quote Summary */}
             <div className="lg:col-span-1 space-y-8 lg:sticky lg:top-24">
-                <Card className="bg-background">
+                <Card className="bg-slate-50">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
                   </CardHeader>
-                  <CardContent className="grid grid-cols-1 gap-4 bg-background">
+                  <CardContent className="grid grid-cols-1 gap-4">
                     <div className="space-y-2">
-                        <Label htmlFor="nombre-cliente" className="text-foreground">Nombre de contacto</Label>
+                        <Label htmlFor="nombre-cliente">Nombre de contacto</Label>
                         <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="telefono-cliente" className="text-foreground">Teléfono (WhatsApp)</Label>
+                        <Label htmlFor="telefono-cliente">Teléfono (WhatsApp)</Label>
                         <Input id="telefono-cliente" type="tel" placeholder="3001234567" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="correo-cliente" className="text-foreground">Correo electrónico</Label>
+                        <Label htmlFor="correo-cliente">Correo electrónico</Label>
                         <Input id="correo-cliente" type="email" placeholder="tu@correo.com" value={correo} onChange={(e) => setCorreo(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="direccion-cliente" className="text-foreground">Dirección</Label>
+                        <Label htmlFor="direccion-cliente">Dirección</Label>
                         <Input id="direccion-cliente" placeholder="Carrera 5 # 10-20" value={direccion} onChange={(e) => setDireccion(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="barrio-cliente" className="text-foreground">Barrio</Label>
+                        <Label htmlFor="barrio-cliente">Barrio</Label>
                         <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                     </div>
                      <div className="space-y-2">
-                        <Label htmlFor="observaciones-modular" className="text-foreground">Observaciones (opcional)</Label>
+                        <Label htmlFor="observaciones-modular">Observaciones (opcional)</Label>
                         <Textarea id="observaciones-modular" placeholder="Ej: alergias, preferencias especiales, etc." value={observaciones} onChange={(e) => setObservaciones(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-background">
+                <Card className="bg-slate-50">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3"><CalendarIcon className="text-primary"/> Elige una Fecha</CardTitle>
                   </CardHeader>
-                  <CardContent className="grid grid-cols-1 gap-4 bg-background">
+                  <CardContent className="grid grid-cols-1 gap-4">
                     <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                       <PopoverTrigger asChild>
                         <Button
@@ -536,23 +536,23 @@ export default function ModularQuotePage() {
                     </Popover>
                     <div className="flex gap-4">
                       <div className="w-1/2">
-                        <Label htmlFor="hora-inicio" className="text-foreground">Hora de inicio</Label>
+                        <Label htmlFor="hora-inicio">Hora de inicio</Label>
                           <input type="time" id="hora-inicio" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-background" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
                       </div>
                       <div className="w-1/2">
-                        <Label htmlFor="hora-fin" className="text-foreground">Hora de finalización</Label>
+                        <Label htmlFor="hora-fin">Hora de finalización</Label>
                           <input type="time" id="hora-fin" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-background" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-background">
+                <Card className="bg-slate-50">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3"><MapPin className="text-primary"/> Lugar del Evento</CardTitle>
                   </CardHeader>
-                  <CardContent className="bg-background">
-                      <Label htmlFor="direccion-salon" className="text-foreground">Si ya tienes un lugar, introduce la dirección</Label>
+                  <CardContent>
+                      <Label htmlFor="direccion-salon">Si ya tienes un lugar, introduce la dirección</Label>
                       <Input 
                           id="direccion-salon" 
                           className="mt-2 bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500"
@@ -563,7 +563,7 @@ export default function ModularQuotePage() {
                   </CardContent>
                 </Card>
 
-              <Card ref={summaryRef}>
+              <Card ref={summaryRef} className="bg-slate-50">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3">
                     <ShoppingCart className="text-primary" />
@@ -579,7 +579,7 @@ export default function ModularQuotePage() {
                       >
                         <div>
                           <p className="font-medium">{item.nombre}</p>
-                          <p className="text-muted-foreground">
+                          <p className="text-gray-600">
                             {item.cantidad} x {formatCurrency(item.precioUnitario)}
                           </p>
                         </div>
@@ -589,7 +589,7 @@ export default function ModularQuotePage() {
                       </div>
                     ))
                   ) : (
-                    <p className="text-muted-foreground text-center py-8">
+                    <p className="text-gray-600 text-center py-8">
                       Selecciona servicios para ver tu cotización.
                     </p>
                   )}
