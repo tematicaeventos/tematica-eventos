@@ -133,7 +133,7 @@ export default function EditAffiliatePage() {
 
     return (
         <div className="container max-w-3xl mx-auto py-8 md:py-12">
-            <Card>
+            <Card className="bg-background">
                 <CardHeader>
                     <Button asChild variant="ghost" size="sm" className="mb-4 w-fit -ml-3">
                       <Link href="/profile"><ArrowLeft className="mr-2 h-4 w-4" /> Volver al Perfil</Link>
@@ -147,21 +147,21 @@ export default function EditAffiliatePage() {
                              <section className="space-y-4">
                                 <h3 className="text-lg font-semibold flex items-center gap-2"><UserIcon className="text-primary h-5 w-5"/> Datos Personales</h3>
                                 <div className="grid md:grid-cols-2 gap-4">
-                                    <FormField control={form.control} name="firstName" render={({ field }) => <FormItem><FormLabel>Nombre</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-                                    <FormField control={form.control} name="lastName" render={({ field }) => <FormItem><FormLabel>Apellidos</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-                                    <FormField control={form.control} name="documentId" render={({ field }) => <FormItem><FormLabel>Documento de identidad</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-                                    <FormField control={form.control} name="email" render={({ field }) => <FormItem><FormLabel>Correo electrónico</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>} />
-                                    <FormField control={form.control} name="phone" render={({ field }) => <FormItem><FormLabel>Teléfono</FormLabel><FormControl><Input type="tel" {...field} /></FormControl><FormMessage /></FormItem>} />
+                                    <FormField control={form.control} name="firstName" render={({ field }) => <FormItem><FormLabel className="text-foreground">Nombre</FormLabel><FormControl><Input {...field} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" /></FormControl><FormMessage /></FormItem>} />
+                                    <FormField control={form.control} name="lastName" render={({ field }) => <FormItem><FormLabel className="text-foreground">Apellidos</FormLabel><FormControl><Input {...field} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" /></FormControl><FormMessage /></FormItem>} />
+                                    <FormField control={form.control} name="documentId" render={({ field }) => <FormItem><FormLabel className="text-foreground">Documento de identidad</FormLabel><FormControl><Input {...field} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" /></FormControl><FormMessage /></FormItem>} />
+                                    <FormField control={form.control} name="email" render={({ field }) => <FormItem><FormLabel className="text-foreground">Correo electrónico</FormLabel><FormControl><Input type="email" {...field} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" /></FormControl><FormMessage /></FormItem>} />
+                                    <FormField control={form.control} name="phone" render={({ field }) => <FormItem><FormLabel className="text-foreground">Teléfono</FormLabel><FormControl><Input type="tel" {...field} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" /></FormControl><FormMessage /></FormItem>} />
                                 </div>
                             </section>
 
                             <section className="space-y-4">
                                 <h3 className="text-lg font-semibold flex items-center gap-2"><Home className="text-primary h-5 w-5"/> Dirección</h3>
                                 <div className="grid md:grid-cols-2 gap-4">
-                                    <FormField control={form.control} name="country" render={({ field }) => <FormItem><FormLabel>País</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-                                    <FormField control={form.control} name="city" render={({ field }) => <FormItem><FormLabel>Ciudad</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                    <FormField control={form.control} name="country" render={({ field }) => <FormItem><FormLabel className="text-foreground">País</FormLabel><FormControl><Input {...field} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" /></FormControl><FormMessage /></FormItem>} />
+                                    <FormField control={form.control} name="city" render={({ field }) => <FormItem><FormLabel className="text-foreground">Ciudad</FormLabel><FormControl><Input {...field} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" /></FormControl><FormMessage /></FormItem>} />
                                     <div className="md:col-span-2">
-                                    <FormField control={form.control} name="address" render={({ field }) => <FormItem><FormLabel>Dirección completa</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                    <FormField control={form.control} name="address" render={({ field }) => <FormItem><FormLabel className="text-foreground">Dirección completa</FormLabel><FormControl><Input {...field} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" /></FormControl><FormMessage /></FormItem>} />
                                     </div>
                                 </div>
                             </section>
@@ -170,12 +170,12 @@ export default function EditAffiliatePage() {
                                 <h3 className="text-lg font-semibold flex items-center gap-2"><Banknote className="text-primary h-5 w-5"/> Datos de Pago</h3>
                                 <p className="text-sm text-muted-foreground">Estos datos solo se usarán para el pago de comisiones.</p>
                                 <div className="grid md:grid-cols-2 gap-4">
-                                    <FormField control={form.control} name="paymentAccountHolder" render={({ field }) => <FormItem><FormLabel>Nombre del titular de la cuenta</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-                                    <FormField control={form.control} name="paymentAccountType" render={({ field }) => <FormItem><FormLabel>Tipo de cuenta</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger><SelectValue placeholder="Selecciona..." /></SelectTrigger></FormControl><SelectContent><SelectItem value="ahorros">Ahorros</SelectItem><SelectItem value="corriente">Corriente</SelectItem></SelectContent></Select><FormMessage /></FormItem>} />
-                                    <FormField control={form.control} name="paymentBank" render={({ field }) => <FormItem><FormLabel>Banco</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-                                    <FormField control={form.control} name="paymentAccountNumber" render={({ field }) => <FormItem><FormLabel>Número de cuenta</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                    <FormField control={form.control} name="paymentAccountHolder" render={({ field }) => <FormItem><FormLabel className="text-foreground">Nombre del titular de la cuenta</FormLabel><FormControl><Input {...field} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" /></FormControl><FormMessage /></FormItem>} />
+                                    <FormField control={form.control} name="paymentAccountType" render={({ field }) => <FormItem><FormLabel className="text-foreground">Tipo de cuenta</FormLabel><Select onValueChange={field.onChange} defaultValue={field.value}><FormControl><SelectTrigger className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary"><SelectValue placeholder="Selecciona..." /></SelectTrigger></FormControl><SelectContent><SelectItem value="ahorros">Ahorros</SelectItem><SelectItem value="corriente">Corriente</SelectItem></SelectContent></Select><FormMessage /></FormItem>} />
+                                    <FormField control={form.control} name="paymentBank" render={({ field }) => <FormItem><FormLabel className="text-foreground">Banco</FormLabel><FormControl><Input {...field} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" /></FormControl><FormMessage /></FormItem>} />
+                                    <FormField control={form.control} name="paymentAccountNumber" render={({ field }) => <FormItem><FormLabel className="text-foreground">Número de cuenta</FormLabel><FormControl><Input {...field} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" /></FormControl><FormMessage /></FormItem>} />
                                     <div className="md:col-span-2">
-                                    <FormField control={form.control} name="paymentAlternative" render={({ field }) => <FormItem><FormLabel>Medio de pago alternativo (opcional)</FormLabel><FormControl><Input placeholder="Ej: Nequi 3001234567" {...field} /></FormControl><FormMessage /></FormItem>} />
+                                    <FormField control={form.control} name="paymentAlternative" render={({ field }) => <FormItem><FormLabel className="text-foreground">Medio de pago alternativo (opcional)</FormLabel><FormControl><Input placeholder="Ej: Nequi 3001234567" {...field} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" /></FormControl><FormMessage /></FormItem>} />
                                     </div>
                                 </div>
                             </section>

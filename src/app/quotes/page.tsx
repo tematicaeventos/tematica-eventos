@@ -456,48 +456,48 @@ export default function ModularQuotePage() {
 
             {/* Date and Quote Summary */}
             <div className="lg:col-span-1 space-y-8 lg:sticky lg:top-24" ref={summaryRef}>
-                <Card>
+                <Card className="bg-background">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
                   </CardHeader>
-                  <CardContent className="grid grid-cols-1 gap-4">
+                  <CardContent className="grid grid-cols-1 gap-4 bg-background">
                     <div className="space-y-2">
-                        <Label htmlFor="nombre-cliente">Nombre de contacto</Label>
-                        <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} />
+                        <Label htmlFor="nombre-cliente" className="text-foreground">Nombre de contacto</Label>
+                        <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="telefono-cliente">Teléfono (WhatsApp)</Label>
-                        <Input id="telefono-cliente" type="tel" placeholder="3001234567" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+                        <Label htmlFor="telefono-cliente" className="text-foreground">Teléfono (WhatsApp)</Label>
+                        <Input id="telefono-cliente" type="tel" placeholder="3001234567" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="correo-cliente">Correo electrónico</Label>
-                        <Input id="correo-cliente" type="email" placeholder="tu@correo.com" value={correo} onChange={(e) => setCorreo(e.target.value)} />
+                        <Label htmlFor="correo-cliente" className="text-foreground">Correo electrónico</Label>
+                        <Input id="correo-cliente" type="email" placeholder="tu@correo.com" value={correo} onChange={(e) => setCorreo(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="direccion-cliente">Dirección</Label>
-                        <Input id="direccion-cliente" placeholder="Carrera 5 # 10-20" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
+                        <Label htmlFor="direccion-cliente" className="text-foreground">Dirección</Label>
+                        <Input id="direccion-cliente" placeholder="Carrera 5 # 10-20" value={direccion} onChange={(e) => setDireccion(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="barrio-cliente">Barrio</Label>
-                        <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} />
+                        <Label htmlFor="barrio-cliente" className="text-foreground">Barrio</Label>
+                        <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                     </div>
                      <div className="space-y-2">
-                        <Label htmlFor="observaciones-modular">Observaciones (opcional)</Label>
-                        <Textarea id="observaciones-modular" placeholder="Ej: alergias, preferencias especiales, etc." value={observaciones} onChange={(e) => setObservaciones(e.target.value)} />
+                        <Label htmlFor="observaciones-modular" className="text-foreground">Observaciones (opcional)</Label>
+                        <Textarea id="observaciones-modular" placeholder="Ej: alergias, preferencias especiales, etc." value={observaciones} onChange={(e) => setObservaciones(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="bg-background">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3"><CalendarIcon className="text-primary"/> Elige una Fecha</CardTitle>
                   </CardHeader>
-                  <CardContent className="grid grid-cols-1 gap-4">
+                  <CardContent className="grid grid-cols-1 gap-4 bg-background">
                     <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                       <PopoverTrigger asChild>
                         <Button
                           variant={"outline"}
-                          className="w-full justify-start text-left font-normal h-12"
+                          className="w-full justify-start text-left font-normal h-12 bg-white border-gray-300 text-gray-900 hover:bg-gray-100"
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
                           {fecha ? format(fecha, "PPP", { locale: es }) : <span>Selecciona una fecha</span>}
@@ -522,26 +522,26 @@ export default function ModularQuotePage() {
                     </Popover>
                     <div className="flex gap-4">
                       <div className="w-1/2">
-                        <Label htmlFor="hora-inicio">Hora de inicio</Label>
-                          <input type="time" id="hora-inicio" className="w-full bg-input border border-border rounded-md p-3 mt-2 text-sm h-12" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
+                        <Label htmlFor="hora-inicio" className="text-foreground">Hora de inicio</Label>
+                          <input type="time" id="hora-inicio" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-background" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
                       </div>
                       <div className="w-1/2">
-                        <Label htmlFor="hora-fin">Hora de finalización</Label>
-                          <input type="time" id="hora-fin" className="w-full bg-input border border-border rounded-md p-3 mt-2 text-sm h-12" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
+                        <Label htmlFor="hora-fin" className="text-foreground">Hora de finalización</Label>
+                          <input type="time" id="hora-fin" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-background" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="bg-background">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3"><MapPin className="text-primary"/> Lugar del Evento</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                      <Label htmlFor="direccion-salon">Si ya tienes un lugar, introduce la dirección</Label>
+                  <CardContent className="bg-background">
+                      <Label htmlFor="direccion-salon" className="text-foreground">Si ya tienes un lugar, introduce la dirección</Label>
                       <Input 
                           id="direccion-salon" 
-                          className="mt-2"
+                          className="mt-2 bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500"
                           placeholder="Ej: Calle 5 # 10-20, Bogotá"
                           value={direccionSalon}
                           onChange={(e) => setDireccionSalon(e.target.value)}
