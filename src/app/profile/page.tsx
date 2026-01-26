@@ -138,7 +138,7 @@ export default function ProfilePage() {
                           <Share2 className="mr-2 h-4 w-4"/>
                           Compartir Enlace
                       </Button>
-                       <Button asChild variant="outline" className="w-full">
+                       <Button asChild variant="outline" className="w-full bg-white text-blue-700 border-blue-700 hover:bg-gray-100 hover:text-blue-700">
                           <Link href="/profile/affiliate/edit">
                               <FilePenLine className="mr-2 h-4 w-4" />
                               Ver y Editar mis Datos
