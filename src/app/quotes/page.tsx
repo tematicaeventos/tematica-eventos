@@ -469,7 +469,7 @@ export default function ModularQuotePage() {
             </div>
 
             {/* Date and Quote Summary */}
-            <div className="lg:col-span-1 space-y-8 lg:sticky lg:top-24" ref={summaryRef}>
+            <div className="lg:col-span-1 space-y-8 lg:sticky lg:top-24">
                 <Card className="bg-background">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
@@ -563,7 +563,7 @@ export default function ModularQuotePage() {
                   </CardContent>
                 </Card>
 
-              <Card>
+              <Card ref={summaryRef}>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3">
                     <ShoppingCart className="text-primary" />
