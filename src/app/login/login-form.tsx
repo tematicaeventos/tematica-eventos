@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -131,7 +132,7 @@ export function LoginForm() {
         </div>
         <div className="mt-6 space-y-3 text-center">
             <p className="text-sm text-muted-foreground">¿No tienes una cuenta?</p>
-            <Button asChild variant="outline" className="w-full font-bold border-primary text-primary hover:bg-primary/10">
+            <Button asChild className="w-full font-bold bg-white text-black hover:bg-gray-200">
                 <Link href={signupHref}>REGÍSTRATE AQUÍ</Link>
             </Button>
         </div>
