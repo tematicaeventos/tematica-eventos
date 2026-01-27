@@ -342,7 +342,7 @@ export default function ModularQuotePage() {
           <QuotePDFDocument quoteId={generatedQuoteId} quote={generatedQuote as Quote} />
         )}
       </div>
-      <div className="pt-16 md:pt-0 bg-white text-gray-900">
+      <div className="pt-16 md:pt-0 bg-slate-900 text-gray-300">
         <section className="relative w-full h-[40vh] bg-black flex flex-col justify-center items-center text-center px-4">
           {bannerImage && (
             <Image
@@ -403,16 +403,16 @@ export default function ModularQuotePage() {
                             <div className="flex-1 grid gap-1.5 leading-none">
                               <Label
                                 htmlFor={service.id}
-                                className="font-semibold text-base cursor-pointer"
+                                className="font-semibold text-base cursor-pointer text-white"
                               >
                                 {service.nombre}
                               </Label>
-                              <p className="text-sm text-gray-600">
+                              <p className="text-sm text-slate-400">
                                 {service.descripcion}
                               </p>
                               <p className="text-sm font-bold text-primary">
                                 {formatCurrency(service.precioUnitario)}{' '}
-                                <span className="font-normal text-xs text-gray-500">
+                                <span className="font-normal text-xs text-slate-500">
                                   / {service.tipoCobro}
                                 </span>
                               </p>
@@ -470,7 +470,7 @@ export default function ModularQuotePage() {
 
             {/* Date and Quote Summary */}
             <div className="lg:col-span-1 space-y-8 lg:sticky lg:top-24">
-                <Card className="bg-slate-50">
+                <Card className="bg-slate-800 border-slate-700">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
                   </CardHeader>
@@ -502,7 +502,7 @@ export default function ModularQuotePage() {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-slate-50">
+                <Card className="bg-slate-800 border-slate-700">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3"><CalendarIcon className="text-primary"/> Elige una Fecha</CardTitle>
                   </CardHeader>
@@ -547,7 +547,7 @@ export default function ModularQuotePage() {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-slate-50">
+                <Card className="bg-slate-800 border-slate-700">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3"><MapPin className="text-primary"/> Lugar del Evento</CardTitle>
                   </CardHeader>
@@ -563,7 +563,7 @@ export default function ModularQuotePage() {
                   </CardContent>
                 </Card>
 
-              <Card ref={summaryRef} className="bg-slate-50">
+              <Card ref={summaryRef} className="bg-slate-800 border-slate-700">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3">
                     <ShoppingCart className="text-primary" />
@@ -578,25 +578,25 @@ export default function ModularQuotePage() {
                         className="flex justify-between items-center text-sm"
                       >
                         <div>
-                          <p className="font-medium">{item.nombre}</p>
-                          <p className="text-gray-600">
+                          <p className="font-medium text-white">{item.nombre}</p>
+                          <p className="text-slate-400">
                             {item.cantidad} x {formatCurrency(item.precioUnitario)}
                           </p>
                         </div>
-                        <p className="font-semibold">
+                        <p className="font-semibold text-white">
                           {formatCurrency(item.subtotal)}
                         </p>
                       </div>
                     ))
                   ) : (
-                    <p className="text-gray-600 text-center py-8">
+                    <p className="text-slate-400 text-center py-8">
                       Selecciona servicios para ver tu cotización.
                     </p>
                   )}
                 </CardContent>
-                <Separator className={quoteItems.length === 0 ? 'hidden' : 'my-4'} />
+                <Separator className={cn('my-4 border-slate-700', quoteItems.length === 0 ? 'hidden' : '')} />
                 <CardFooter className="flex-col gap-4">
-                  <div className="w-full flex justify-between font-bold text-xl">
+                  <div className="w-full flex justify-between font-bold text-xl text-white">
                     <span>TOTAL</span>
                     <span>{formatCurrency(total)}</span>
                   </div>
