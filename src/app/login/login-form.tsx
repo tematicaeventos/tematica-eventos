@@ -119,6 +119,14 @@ export function LoginForm() {
                       </Button>
                     </div>
                   </FormControl>
+                  <div className="text-right">
+                    <Link
+                      href="/forgot-password"
+                      className="text-sm font-medium text-foreground hover:underline"
+                    >
+                      ¿Olvidaste tu contraseña?
+                    </Link>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -128,14 +136,6 @@ export function LoginForm() {
             </Button>
           </form>
         </Form>
-        <div className="mt-4 text-center">
-          <Link
-            href="/forgot-password"
-            className="text-sm font-medium text-destructive hover:underline"
-          >
-            ¿Olvidaste tu contraseña?
-          </Link>
-        </div>
         <div className="mt-6 space-y-3 text-center">
             <p className="text-sm text-foreground">¿No tienes una cuenta?</p>
             <Button asChild className="w-full font-bold bg-white text-black hover:bg-gray-200">
