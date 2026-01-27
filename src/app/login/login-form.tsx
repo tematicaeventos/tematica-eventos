@@ -129,12 +129,12 @@ export function LoginForm() {
             ¿Olvidaste tu contraseña?
           </Link>
         </div>
-        <p className="mt-6 text-center text-sm text-muted-foreground">
-          ¿No tienes una cuenta?{' '}
-          <Link href={signupHref} className="font-medium text-primary hover:underline">
-            Regístrate aquí
-          </Link>
-        </p>
+        <div className="mt-6 space-y-3 text-center">
+            <p className="text-sm text-muted-foreground">¿No tienes una cuenta?</p>
+            <Button asChild variant="outline" className="w-full font-bold border-primary text-primary hover:bg-primary/10">
+                <Link href={signupHref}>REGÍSTRATE AQUÍ</Link>
+            </Button>
+        </div>
       </CardContent>
     </Card>
   );
