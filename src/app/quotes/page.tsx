@@ -342,7 +342,7 @@ export default function ModularQuotePage() {
           <QuotePDFDocument quoteId={generatedQuoteId} quote={generatedQuote as Quote} />
         )}
       </div>
-      <div className="pt-16 md:pt-0 bg-slate-900 text-gray-300">
+      <div className="bg-slate-900 text-gray-300 pt-16 md:pt-0">
         <section className="relative w-full h-[40vh] bg-black flex flex-col justify-center items-center text-center px-4">
           {bannerImage && (
             <Image
@@ -470,6 +470,70 @@ export default function ModularQuotePage() {
 
             {/* Date and Quote Summary */}
             <div className="lg:col-span-1 space-y-8 lg:sticky lg:top-24">
+                <Card ref={summaryRef} className="bg-slate-800 border-slate-700">
+                    <CardHeader>
+                    <CardTitle className="flex items-center gap-3">
+                        <ShoppingCart className="text-primary" />
+                        Tu Cotización
+                    </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4 max-h-[50vh] overflow-y-auto">
+                    {quoteItems.length > 0 ? (
+                        quoteItems.map((item, index) => (
+                        <div
+                            key={index}
+                            className="flex justify-between items-center text-sm"
+                        >
+                            <div>
+                            <p className="font-medium text-white">{item.nombre}</p>
+                            <p className="text-slate-400">
+                                {item.cantidad} x {formatCurrency(item.precioUnitario)}
+                            </p>
+                            </div>
+                            <p className="font-semibold text-white">
+                            {formatCurrency(item.subtotal)}
+                            </p>
+                        </div>
+                        ))
+                    ) : (
+                        <p className="text-slate-400 text-center py-8">
+                        Selecciona servicios para ver tu cotización.
+                        </p>
+                    )}
+                    </CardContent>
+                    <Separator className={cn('my-4 border-slate-700', quoteItems.length === 0 ? 'hidden' : '')} />
+                    <CardFooter className="flex-col gap-4">
+                    <div className="w-full flex justify-between font-bold text-xl text-white">
+                        <span>TOTAL</span>
+                        <span>{formatCurrency(total)}</span>
+                    </div>
+                    {!generatedQuoteId ? (
+                        <Button
+                        onClick={handleContinueToReservation}
+                        size="lg"
+                        className="w-full group h-auto py-3 whitespace-normal"
+                        disabled={isSaving}
+                        >
+                        {isSaving ? 'Guardando...' : 'continua, envia por WhastsApp y regresa a descargar tu pdf'}
+                        <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                        </Button>
+                    ) : (
+                        <div className='w-full text-center space-y-3'>
+                            <p className='text-sm text-green-500 font-medium'>¡Cotización enviada a WhatsApp!</p>
+                            <Button
+                            onClick={handleDownloadPDF}
+                            size="lg"
+                            className="w-full group"
+                            variant="outline"
+                            >
+                            <Download className="mr-2 h-5 w-5" />
+                            Descargar PDF
+                            </Button>
+                        </div>
+                    )}
+                    </CardFooter>
+                </Card>
+
                 <Card className="bg-slate-800 border-slate-700">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
@@ -562,70 +626,6 @@ export default function ModularQuotePage() {
                       />
                   </CardContent>
                 </Card>
-
-              <Card ref={summaryRef} className="bg-slate-800 border-slate-700">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3">
-                    <ShoppingCart className="text-primary" />
-                    Tu Cotización
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4 max-h-[50vh] overflow-y-auto">
-                  {quoteItems.length > 0 ? (
-                    quoteItems.map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex justify-between items-center text-sm"
-                      >
-                        <div>
-                          <p className="font-medium text-white">{item.nombre}</p>
-                          <p className="text-slate-400">
-                            {item.cantidad} x {formatCurrency(item.precioUnitario)}
-                          </p>
-                        </div>
-                        <p className="font-semibold text-white">
-                          {formatCurrency(item.subtotal)}
-                        </p>
-                      </div>
-                    ))
-                  ) : (
-                    <p className="text-slate-400 text-center py-8">
-                      Selecciona servicios para ver tu cotización.
-                    </p>
-                  )}
-                </CardContent>
-                <Separator className={cn('my-4 border-slate-700', quoteItems.length === 0 ? 'hidden' : '')} />
-                <CardFooter className="flex-col gap-4">
-                  <div className="w-full flex justify-between font-bold text-xl text-white">
-                    <span>TOTAL</span>
-                    <span>{formatCurrency(total)}</span>
-                  </div>
-                  {!generatedQuoteId ? (
-                    <Button
-                      onClick={handleContinueToReservation}
-                      size="lg"
-                      className="w-full group h-auto py-3 whitespace-normal"
-                      disabled={isSaving}
-                    >
-                      {isSaving ? 'Guardando...' : 'continua, envia por WhastsApp y regresa a descargar tu pdf'}
-                      <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                    </Button>
-                  ) : (
-                     <div className='w-full text-center space-y-3'>
-                        <p className='text-sm text-green-500 font-medium'>¡Cotización enviada a WhatsApp!</p>
-                        <Button
-                          onClick={handleDownloadPDF}
-                          size="lg"
-                          className="w-full group"
-                          variant="outline"
-                        >
-                          <Download className="mr-2 h-5 w-5" />
-                          Descargar PDF
-                        </Button>
-                      </div>
-                  )}
-                </CardFooter>
-              </Card>
             </div>
           </div>
         </div>
