@@ -52,6 +52,19 @@ export default function PackagedQuotePage() {
   const { toast } = useToast();
   const pdfRef = useRef<HTMLDivElement>(null);
   const summaryRef = useRef<HTMLDivElement>(null);
+
+  const handleAuthCheck = () => {
+    if (!user) {
+      toast({
+        variant: 'destructive',
+        title: 'Acción requerida',
+        description: 'Inicia sesión o regístrate para continuar con la cotización.',
+      });
+      router.push(`/login?redirect=${window.location.pathname}`);
+      return false;
+    }
+    return true;
+  };
   
   // Services Config
   const packagedServicesConfig = useMemo(() => [
@@ -207,13 +220,7 @@ export default function PackagedQuotePage() {
   };
 
   async function handleSaveAndRedirect() {
-    if (!user) {
-      toast({
-        variant: 'destructive',
-        title: 'Inicia sesión para continuar',
-        description: 'Debes iniciar sesión para poder guardar tu cotización y continuar.',
-      });
-      router.push(`/login?redirect=/quote/${params.eventType}`);
+    if (!handleAuthCheck()) {
       return;
     }
     
@@ -401,7 +408,7 @@ export default function PackagedQuotePage() {
                 <CardTitle className="flex items-center gap-3"><Users className="text-primary"/> Número de Personas</CardTitle>
               </CardHeader>
               <CardContent>
-                <RadioGroup value={personas.toString()} onValueChange={(val) => setPersonas(parseInt(val))} className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <RadioGroup value={personas.toString()} onValueChange={(val) => { if (handleAuthCheck()) setPersonas(parseInt(val)) }} className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {PLANES_BASE.map(plan => (
                     <Label key={plan.personas} htmlFor={`personas-${plan.personas}`} className="cursor-pointer flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 text-popover-foreground hover:bg-accent hover:text-accent-foreground has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary has-[[data-state=checked]]:text-primary-foreground">
                       <RadioGroupItem value={plan.personas.toString()} id={`personas-${plan.personas}`} className="sr-only" />
@@ -436,11 +443,13 @@ export default function PackagedQuotePage() {
                               ? 'border-primary ring-2 ring-primary ring-offset-2'
                               : 'border-muted'
                           )}
-                          onClick={() =>
-                            setSelectedTheme((prev) =>
-                              prev === theme.title ? null : theme.title
-                            )
-                          }
+                          onClick={() => {
+                            if (handleAuthCheck()) {
+                                setSelectedTheme((prev) =>
+                                prev === theme.title ? null : theme.title
+                                )
+                            }
+                          }}
                         >
                           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md">
                             {image && (
@@ -473,9 +482,9 @@ export default function PackagedQuotePage() {
               <CardContent>
                   <div 
                       className="flex items-center space-x-3 p-4 rounded-md border border-gray-200 bg-white cursor-pointer hover:bg-gray-100"
-                      onClick={() => setIncluirSalon(!incluirSalon)}
+                      onClick={() => { if (handleAuthCheck()) setIncluirSalon(!incluirSalon) }}
                   >
-                      <Checkbox id="incluir-salon" checked={incluirSalon} onCheckedChange={(checked) => setIncluirSalon(!!checked)} />
+                      <Checkbox id="incluir-salon" checked={incluirSalon} onCheckedChange={(checked) => { if (handleAuthCheck()) setIncluirSalon(!!checked) }} />
                       <Label htmlFor="incluir-salon" className="cursor-pointer flex-1">
                           <p className="font-semibold text-gray-800">Incluir salón de eventos en el paquete</p>
                           <p className="text-sm text-gray-600">Uso del salón y logística completa. Desmárcalo si ya tienes un lugar.</p>
@@ -491,7 +500,7 @@ export default function PackagedQuotePage() {
                             id="direccion-salon" 
                             placeholder="Ej: Calle 5 # 10-20, Bogotá"
                             value={direccionSalon}
-                            onChange={(e) => setDireccionSalon(e.target.value)}
+                            onChange={(e) => { if (handleAuthCheck()) setDireccionSalon(e.target.value) }}
                             className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500"
                         />
                         <p className="text-xs text-gray-500">Este campo es obligatorio si no incluyes nuestro salón.</p>
@@ -512,15 +521,17 @@ export default function PackagedQuotePage() {
                         id={`service-${item.id}`}
                         checked={selectedServices.has(item.id)}
                         onCheckedChange={(checked) => {
-                          setSelectedServices(prev => {
-                            const newSelection = new Set(prev);
-                            if (checked) {
-                              newSelection.add(item.id);
-                            } else {
-                              newSelection.delete(item.id);
+                            if (handleAuthCheck()) {
+                                setSelectedServices(prev => {
+                                    const newSelection = new Set(prev);
+                                    if (checked) {
+                                    newSelection.add(item.id);
+                                    } else {
+                                    newSelection.delete(item.id);
+                                    }
+                                    return newSelection;
+                                });
                             }
-                            return newSelection;
-                          });
                         }}
                         disabled={item.removable === false}
                         className="h-5 w-5 mt-1"
@@ -552,27 +563,27 @@ export default function PackagedQuotePage() {
               <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-background">
                 <div className="space-y-2">
                     <Label htmlFor="nombre-cliente" className="text-foreground">Nombre de contacto</Label>
-                    <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
+                    <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => { if (handleAuthCheck()) setNombreCliente(e.target.value) }} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="telefono-cliente" className="text-foreground">Teléfono (WhatsApp)</Label>
-                    <Input id="telefono-cliente" type="tel" placeholder="3001234567" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
+                    <Input id="telefono-cliente" type="tel" placeholder="3001234567" value={telefono} onChange={(e) => { if (handleAuthCheck()) setTelefono(e.target.value) }} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                  <div className="space-y-2 md:col-span-2">
                     <Label htmlFor="correo-cliente" className="text-foreground">Correo electrónico</Label>
-                    <Input id="correo-cliente" type="email" placeholder="tu@correo.com" value={correo} onChange={(e) => setCorreo(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
+                    <Input id="correo-cliente" type="email" placeholder="tu@correo.com" value={correo} onChange={(e) => { if (handleAuthCheck()) setCorreo(e.target.value) }} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="direccion-cliente" className="text-foreground">Dirección</Label>
-                    <Input id="direccion-cliente" placeholder="Carrera 5 # 10-20" value={direccion} onChange={(e) => setDireccion(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
+                    <Input id="direccion-cliente" placeholder="Carrera 5 # 10-20" value={direccion} onChange={(e) => { if (handleAuthCheck()) setDireccion(e.target.value) }} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="barrio-cliente" className="text-foreground">Barrio</Label>
-                    <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
+                    <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => { if (handleAuthCheck()) setBarrio(e.target.value) }} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2 md:col-span-2">
                   <Label htmlFor="observaciones-cliente" className="text-foreground">Observaciones (opcional)</Label>
-                  <Textarea id="observaciones-cliente" placeholder="Ej: alergias, preferencias especiales, etc." value={observaciones} onChange={(e) => setObservaciones(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
+                  <Textarea id="observaciones-cliente" placeholder="Ej: alergias, preferencias especiales, etc." value={observaciones} onChange={(e) => { if (handleAuthCheck()) setObservaciones(e.target.value) }} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
                 </div>
               </CardContent>
             </Card>
@@ -588,6 +599,7 @@ export default function PackagedQuotePage() {
                     <Button
                       variant={"outline"}
                       className="w-full justify-start text-left font-normal h-12 bg-white border-gray-300 text-gray-900 hover:bg-gray-100"
+                       onClick={() => { if (handleAuthCheck()) setIsCalendarOpen(true) }}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {fecha ? format(fecha, "PPP", { locale: es }) : <span>Selecciona una fecha</span>}
@@ -598,8 +610,10 @@ export default function PackagedQuotePage() {
                       mode="single"
                       selected={fecha}
                       onSelect={(day) => {
-                        setFecha(day);
-                        setIsCalendarOpen(false);
+                        if (handleAuthCheck()) {
+                            setFecha(day);
+                            setIsCalendarOpen(false);
+                        }
                       }}
                       initialFocus
                       locale={es}
@@ -613,11 +627,11 @@ export default function PackagedQuotePage() {
                 <div className="flex gap-4">
                   <div className="w-1/2">
                     <Label htmlFor="hora-inicio" className="text-foreground">Hora de inicio</Label>
-                      <input type="time" id="hora-inicio" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-background" value={horaInicio} onChange={(e) => setHoraInicio(e.target.value)} />
+                      <input type="time" id="hora-inicio" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-background" value={horaInicio} onChange={(e) => { if (handleAuthCheck()) setHoraInicio(e.target.value) }} />
                   </div>
                   <div className="w-1/2">
                     <Label htmlFor="hora-fin" className="text-foreground">Hora de finalización</Label>
-                      <input type="time" id="hora-fin" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-background" value={horaFin} onChange={(e) => setHoraFin(e.target.value)} />
+                      <input type="time" id="hora-fin" className="w-full rounded-md border border-gray-300 bg-white p-3 mt-2 text-sm h-12 text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-background" value={horaFin} onChange={(e) => { if (handleAuthCheck()) setHoraFin(e.target.value) }} />
                   </div>
                 </div>
               </CardContent>
