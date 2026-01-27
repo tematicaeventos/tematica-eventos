@@ -84,7 +84,11 @@ export function SignupForm() {
                 <FormItem>
                   <FormLabel>Nombre Completo</FormLabel>
                   <FormControl>
-                    <Input placeholder="Tu nombre" {...field} />
+                    <Input
+                      placeholder="Tu nombre"
+                      {...field}
+                      className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -97,7 +101,12 @@ export function SignupForm() {
                 <FormItem>
                   <FormLabel>Correo Electrónico</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="tu@correo.com" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="tu@correo.com"
+                      {...field}
+                      className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -110,7 +119,11 @@ export function SignupForm() {
                 <FormItem>
                   <FormLabel>Número de Teléfono (WhatsApp)</FormLabel>
                   <FormControl>
-                    <Input placeholder="3001234567" {...field} />
+                    <Input
+                      placeholder="3001234567"
+                      {...field}
+                      className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -128,6 +141,7 @@ export function SignupForm() {
                         type={showPassword ? 'text' : 'password'}
                         placeholder="••••••••"
                         {...field}
+                        className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500"
                       />
                       <Button
                         type="button"

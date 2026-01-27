@@ -92,7 +92,12 @@ export default function ForgotPasswordPage() {
                   <FormItem>
                     <FormLabel>Correo Electrónico</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="tu@correo.com" {...field} />
+                      <Input
+                        type="email"
+                        placeholder="tu@correo.com"
+                        {...field}
+                        className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
