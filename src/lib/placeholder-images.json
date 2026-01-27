@@ -8,8 +8,8 @@
     },
     {
       "id": "event-type-15-anos",
-      "description": "Un salón elegantemente decorado para una fiesta de 15 años.",
-      "imageUrl": "https://images.unsplash.com/photo-1579227521323-4b68a6234b9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxxdWluY2VhbmVyYSUyMHBhcnR5fGVufDB8fHx8MTc3MjI1NTYxNXww&ixlib=rb-4.0.3&q=80&w=1080",
+      "description": "Una joven celebrando su fiesta de 15 años con un vestido elegante.",
+      "imageUrl": "https://images.unsplash.com/photo-1541529410135-2a22f471a25b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxxdWluY2VhbmVyYSUyMHBhcnR5fGVufDB8fHx8MTc3MjM1MzAzNHww&ixlib=rb-4.0.3&q=80&w=1080",
       "imageHint": "quinceanera party"
     },
     {
@@ -63,7 +63,7 @@
     {
       "id": "theme-15-vintage",
       "description": "A vintage-themed 15th birthday party.",
-      "imageUrl": "https://images.unsplash.com/photo-1602123162984-ef1527d860d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx2aW50YWdlJTIwcGFydHl8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1602123162984-ef1527d860d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx2aW50YWdlJTIwcGFydHl8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "vintage party"
     },
     {
@@ -75,13 +75,13 @@
     {
       "id": "theme-15-paris",
       "description": "A Paris-themed 15th birthday party.",
-      "imageUrl": "https://images.unsplash.com/photo-1640693039454-48acf87927e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwYXJpcyUyMHRoZW1lfGVufDB8fHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1640693039454-48acf87927e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwYXJpcyUyMHRoZW1lfGVufDB8fHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "paris theme"
     },
     {
       "id": "theme-15-hawaiian",
       "description": "A Hawaiian-themed 15th birthday party.",
-      "imageUrl": "https://images.unsplash.com/photo-1591843463640-1a44f5641f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxoYXdhaWlhbiUyMHBhcnR5fGVufDB8fHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1591843463640-1a44f5641f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxoYXdhaWlhbiUyMHBhcnR5fGVufDB8fHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "hawaiian party"
     },
     {
@@ -195,13 +195,13 @@
     {
       "id": "theme-farewell-costume",
       "description": "A costume-themed farewell party.",
-      "imageUrl": "https://images.unsplash.com/photo-1762115359661-b409526c42af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb3N0dW1lJTIwcGFydHl8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1762115359661-b409526c42af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb3N0dW1lJTIwcGFydHl8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "costume party"
     },
     {
       "id": "theme-farewell-casino",
       "description": "A casino-themed farewell party.",
-      "imageUrl": "https://images.unsplash.com/photo-1617078885011-5f0a62c501eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjYXNpbm8lMjBwYXJ0eXxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1617078885011-5f0a62c501eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjYXNpbm8lMjBwYXJ0eXxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "casino party"
     },
     {
@@ -225,7 +225,7 @@
     {
       "id": "theme-farewell-caribbean",
       "description": "A Caribbean night-themed farewell party.",
-      "imageUrl": "https://images.unsplash.com/photo-1595530368559-ed36c4ebeac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjYXJpYmJlYW4lMjBuaWdodHxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1595530368559-ed36c4ebeac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjYXJpYmJlYW4lMjBuaWdodHxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "caribbean night"
     },
     {
