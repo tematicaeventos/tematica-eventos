@@ -536,38 +536,6 @@ export default function ModularQuotePage() {
 
                 <Card className="bg-slate-800 border-slate-700">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
-                  </CardHeader>
-                  <CardContent className="grid grid-cols-1 gap-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="nombre-cliente">Nombre de contacto</Label>
-                        <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="telefono-cliente">Teléfono (WhatsApp)</Label>
-                        <Input id="telefono-cliente" type="tel" placeholder="3001234567" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="correo-cliente">Correo electrónico</Label>
-                        <Input id="correo-cliente" type="email" placeholder="tu@correo.com" value={correo} onChange={(e) => setCorreo(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="direccion-cliente">Dirección</Label>
-                        <Input id="direccion-cliente" placeholder="Carrera 5 # 10-20" value={direccion} onChange={(e) => setDireccion(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="barrio-cliente">Barrio</Label>
-                        <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
-                    </div>
-                     <div className="space-y-2">
-                        <Label htmlFor="observaciones-modular">Observaciones (opcional)</Label>
-                        <Textarea id="observaciones-modular" placeholder="Ej: alergias, preferencias especiales, etc." value={observaciones} onChange={(e) => setObservaciones(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-slate-800 border-slate-700">
-                  <CardHeader>
                     <CardTitle className="flex items-center gap-3"><CalendarIcon className="text-primary"/> Elige una Fecha</CardTitle>
                   </CardHeader>
                   <CardContent className="grid grid-cols-1 gap-4">
@@ -624,6 +592,38 @@ export default function ModularQuotePage() {
                           value={direccionSalon}
                           onChange={(e) => setDireccionSalon(e.target.value)}
                       />
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-slate-800 border-slate-700">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3"><User className="text-primary"/> Datos de Contacto</CardTitle>
+                  </CardHeader>
+                  <CardContent className="grid grid-cols-1 gap-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="nombre-cliente">Nombre de contacto</Label>
+                        <Input id="nombre-cliente" placeholder="Nombre completo" value={nombreCliente} onChange={(e) => setNombreCliente(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="telefono-cliente">Teléfono (WhatsApp)</Label>
+                        <Input id="telefono-cliente" type="tel" placeholder="3001234567" value={telefono} onChange={(e) => setTelefono(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="correo-cliente">Correo electrónico</Label>
+                        <Input id="correo-cliente" type="email" placeholder="tu@correo.com" value={correo} onChange={(e) => setCorreo(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="direccion-cliente">Dirección</Label>
+                        <Input id="direccion-cliente" placeholder="Carrera 5 # 10-20" value={direccion} onChange={(e) => setDireccion(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="barrio-cliente">Barrio</Label>
+                        <Input id="barrio-cliente" placeholder="El centro" value={barrio} onChange={(e) => setBarrio(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
+                    </div>
+                     <div className="space-y-2">
+                        <Label htmlFor="observaciones-modular">Observaciones (opcional)</Label>
+                        <Textarea id="observaciones-modular" placeholder="Ej: alergias, preferencias especiales, etc." value={observaciones} onChange={(e) => setObservaciones(e.target.value)} className="bg-white border-gray-300 text-gray-900 ring-offset-background focus-visible:ring-primary placeholder:text-gray-500" />
+                    </div>
                   </CardContent>
                 </Card>
             </div>
