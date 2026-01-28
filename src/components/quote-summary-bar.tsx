@@ -28,8 +28,8 @@ export function QuoteSummaryBar({ total, onViewQuoteClick }: QuoteSummaryBarProp
         >
             <div className="container mx-auto flex items-center justify-between gap-2">
                 <div className='flex-1 truncate'>
-                    <p className="text-xs text-muted-foreground">Total actual</p>
-                    <p className="font-bold text-lg text-primary truncate">{formatCurrency(total)}</p>
+                    <p className="text-xs text-foreground">Total actual</p>
+                    <p className="font-bold text-lg text-foreground truncate">{formatCurrency(total)}</p>
                 </div>
                 <Button onClick={onViewQuoteClick} size="sm" className="group whitespace-nowrap">
                     Ver cotización
