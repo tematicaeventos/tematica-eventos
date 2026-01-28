@@ -59,11 +59,11 @@ export default function AboutPage() {
           <div className="mt-8 space-y-4 max-w-md mx-auto text-left">
               <div className="flex items-center gap-4 p-4 bg-[hsl(var(--luminous-blue-bg))] border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20 rounded-lg">
                   <Mail className="h-5 w-5 text-primary" />
-                  <p className="text-foreground">hernan.ramirez@tematicaeventos.com (ejemplo)</p>
+                  <p className="text-foreground">inversionesvdr0@gmail.com</p>
               </div>
                <div className="flex items-center gap-4 p-4 bg-[hsl(var(--luminous-blue-bg))] border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20 rounded-lg">
                   <Phone className="h-5 w-5 text-primary" />
-                  <p className="text-foreground">3045295251</p>
+                  <p className="text-foreground">3112410969</p>
               </div>
                <div className="flex items-center gap-4 p-4 bg-[hsl(var(--luminous-blue-bg))] border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20 rounded-lg">
                   <MapPin className="h-5 w-5 text-primary" />
