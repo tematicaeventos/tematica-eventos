@@ -370,7 +370,7 @@ export default function PackagedQuotePage() {
           <h1 className="text-4xl font-bold tracking-tight font-headline">
             Cotizador de Paquetes para {eventType.title}
           </h1>
-          <p className="mt-2 text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="mt-2 text-lg max-w-3xl mx-auto text-foreground [text-shadow:0_0_12px_white]">
             Nuestros paquetes todo incluido están diseñados para que no te preocupes por nada. Selecciona el número de invitados y reserva tu fecha.
           </p>
         </div>
