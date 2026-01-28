@@ -48,7 +48,7 @@ export function EventTypeCard({ eventType, className }: EventTypeCardProps) {
           <CardTitle className="mb-2 text-2xl font-bold font-headline text-foreground transition-colors group-hover:text-primary">
             {eventType.title}
           </CardTitle>
-          <p className="text-base text-muted-foreground line-clamp-3">
+          <p className="text-base text-foreground line-clamp-3">
             {eventType.description}
           </p>
         </CardContent>
