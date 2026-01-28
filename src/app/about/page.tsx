@@ -7,7 +7,7 @@ export default function AboutPage() {
   const aboutImage = PlaceHolderImages.find(img => img.id === 'hero');
 
   return (
-    <div className="text-foreground animate-fade-in-up" style={{ backgroundColor: '#464F6C' }}>
+    <div className="text-foreground animate-fade-in-up">
       <section className="relative py-20 md:py-32 bg-black">
         {aboutImage && (
             <Image
@@ -45,7 +45,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center max-w-4xl mx-auto">
-            <Card className="bg-primary text-primary-foreground border-white shadow-xl shadow-white/20">
+            <Card className="bg-primary text-primary-foreground border-border shadow-lg shadow-primary/20">
               <CardHeader>
                 <Award className="h-10 w-10 mx-auto" />
                 <CardTitle className="mt-4">Misión</CardTitle>
@@ -56,7 +56,7 @@ export default function AboutPage() {
                 </p>
               </CardContent>
             </Card>
-            <Card className="bg-primary text-primary-foreground border-white shadow-xl shadow-white/20">
+            <Card className="bg-primary text-primary-foreground border-border shadow-lg shadow-primary/20">
               <CardHeader>
                 <Eye className="h-10 w-10 mx-auto" />
                 <CardTitle className="mt-4">Visión</CardTitle>
