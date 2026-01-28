@@ -1,5 +1,5 @@
 
-import { Phone, Mail, MapPin, Building } from 'lucide-react';
+import { Phone, Mail, MapPin } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function AboutPage() {
@@ -50,7 +50,6 @@ export default function AboutPage() {
 
       <section className="py-16 md:py-24 bg-card border-y border-border">
         <div className="container mx-auto px-4 text-center">
-          <Building className="h-10 w-10 mx-auto text-primary" />
           <h2 className="text-3xl font-bold font-headline text-foreground mt-4">
             Nuestros Datos
           </h2>
