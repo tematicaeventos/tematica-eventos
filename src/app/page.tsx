@@ -5,12 +5,14 @@ import { eventTypes } from '@/lib/data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { ArrowRight, Puzzle } from 'lucide-react';
 import { EventTypeCard } from '@/components/event-type-card';
+import { Confetti } from '@/components/confetti';
 
 export default function Home() {
   const buildEventImage = PlaceHolderImages.find(img => img.id === 'build-event-banner');
 
   return (
     <div className="flex flex-col">
+      <Confetti />
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">

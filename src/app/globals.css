@@ -35,3 +35,29 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes confetti-explode {
+  0% {
+    transform: translate(0, 0) rotate(var(--r-start)) scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) rotate(var(--r-end)) scale(0);
+    opacity: 0;
+  }
+}
+
+.confetti-particle {
+  transform-origin: center;
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
