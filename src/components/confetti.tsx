@@ -18,7 +18,7 @@ const ConfettiParticle = ({ id }: { id: number }) => {
   const colorClass = CONFETTI_COLORS[id % CONFETTI_COLORS.length];
 
   useEffect(() => {
-    const distance = Math.random() * (Math.min(window.innerWidth, window.innerHeight) / 1.8) + 50;
+    const distance = Math.random() * (Math.min(window.innerWidth, window.innerHeight) / 1.5) + 50;
     const angle = Math.random() * 360;
     const tx = Math.cos(angle * (Math.PI / 180)) * distance;
     const ty = Math.sin(angle * (Math.PI / 180)) * distance;
@@ -26,7 +26,7 @@ const ConfettiParticle = ({ id }: { id: number }) => {
     const rStart = Math.random() * 360;
     const rEnd = rStart + (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 360 + 360);
 
-    const randomDuration = Math.random() * 2 + 2; // 2s to 4s
+    const randomDuration = Math.random() * 3 + 4; // Animation lasts between 4s and 7s
 
     setStyle({
         '--tx': `${tx}px`,
@@ -40,7 +40,7 @@ const ConfettiParticle = ({ id }: { id: number }) => {
   return (
     <div
       className={cn(
-        'confetti-particle absolute w-3 h-3',
+        'confetti-particle absolute w-2 h-5', // Made particles longer
         colorClass
       )}
       style={style}
@@ -59,7 +59,7 @@ export const Confetti = () => {
 
         const timer = setTimeout(() => {
             setVisible(false);
-        }, 5000); // Hide confetti container after 5 seconds
+        }, 8000); // Hide confetti container after 8 seconds
 
         return () => clearTimeout(timer);
     }, []);
