@@ -18,15 +18,15 @@ const ConfettiParticle = ({ id }: { id: number }) => {
   const colorClass = CONFETTI_COLORS[id % CONFETTI_COLORS.length];
 
   useEffect(() => {
+    const distance = Math.random() * (Math.min(window.innerWidth, window.innerHeight) / 1.8) + 50;
     const angle = Math.random() * 360;
-    const distance = Math.random() * (Math.min(window.innerWidth, window.innerHeight) / 2.5) + 50;
     const tx = Math.cos(angle * (Math.PI / 180)) * distance;
     const ty = Math.sin(angle * (Math.PI / 180)) * distance;
     
     const rStart = Math.random() * 360;
     const rEnd = rStart + (Math.random() > 0.5 ? 1 : -1) * (Math.random() * 360 + 360);
 
-    const randomDuration = Math.random() * 1.5 + 1; // 1s to 2.5s
+    const randomDuration = Math.random() * 2 + 2; // 2s to 4s
 
     setStyle({
         '--tx': `${tx}px`,
@@ -59,7 +59,7 @@ export const Confetti = () => {
 
         const timer = setTimeout(() => {
             setVisible(false);
-        }, 3000); // Hide confetti container after 3 seconds
+        }, 5000); // Hide confetti container after 5 seconds
 
         return () => clearTimeout(timer);
     }, []);
