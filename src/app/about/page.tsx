@@ -1,3 +1,4 @@
+
 import { Phone, Mail, MapPin, Building } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -21,7 +22,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center max-w-4xl mx-auto">
-            <Card className="bg-card border-border/50">
+            <Card className="bg-card border-2 border-white/30 shadow-xl shadow-white/10">
               <CardHeader>
                 <CardTitle className="text-3xl font-headline text-foreground">Misión</CardTitle>
               </CardHeader>
@@ -31,7 +32,7 @@ export default function AboutPage() {
                 </p>
               </CardContent>
             </Card>
-            <Card className="bg-card border-border/50">
+            <Card className="bg-card border-2 border-white/30 shadow-xl shadow-white/10">
               <CardHeader>
                 <CardTitle className="text-3xl font-headline text-foreground">Visión</CardTitle>
               </CardHeader>
@@ -57,15 +58,15 @@ export default function AboutPage() {
           <div className="mt-8 space-y-4 max-w-md mx-auto text-left">
               <div className="flex items-center gap-4 p-4 bg-background rounded-lg border">
                   <Mail className="h-5 w-5 text-primary" />
-                  <p className="text-foreground/90">hernan.ramirez@tematicaeventos.com (ejemplo)</p>
+                  <p className="text-foreground">hernan.ramirez@tematicaeventos.com (ejemplo)</p>
               </div>
                <div className="flex items-center gap-4 p-4 bg-background rounded-lg border">
                   <Phone className="h-5 w-5 text-primary" />
-                  <p className="text-foreground/90">3045295251</p>
+                  <p className="text-foreground">3045295251</p>
               </div>
                <div className="flex items-center gap-4 p-4 bg-background rounded-lg border">
                   <MapPin className="h-5 w-5 text-primary" />
-                  <p className="text-foreground/90">Calle 18 # 5-17, Soacha, Cundinamarca</p>
+                  <p className="text-foreground">Calle 18 # 5-17, Soacha, Cundinamarca</p>
               </div>
           </div>
           <p className="mt-8 text-foreground/90">Hernan Ramirez Sanchez - Gerente General</p>
