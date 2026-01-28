@@ -70,7 +70,7 @@ export default function AboutPage() {
                   <p className="text-foreground">Calle 18 # 5-17, Soacha, Cundinamarca</p>
               </div>
           </div>
-          <p className="mt-8 text-foreground/90">Hernan Ramirez Sanchez - Gerente General</p>
+          <h3 className="text-4xl font-bold font-headline text-primary mt-12 text-center">No solo hacemos eventos, creamos recuerdos inolvidables.</h3>
         </div>
       </section>
     </div>
