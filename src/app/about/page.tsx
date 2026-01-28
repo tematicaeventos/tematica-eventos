@@ -22,7 +22,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center max-w-4xl mx-auto">
-            <Card className="bg-card border-2 border-white/30 shadow-xl shadow-white/10">
+            <Card className="bg-[hsl(var(--luminous-blue-bg))] border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20">
               <CardHeader>
                 <CardTitle className="text-3xl font-headline text-foreground">Misión</CardTitle>
               </CardHeader>
@@ -32,7 +32,7 @@ export default function AboutPage() {
                 </p>
               </CardContent>
             </Card>
-            <Card className="bg-card border-2 border-white/30 shadow-xl shadow-white/10">
+            <Card className="bg-[hsl(var(--luminous-blue-bg))] border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20">
               <CardHeader>
                 <CardTitle className="text-3xl font-headline text-foreground">Visión</CardTitle>
               </CardHeader>
