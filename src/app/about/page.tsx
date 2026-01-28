@@ -7,17 +7,19 @@ export default function AboutPage() {
     <div className="animate-fade-in-up">
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold font-headline text-foreground">
-              Sobre Nosotros
-            </h1>
-            <h2 className="text-3xl font-bold font-headline text-foreground/90 mt-8">
-              20 Años Creando Momentos Inolvidables
-            </h2>
-            <div className="max-w-3xl mx-auto mt-6 text-foreground/90">
-              <p>
-                Desde nuestros inicios, hace más de dos décadas, en Temática Eventos hemos tenido un solo propósito: hacer realidad la celebración que imaginas. Nuestra trayectoria es el reflejo de cientos de eventos exitosos, desde bodas de ensueño y quinceañeros mágicos hasta eventos corporativos de alto impacto. La experiencia nos ha enseñado que cada detalle cuenta. Por eso, nuestro equipo de profesionales se dedica con pasión y esmero a la planificación, coordinación y ejecución de cada evento, garantizando no solo calidad, sino también la tranquilidad de saber que todo está bajo control.
-              </p>
+          <div className="mb-16 rounded-lg bg-[hsl(var(--luminous-blue-bg))] border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20 p-8">
+            <div className="text-center">
+              <h1 className="text-4xl md:text-5xl font-bold font-headline text-foreground">
+                Sobre Nosotros
+              </h1>
+              <h2 className="text-3xl font-bold font-headline text-foreground/90 mt-8">
+                20 Años Creando Momentos Inolvidables
+              </h2>
+              <div className="max-w-3xl mx-auto mt-6 text-foreground/90">
+                <p>
+                  Desde nuestros inicios, hace más de dos décadas, en Temática Eventos hemos tenido un solo propósito: hacer realidad la celebración que imaginas. Nuestra trayectoria es el reflejo de cientos de eventos exitosos, desde bodas de ensueño y quinceañeros mágicos hasta eventos corporativos de alto impacto. La experiencia nos ha enseñado que cada detalle cuenta. Por eso, nuestro equipo de profesionales se dedica con pasión y esmero a la planificación, coordinación y ejecución de cada evento, garantizando no solo calidad, sino también la tranquilidad de saber que todo está bajo control.
+                </p>
+              </div>
             </div>
           </div>
 
