@@ -1,4 +1,4 @@
-import { Award, Eye, Phone, Mail, MapPin, Building } from 'lucide-react';
+import { Phone, Mail, MapPin, Building } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function AboutPage() {
@@ -10,7 +10,7 @@ export default function AboutPage() {
             <h1 className="text-4xl md:text-5xl font-bold font-headline text-foreground">
               Sobre Nosotros
             </h1>
-            <h2 className="text-3xl font-bold font-headline text-foreground mt-8">
+            <h2 className="text-3xl font-bold font-headline text-foreground/90 mt-8">
               20 Años Creando Momentos Inolvidables
             </h2>
             <div className="max-w-3xl mx-auto mt-6 text-foreground/90">
@@ -23,8 +23,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center max-w-4xl mx-auto">
             <Card className="bg-card border-border/50">
               <CardHeader>
-                <Award className="h-10 w-10 mx-auto text-primary" />
-                <CardTitle className="mt-4 text-2xl font-headline text-foreground">Misión</CardTitle>
+                <CardTitle className="text-3xl font-headline text-foreground">Misión</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-foreground/90">
@@ -34,8 +33,7 @@ export default function AboutPage() {
             </Card>
             <Card className="bg-card border-border/50">
               <CardHeader>
-                <Eye className="h-10 w-10 mx-auto text-primary" />
-                <CardTitle className="mt-4 text-2xl font-headline text-foreground">Visión</CardTitle>
+                <CardTitle className="text-3xl font-headline text-foreground">Visión</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-foreground/90">
