@@ -90,9 +90,6 @@ export function Header() {
             <Sparkles className="h-6 w-6 text-primary" />
             <span className="font-headline text-lg">Temática Eventos</span>
           </Link>
-          <Button asChild variant="link" className="hidden md:flex text-foreground hover:text-primary">
-            <Link href="/about">Sobre Nosotros</Link>
-          </Button>
         </div>
 
         <div className="flex items-center gap-4">

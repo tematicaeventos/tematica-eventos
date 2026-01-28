@@ -14,6 +14,11 @@ export default function Home() {
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
+            <Button asChild size="lg" variant="outline" className="mb-8 border-primary text-primary hover:bg-primary/10">
+              <Link href="/about">
+                Sobre Nosotros
+              </Link>
+            </Button>
             <h2 className="text-4xl font-bold font-headline text-foreground">
               Nuestros Eventos
             </h2>
