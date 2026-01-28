@@ -36,9 +36,24 @@
   }
 }
 
+@keyframes sparkle-fade {
+  0%, 100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.sparkle-particle {
+    filter: blur(1.5px);
+}
+
 @keyframes confetti-explode {
   0% {
-    transform: translate(0, 0) rotate(var(--r-start)) scale(2.5);
+    transform: translate(0, 0) rotate(var(--r-start)) scale(1.5);
     opacity: 1;
   }
   100% {

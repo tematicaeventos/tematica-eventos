@@ -47,7 +47,7 @@ export default function AffiliateFunnelPage() {
     const progressValue = (step / 4) * 100;
 
     return (
-        <div className="container max-w-3xl mx-auto py-8 md:py-12">
+        <div className="container max-w-3xl mx-auto py-8 md:py-12 animate-fade-in-up">
             {!affiliateCode && <Progress value={progressValue} className="mb-8" />}
             {step === 1 && <Step1 onNext={nextStep} />}
             {step === 2 && <Step2 onNext={nextStep} />}

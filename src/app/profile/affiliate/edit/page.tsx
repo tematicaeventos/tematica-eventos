@@ -132,7 +132,7 @@ export default function EditAffiliatePage() {
     }
 
     return (
-        <div className="container max-w-3xl mx-auto py-8 md:py-12">
+        <div className="container max-w-3xl mx-auto py-8 md:py-12 animate-fade-in-up">
             <Card className="bg-background">
                 <CardHeader>
                     <Button asChild variant="ghost" size="sm" className="mb-4 w-fit -ml-3">

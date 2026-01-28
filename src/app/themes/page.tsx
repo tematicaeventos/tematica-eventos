@@ -1,3 +1,4 @@
+import { Sparkles } from '@/components/sparkles';
 import { ThemeCarousel } from '@/components/theme-carousel';
 import { themeCategories } from '@/lib/themes-data';
 import { Separator } from '@/components/ui/separator';
@@ -5,6 +6,7 @@ import { Separator } from '@/components/ui/separator';
 export default function ThemesPage() {
   return (
     <div className="flex flex-col">
+      <Sparkles />
       <section className="py-12 md:py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">

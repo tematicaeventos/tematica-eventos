@@ -270,7 +270,7 @@ export default function ModularQuotePage() {
       const newQuoteId = await saveQuote(quoteData);
       toast({
         title: 'Cotización Guardada',
-        description: `Tu cotización #${newQuoteId} ha sido guardada. Serás redirigido a WhatsApp para enviarla.`,
+        description: `Tu cotización #${newQuoteId} ha sido guardada y enviada a WhatsApp.`,
       });
       
       setGeneratedQuote(quoteData);
@@ -315,33 +315,6 @@ export default function ModularQuotePage() {
     }
   };
 
-  async function handleDownloadPDF() {
-    if (!pdfRef.current || !generatedQuoteId || !generatedQuote) return;
-
-    const { jsPDF } = await import('jspdf');
-    const html2canvas = (await import('html2canvas')).default;
-    
-    const canvas = await html2canvas(pdfRef.current, { scale: 2 });
-    const imgData = canvas.toDataURL('image/png');
-    
-    const pdf = new jsPDF({
-        orientation: 'p',
-        unit: 'px',
-        format: 'a4',
-        hotfixes: ['px_scaling'],
-    });
-
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-    const imgWidth = canvas.width;
-    const imgHeight = canvas.height;
-    const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-    const imgX = (pdfWidth - imgWidth * ratio) / 2;
-    
-    pdf.addImage(imgData, 'PNG', imgX, 0, imgWidth * ratio, imgHeight * ratio);
-    pdf.save(`Cotizacion-${generatedQuoteId}.pdf`);
-  }
-
   return (
     <>
        <QuoteSummaryBar total={total} onViewQuoteClick={handleScrollToSummary} />
@@ -350,7 +323,7 @@ export default function ModularQuotePage() {
           <QuotePDFDocument quoteId={generatedQuoteId} quote={generatedQuote as Quote} />
         )}
       </div>
-      <div className="bg-slate-900 text-gray-300 pt-16 md:pt-0">
+      <div className="bg-slate-900 text-gray-300 pt-16 md:pt-0 animate-fade-in-up">
         <section className="relative w-full h-[40vh] bg-black flex flex-col justify-center items-center text-center px-4">
           {bannerImage && (
             <Image
@@ -515,30 +488,15 @@ export default function ModularQuotePage() {
                         <span>TOTAL</span>
                         <span>{formatCurrency(total)}</span>
                     </div>
-                    {!generatedQuoteId ? (
-                        <Button
-                        onClick={handleContinueToReservation}
-                        size="lg"
-                        className="w-full group h-auto py-3 whitespace-normal"
-                        disabled={isSaving}
-                        >
-                        {isSaving ? 'Guardando...' : 'continua, envia por WhastsApp y regresa a descargar tu pdf'}
-                        <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                        </Button>
-                    ) : (
-                        <div className='w-full text-center space-y-3'>
-                            <p className='text-sm text-green-500 font-medium'>¡Cotización enviada a WhatsApp!</p>
-                            <Button
-                            onClick={handleDownloadPDF}
-                            size="lg"
-                            className="w-full group"
-                            variant="outline"
-                            >
-                            <Download className="mr-2 h-5 w-5" />
-                            Descargar PDF
-                            </Button>
-                        </div>
-                    )}
+                    <Button
+                    onClick={handleContinueToReservation}
+                    size="lg"
+                    className="w-full group h-auto py-3 whitespace-normal"
+                    disabled={isSaving}
+                    >
+                    {isSaving ? 'Enviando...' : 'Enviar Cotización a WhatsApp'}
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                    </Button>
                     </CardFooter>
                 </Card>
 

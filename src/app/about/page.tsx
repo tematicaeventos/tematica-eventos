@@ -7,7 +7,7 @@ export default function AboutPage() {
   const aboutImage = PlaceHolderImages.find(img => img.id === 'hero');
 
   return (
-    <div className="bg-background text-foreground">
+    <div className="bg-background text-foreground animate-fade-in-up">
       <section className="relative py-20 md:py-32 bg-black">
         {aboutImage && (
             <Image
@@ -51,7 +51,7 @@ export default function AboutPage() {
                 <CardTitle className="mt-4">Misión</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-card-foreground">
+                <p className="text-white">
                   Materializar los sueños de nuestros clientes, creando eventos únicos y memorables a través de un servicio excepcional, creatividad sin límites y una ejecución impecable. Nos comprometemos a superar las expectativas en cada detalle.
                 </p>
               </CardContent>
@@ -62,7 +62,7 @@ export default function AboutPage() {
                 <CardTitle className="mt-4">Visión</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-card-foreground">
+                <p className="text-white">
                   Ser la empresa líder en organización de eventos en la región, reconocida por nuestra innovación, calidad y la capacidad de transformar cualquier celebración en una experiencia extraordinaria. Aspiramos a ser el aliado de confianza para todos los momentos importantes.
                 </p>
               </CardContent>

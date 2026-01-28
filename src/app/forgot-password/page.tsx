@@ -74,7 +74,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="container flex min-h-[80vh] items-center justify-center">
+    <div className="container flex min-h-[80vh] items-center justify-center animate-fade-in-up">
       <Card className="w-full max-w-md border-2 border-white/50 shadow-xl shadow-white/20">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Recuperar Contraseña</CardTitle>

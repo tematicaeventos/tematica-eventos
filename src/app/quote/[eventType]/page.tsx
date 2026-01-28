@@ -298,7 +298,7 @@ export default function PackagedQuotePage() {
       const newQuoteId = await saveQuote(quoteData);
       toast({
         title: 'Cotización Guardada',
-        description: `Tu cotización #${newQuoteId} ha sido guardada. Serás redirigido a WhatsApp para enviarla.`,
+        description: `Tu cotización #${newQuoteId} ha sido guardada y enviada a WhatsApp.`,
       });
       
       setGeneratedQuote(quoteData);
@@ -350,33 +350,6 @@ export default function PackagedQuotePage() {
       setIsSaving(false);
     }
 }
-
-  async function handleDownloadPDF() {
-    if (!pdfRef.current || !generatedQuoteId || !generatedQuote) return;
-
-    const { jsPDF } = await import('jspdf');
-    const html2canvas = (await import('html2canvas')).default;
-    
-    const canvas = await html2canvas(pdfRef.current, { scale: 2 });
-    const imgData = canvas.toDataURL('image/png');
-    
-    const pdf = new jsPDF({
-        orientation: 'p',
-        unit: 'px',
-        format: 'a4',
-        hotfixes: ['px_scaling'],
-    });
-
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-    const imgWidth = canvas.width;
-    const imgHeight = canvas.height;
-    const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-    const imgX = (pdfWidth - imgWidth * ratio) / 2;
-    
-    pdf.addImage(imgData, 'PNG', imgX, 0, imgWidth * ratio, imgHeight * ratio);
-    pdf.save(`Cotizacion-${generatedQuoteId}.pdf`);
-  }
   
   if (!eventType) {
     return <div>Evento no encontrado</div>;
@@ -390,7 +363,7 @@ export default function PackagedQuotePage() {
           <QuotePDFDocument quoteId={generatedQuoteId} quote={generatedQuote as Quote} />
         )}
       </div>
-      <div className="container mx-auto px-4 pt-20 pb-8 md:py-8">
+      <div className="container mx-auto px-4 pt-20 pb-8 md:py-8 animate-fade-in-up">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight font-headline">
             Cotizador de Paquetes para {eventType.title}
@@ -663,25 +636,10 @@ export default function PackagedQuotePage() {
                   <span>{formatCurrency(total)}</span>
                 </div>
                 
-                {!generatedQuoteId ? (
-                  <Button size="lg" className="w-full group h-auto py-3 whitespace-normal" onClick={handleSaveAndRedirect} disabled={isSaving}>
-                    {isSaving ? 'Guardando...' : 'continua, envia por WhastsApp y regresa a descargar tu pdf'}
-                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                ) : (
-                  <div className='w-full text-center space-y-3'>
-                    <p className='text-sm text-green-500 font-medium'>¡Cotización enviada a WhatsApp!</p>
-                    <Button
-                      onClick={handleDownloadPDF}
-                      size="lg"
-                      className="w-full group"
-                      variant="outline"
-                    >
-                      <Download className="mr-2 h-5 w-5" />
-                      Descargar PDF
-                    </Button>
-                  </div>
-                )}
+                <Button size="lg" className="w-full group h-auto py-3 whitespace-normal" onClick={handleSaveAndRedirect} disabled={isSaving}>
+                  {isSaving ? 'Enviando...' : 'Enviar Cotización a WhatsApp'}
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
 
                 <p className="text-xs text-muted-foreground pt-2">El siguiente paso es iniciar sesión o registrarte para guardar tu cotización y proceder con la reserva.</p>
               </CardFooter>

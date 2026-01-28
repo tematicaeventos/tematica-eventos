@@ -28,7 +28,7 @@ function LoginSkeleton() {
 
 export default function LoginPage() {
     return (
-        <div className="container flex min-h-[80vh] items-center justify-center">
+        <div className="container flex min-h-[80vh] items-center justify-center animate-fade-in-up">
             <Suspense fallback={<LoginSkeleton />}>
                 <LoginForm />
             </Suspense>

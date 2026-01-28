@@ -71,7 +71,7 @@ export default function ProfilePage() {
 
 
   return (
-    <div className="container mx-auto max-w-2xl py-8 md:py-12">
+    <div className="container mx-auto max-w-2xl py-8 md:py-12 animate-fade-in-up">
       <Card className="border-border/60">
         <CardHeader className="items-center text-center">
             <Avatar className="h-24 w-24 mb-4 border-2 border-primary/50">

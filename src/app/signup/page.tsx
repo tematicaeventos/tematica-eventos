@@ -36,7 +36,7 @@ function SignupSkeleton() {
 
 export default function SignupPage() {
     return (
-        <div className="container flex min-h-[80vh] items-center justify-center py-8">
+        <div className="container flex min-h-[80vh] items-center justify-center py-8 animate-fade-in-up">
             <Suspense fallback={<SignupSkeleton />}>
                 <SignupForm />
             </Suspense>
