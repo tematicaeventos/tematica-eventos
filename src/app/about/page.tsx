@@ -7,7 +7,7 @@ export default function AboutPage() {
   const aboutImage = PlaceHolderImages.find(img => img.id === 'hero');
 
   return (
-    <div className="bg-background text-foreground animate-fade-in-up">
+    <div className="text-foreground animate-fade-in-up" style={{ backgroundColor: '#464F6C' }}>
       <section className="relative py-20 md:py-32 bg-black">
         {aboutImage && (
             <Image
