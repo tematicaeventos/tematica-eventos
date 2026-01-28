@@ -45,24 +45,24 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center max-w-4xl mx-auto">
-            <Card className="bg-card border-primary/20">
+            <Card className="bg-card border-white">
               <CardHeader>
                 <Award className="h-10 w-10 mx-auto text-primary" />
                 <CardTitle className="mt-4">Misión</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">
+                <p className="text-card-foreground">
                   Materializar los sueños de nuestros clientes, creando eventos únicos y memorables a través de un servicio excepcional, creatividad sin límites y una ejecución impecable. Nos comprometemos a superar las expectativas en cada detalle.
                 </p>
               </CardContent>
             </Card>
-            <Card className="bg-card border-primary/20">
+            <Card className="bg-card border-white">
               <CardHeader>
                 <Eye className="h-10 w-10 mx-auto text-primary" />
                 <CardTitle className="mt-4">Visión</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">
+                <p className="text-card-foreground">
                   Ser la empresa líder en organización de eventos en la región, reconocida por nuestra innovación, calidad y la capacidad de transformar cualquier celebración en una experiencia extraordinaria. Aspiramos a ser el aliado de confianza para todos los momentos importantes.
                 </p>
               </CardContent>
