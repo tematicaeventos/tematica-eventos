@@ -16,7 +16,7 @@ export default function Home() {
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <Button asChild size="lg" variant="outline" className="mb-8 border-primary text-primary hover:bg-primary/10">
+            <Button asChild size="lg" className="mb-8 text-foreground transition-transform hover:scale-105 bg-[hsl(var(--luminous-blue-bg))] border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20">
               <Link href="/about">
                 Sobre Nosotros
               </Link>
