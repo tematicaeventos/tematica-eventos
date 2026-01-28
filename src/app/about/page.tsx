@@ -70,7 +70,7 @@ export default function AboutPage() {
                   <p className="text-foreground">Calle 18 # 5-17, Soacha, Cundinamarca</p>
               </div>
           </div>
-          <h3 className="text-4xl font-bold font-headline text-primary mt-12 text-center">No solo hacemos eventos, creamos recuerdos inolvidables.</h3>
+          <h3 className="text-4xl font-bold font-headline text-foreground mt-12 text-center [text-shadow:0_0_12px_white]">No solo hacemos eventos, creamos recuerdos inolvidables.</h3>
         </div>
       </section>
     </div>
