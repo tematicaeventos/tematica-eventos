@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { eventTypes } from '@/lib/data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { ArrowRight, Puzzle } from 'lucide-react';
+import { ArrowRight, Puzzle, Award } from 'lucide-react';
 import { EventTypeCard } from '@/components/event-type-card';
 import { Confetti } from '@/components/confetti';
 
@@ -18,6 +18,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <Button asChild size="lg" className="mb-8 text-foreground transition-transform hover:scale-105 bg-[hsl(var(--luminous-blue-bg))] border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20">
               <Link href="/about">
+                <Award className="h-5 w-5" />
                 Sobre Nosotros
               </Link>
             </Button>
