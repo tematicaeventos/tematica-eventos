@@ -76,12 +76,12 @@ export default function ProfilePage() {
         <CardHeader className="items-center text-center">
             <Avatar className="h-24 w-24 mb-4 border-2 border-primary/50">
               <AvatarImage src={user.photoURL ?? undefined} alt={profile.nombre} />
-              <AvatarFallback className="text-3xl bg-muted">
+              <AvatarFallback className="text-3xl bg-white text-black">
                 {getInitials(profile.nombre)}
               </AvatarFallback>
             </Avatar>
             <CardTitle className="text-3xl font-headline">{profile.nombre}</CardTitle>
-            <CardDescription>Perfil de Usuario</CardDescription>
+            <CardDescription className="text-foreground">Perfil de Usuario</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
             <div className="flex items-center gap-4 p-4 bg-[hsl(var(--luminous-blue-bg))] border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20 rounded-lg">
