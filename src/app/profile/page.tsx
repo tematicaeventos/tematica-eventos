@@ -102,7 +102,7 @@ export default function ProfilePage() {
                 <Button
                   onClick={handleAffiliateClick}
                   size="lg"
-                  className="w-full h-12 text-lg transition-all duration-300 ease-in-out shadow-[0_0_15px_-5px_hsl(var(--primary))] hover:shadow-[0_0_25px_-5px_hsl(var(--primary))] hover:-translate-y-1"
+                  className="w-full h-12 text-lg bg-white text-black hover:bg-gray-200"
                 >
                   <Handshake className="mr-3 h-6 w-6" />
                   Quiero ser Afiliado
