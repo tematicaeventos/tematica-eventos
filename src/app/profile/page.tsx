@@ -84,26 +84,17 @@ export default function ProfilePage() {
             <CardDescription>Perfil de Usuario</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
-            <div className="flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-200">
+            <div className="flex items-center gap-4 p-4 bg-[hsl(var(--luminous-blue-bg))] border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20 rounded-lg">
                 <Mail className="h-5 w-5 text-primary" />
-                <div className="text-sm">
-                    <p className="text-gray-500">Correo Electrónico</p>
-                    <p className="font-medium text-gray-900">{profile.correo}</p>
-                </div>
+                <p className="text-foreground">{profile.correo}</p>
             </div>
-             <div className="flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-200">
+             <div className="flex items-center gap-4 p-4 bg-[hsl(var(--luminous-blue-bg))] border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20 rounded-lg">
                 <Phone className="h-5 w-5 text-primary" />
-                <div className="text-sm">
-                    <p className="text-gray-500">Teléfono</p>
-                    <p className="font-medium text-gray-900">{profile.telefono}</p>
-                </div>
+                <p className="text-foreground">{profile.telefono}</p>
             </div>
-             <div className="flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-200">
+             <div className="flex items-center gap-4 p-4 bg-[hsl(var(--luminous-blue-bg))] border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20 rounded-lg">
                 <UserIcon className="h-5 w-5 text-primary" />
-                 <div className="text-sm">
-                    <p className="text-gray-500">Miembro desde</p>
-                    <p className="font-medium text-gray-900">{new Date(profile.fechaRegistro).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                </div>
+                 <p className="text-foreground">Miembro desde {new Date(profile.fechaRegistro).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
             </div>
            
             <div className="pt-4 space-y-4">
@@ -147,7 +138,7 @@ export default function ProfilePage() {
                   </CardFooter>
                 </Card>
               )}
-              <Button onClick={() => signOut()} variant="ghost" className="w-full border border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground">
+              <Button onClick={() => signOut()} variant="ghost" className="w-full border border-destructive text-destructive hover:bg-destructive/10">
                 <LogOut className="mr-2 h-4 w-4" />
                 Cerrar Sesión
               </Button>
@@ -167,28 +158,10 @@ function ProfileSkeleton() {
                     <Skeleton className="h-8 w-48" />
                     <Skeleton className="h-4 w-32 mt-2" />
                 </CardHeader>
-                <CardContent className="space-y-6 pt-6">
-                    <div className="flex items-center gap-4 p-3 bg-card rounded-md border">
-                        <Skeleton className="h-5 w-5" />
-                        <div className="w-full space-y-2">
-                           <Skeleton className="h-4 w-1/3" />
-                           <Skeleton className="h-5 w-2/3" />
-                        </div>
-                    </div>
-                     <div className="flex items-center gap-4 p-3 bg-card rounded-md border">
-                         <Skeleton className="h-5 w-5" />
-                        <div className="w-full space-y-2">
-                           <Skeleton className="h-4 w-1/3" />
-                           <Skeleton className="h-5 w-1/2" />
-                        </div>
-                    </div>
-                     <div className="flex items-center gap-4 p-3 bg-card rounded-md border">
-                         <Skeleton className="h-5 w-5" />
-                        <div className="w-full space-y-2">
-                           <Skeleton className="h-4 w-1/3" />
-                           <Skeleton className="h-5 w-2/3" />
-                        </div>
-                    </div>
+                <CardContent className="space-y-4 pt-6">
+                    <Skeleton className="h-14 w-full rounded-lg" />
+                    <Skeleton className="h-14 w-full rounded-lg" />
+                    <Skeleton className="h-14 w-full rounded-lg" />
                     <div className="pt-4 space-y-4">
                         <Skeleton className="h-12 w-full" />
                         <Skeleton className="h-10 w-full" />
