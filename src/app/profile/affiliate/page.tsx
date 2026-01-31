@@ -1,3 +1,4 @@
+
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -108,7 +109,7 @@ const Step2 = ({ onNext }: { onNext: () => void }) => {
                 </div>
             </CardContent>
             <CardFooter>
-                <Button onClick={onNext} disabled={!accepted} className="w-full md:w-auto mx-auto" size="lg">Continuar</Button>
+                <Button onClick={onNext} disabled={!accepted} className="w-full md:w-auto mx-auto bg-[hsl(var(--luminous-blue-bg))] text-foreground border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20 hover:bg-[hsl(var(--luminous-blue-bg))]/90" size="lg">Continuar</Button>
             </CardFooter>
         </Card>
     );
