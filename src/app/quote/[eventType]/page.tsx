@@ -453,6 +453,7 @@ export default function PackagedQuotePage() {
             <Card className="border-primary">
               <CardHeader>
                   <CardTitle className="flex items-center gap-3"><Building className="text-primary"/> Salón de Eventos</CardTitle>
+                  <p className="text-muted-foreground pt-2">(Nuestras sedes: Kennedy, Bosa, Soacha). En caso de que no desees el salón en estas locaciones, desmarca la casilla.</p>
               </CardHeader>
               <CardContent>
                   <div 
@@ -462,7 +463,7 @@ export default function PackagedQuotePage() {
                       <Checkbox id="incluir-salon" checked={incluirSalon} onCheckedChange={(checked) => { if (handleAuthCheck()) setIncluirSalon(!!checked) }} />
                       <Label htmlFor="incluir-salon" className="cursor-pointer flex-1">
                           <p className="font-semibold text-gray-800">Incluir salón de eventos en el paquete</p>
-                          <p className="text-sm text-gray-600">Uso del salón y logística completa. Desmárcalo si ya tienes un lugar.</p>
+                          <p className="text-sm text-gray-600">Uso del salón y logística completa.</p>
                       </Label>
                   </div>
                    {!incluirSalon && (
