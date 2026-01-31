@@ -79,7 +79,7 @@ const Step1 = ({ onNext }: { onNext: () => void }) => (
             <p className="text-foreground/90">No tiene costo ni riesgos. La empresa se encarga de la cotización, el cierre y la ejecución del evento.</p>
         </CardContent>
         <CardFooter>
-            <Button onClick={onNext} className="w-full md:w-auto mx-auto" size="lg">Aceptar y continuar</Button>
+            <Button onClick={onNext} className="w-full md:w-auto mx-auto bg-[hsl(var(--luminous-blue-bg))] text-foreground border border-[hsl(var(--luminous-blue-border))] shadow-lg shadow-[hsl(var(--luminous-blue-border))]/20 hover:bg-[hsl(var(--luminous-blue-bg))]/90" size="lg">Aceptar y continuar</Button>
         </CardFooter>
     </Card>
 );
