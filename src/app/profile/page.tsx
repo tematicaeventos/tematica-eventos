@@ -147,7 +147,7 @@ export default function ProfilePage() {
                   </CardFooter>
                 </Card>
               )}
-              <Button onClick={() => signOut()} variant="destructive" className="w-full">
+              <Button onClick={() => signOut()} variant="ghost" className="w-full border border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground">
                 <LogOut className="mr-2 h-4 w-4" />
                 Cerrar Sesión
               </Button>
