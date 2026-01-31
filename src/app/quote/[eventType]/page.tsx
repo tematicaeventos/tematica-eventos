@@ -467,7 +467,7 @@ export default function PackagedQuotePage() {
                   </div>
                    {!incluirSalon && (
                     <div className="mt-6 space-y-2">
-                        <Label htmlFor="direccion-salon" className="flex items-center gap-2 font-semibold text-gray-800">
+                        <Label htmlFor="direccion-salon" className="flex items-center gap-2 font-semibold text-white text-lg [text-shadow:0_0_8px_white]">
                             <MapPin className="h-4 w-4 text-primary" />
                             Dirección del lugar del evento
                         </Label>
@@ -478,7 +478,7 @@ export default function PackagedQuotePage() {
                             onChange={(e) => { if (handleAuthCheck()) setDireccionSalon(e.target.value) }}
                             className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500"
                         />
-                        <p className="text-xs text-gray-500">Este campo es obligatorio si no incluyes nuestro salón.</p>
+                        <p className="text-sm text-white [text-shadow:0_0_8px_white]">Este campo es obligatorio si no incluyes nuestro salón.</p>
                     </div>
                   )}
               </CardContent>
