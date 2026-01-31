@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
@@ -453,7 +454,7 @@ export default function PackagedQuotePage() {
             <Card className="border-primary">
               <CardHeader>
                   <CardTitle className="flex items-center gap-3"><Building className="text-primary"/> Salón de Eventos</CardTitle>
-                  <p className="text-muted-foreground pt-2">(Nuestras sedes: Kennedy, Bosa, Soacha). En caso de que no desees el salón en estas locaciones, desmarca la casilla.</p>
+                  <p className="pt-2 text-white">(Nuestras sedes: Kennedy, Bosa, Soacha). En caso de que no desees el salón en estas locaciones, desmarca la casilla.</p>
               </CardHeader>
               <CardContent>
                   <div 
