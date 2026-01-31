@@ -99,7 +99,11 @@ export default function ProfilePage() {
            
             <div className="pt-4 space-y-4">
               {!profile.isAffiliate ? (
-                <Button onClick={handleAffiliateClick} size="lg" className="w-full h-12 text-lg">
+                <Button
+                  onClick={handleAffiliateClick}
+                  size="lg"
+                  className="w-full h-12 text-lg transition-all duration-300 ease-in-out shadow-[0_0_15px_-5px_hsl(var(--primary))] hover:shadow-[0_0_25px_-5px_hsl(var(--primary))] hover:-translate-y-1"
+                >
                   <Handshake className="mr-3 h-6 w-6" />
                   Quiero ser Afiliado
                 </Button>
@@ -138,7 +142,7 @@ export default function ProfilePage() {
                   </CardFooter>
                 </Card>
               )}
-              <Button onClick={() => signOut()} variant="ghost" className="w-full border border-destructive text-destructive hover:bg-destructive/10">
+              <Button onClick={() => signOut()} variant="ghost" className="w-full border border-destructive text-destructive hover:bg-transparent hover:text-destructive">
                 <LogOut className="mr-2 h-4 w-4" />
                 Cerrar Sesión
               </Button>
