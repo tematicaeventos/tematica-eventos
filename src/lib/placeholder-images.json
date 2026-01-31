@@ -8,9 +8,9 @@
     },
     {
       "id": "event-type-15-anos",
-      "description": "Una joven celebrando su fiesta de 15 años con un vestido elegante.",
-      "imageUrl": "https://images.unsplash.com/photo-1604948501463-de342b03761e?q=80&w=1080&auto=format&fit=crop",
-      "imageHint": "quinceanera party"
+      "description": "Un collage de diferentes temáticas para fiestas de quince años, mostrando vestidos, decoración y ambientes.",
+      "imageUrl": "https://storage.googleapis.com/stablediffusion-uploads/5f9d65a8-f5e9-444a-a433-f368f5c353c8.png",
+      "imageHint": "quinceanera themes"
     },
     {
       "id": "event-type-matrimonio",
@@ -117,7 +117,7 @@
     {
       "id": "theme-wedding-modern",
       "description": "A modern-themed wedding.",
-      "imageUrl": "https://images.unsplash.com/photo-1615562715349-1182697bfbf3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjB3ZWRkaW5nfGVufDB8fHx8MTc2ODkzMzM0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1615562715349-1182697bfbf3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjB3ZWRkaW5nfGVufDB8fHx8MTc2ODkzMzM0M3ww&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "modern wedding"
     },
     {
@@ -147,25 +147,25 @@
     {
       "id": "theme-corp-80s",
       "description": "An 80s-themed corporate party.",
-      "imageUrl": "https://images.unsplash.com/photo-1607890124765-92d34e0c8f13?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHw4MHMlMjBwYXJ0eXxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1607890124765-92d34e0c8f13?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHw4MHMlMjBwYXJ0eXxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "80s party"
     },
     {
       "id": "theme-corp-awards",
       "description": "An awards night-themed corporate party.",
-      "imageUrl": "https://images.unsplash.com/photo-1700514077430-3659e38eb5e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhd2FyZHMlMjBuaWdodHxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1700514077430-3659e38eb5e7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhd2FyZHMlMjBuaWdodHxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "awards night"
     },
     {
       "id": "theme-corp-luau",
       "description": "A tropical luau-themed corporate party.",
-      "imageUrl": "https://images.unsplash.com/photo-1692394954138-ccf64089b92b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx0cm9waWNhbCUyMGx1YXV8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1692394954138-ccf64089b92b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx0cm9waWNhbCUyMGx1YXV8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "tropical luau"
     },
     {
       "id": "theme-corp-superhero",
       "description": "A superhero-themed corporate party.",
-      "imageUrl": "https://images.unsplash.com/photo-1624310025312-5c914acacffa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdXBlcmhlcm8lMjB0aGVtZXxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1624310025312-5c914acacffa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdXBlcmhlcm8lMjB0aGVtZXxlbnwwfHx8fDE3NjkwMzQ0NDB8MA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "superhero theme"
     },
     {
@@ -177,7 +177,7 @@
     {
       "id": "theme-corp-masquerade",
       "description": "A masquerade-themed corporate party.",
-      "imageUrl": "https://images.unsplash.com/photo-1572553043173-3877d1ac9a0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYXNxdWVyYWRlJTIwcGFydHl8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1572553043173-3877d1ac9a0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYXNxdWVyYWRlJTIwcGFydHl8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib-rb-4.1.0&q=80&w=1080",
       "imageHint": "masquerade party"
     },
     {
@@ -231,7 +231,7 @@
     {
       "id": "theme-farewell-western",
       "description": "A western-themed farewell party.",
-      "imageUrl": "https://images.unsplash.com/photo-1586105449897-20b5efeb3233?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3ZXN0ZXJuJTIwcGFydHl8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1586105449897-20b5efeb3233?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3ZXN0ZXJuJTIwcGFydHl8ZW58MHx8fHwxNzY5MDM0NDQwfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "western party"
     }
   ]
