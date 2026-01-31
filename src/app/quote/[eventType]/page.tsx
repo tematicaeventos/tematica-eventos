@@ -248,7 +248,7 @@ export default function PackagedQuotePage() {
       toast({
         variant: 'destructive',
         title: 'Dirección requerida',
-        description: 'Por favor, introduce la dirección del lugar del evento.',
+        description: 'Este campo es obligatorio. Si no tienes un lugar, indícanos el sector de tu preferencia y nosotros te ayudaremos a conseguirlo.',
       });
       return;
     }
@@ -480,7 +480,7 @@ export default function PackagedQuotePage() {
                             onChange={(e) => { if (handleAuthCheck()) setDireccionSalon(e.target.value) }}
                             className="bg-white border-gray-300 text-gray-900 ring-offset-white focus-visible:ring-primary placeholder:text-gray-500"
                         />
-                        <p className="text-lg text-white [text-shadow:0_0_12px_white]">Este campo es obligatorio. Si no tienes un lugar, indícanos el sector de tu preferencia y nosotros te ayudaremos a conseguirlo.</p>
+                        <p className="text-lg text-white">Este campo es obligatorio. Si no tienes un lugar, indícanos el sector de tu preferencia y nosotros te ayudaremos a conseguirlo.</p>
                     </div>
                   )}
               </CardContent>
