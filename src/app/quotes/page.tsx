@@ -58,7 +58,6 @@ import { services as allServices } from '@/lib/services-data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import QuotePDFDocument from '@/components/QuotePDFDocument';
 import { QuoteSummaryBar } from '@/components/quote-summary-bar';
-import { Confetti } from '@/components/confetti';
 
 const categoryIcons: { [key: string]: React.ReactNode } = {
   'Sillas y Mesas': <Armchair className="h-5 w-5" />,
@@ -319,7 +318,6 @@ export default function ModularQuotePage() {
 
   return (
     <>
-       <Confetti />
        <QuoteSummaryBar total={total} onViewQuoteClick={handleScrollToSummary} />
        <div ref={pdfRef} className="fixed -left-[9999px] top-0 z-[-1]">
         {generatedQuote && generatedQuoteId && (

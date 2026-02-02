@@ -40,7 +40,6 @@ import QuotePDFDocument from '@/components/QuotePDFDocument';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { QuoteSummaryBar } from '@/components/quote-summary-bar';
-import { Confetti } from '@/components/confetti';
 
 
 const PRECIO_SALON = 1500000;
@@ -359,7 +358,6 @@ export default function PackagedQuotePage() {
 
   return (
     <>
-      <Confetti />
       <QuoteSummaryBar total={total} onViewQuoteClick={handleScrollToSummary} />
       <div ref={pdfRef} className="fixed -left-[9999px] top-0 z-[-1]">
         {generatedQuote && generatedQuoteId && (
