@@ -592,7 +592,6 @@ export default function PackagedQuotePage() {
                             setIsCalendarOpen(false);
                         }
                       }}
-                      initialFocus
                       locale={es}
                       disabled={(date) => date < new Date(new Date().setDate(new Date().getDate() - 1))}
                     />
