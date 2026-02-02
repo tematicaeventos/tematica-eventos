@@ -580,9 +580,6 @@ export default function ModularQuotePage() {
                           initialFocus
                           locale={es}
                           disabled={(date) => date < new Date(new Date().setDate(new Date().getDate() - 1))}
-                          captionLayout="dropdown"
-                          fromYear={currentYear}
-                          toYear={currentYear + 5}
                         />
                       </PopoverContent>
                     </Popover>

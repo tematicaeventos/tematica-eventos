@@ -35,7 +35,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useUser } from '@/firebase/auth/use-user';
 import { useToast } from '@/hooks/use-toast';
 import { saveQuote } from '@/firebase/firestore';
-import type { Quote, QuoteItem } from '@/lib/types';
+import type { Quote, QuoteItem, UserProfile } from '@/lib/types';
 import QuotePDFDocument from '@/components/QuotePDFDocument';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -595,9 +595,6 @@ export default function PackagedQuotePage() {
                       initialFocus
                       locale={es}
                       disabled={(date) => date < new Date(new Date().setDate(new Date().getDate() - 1))}
-                      captionLayout="dropdown"
-                      fromYear={currentYear}
-                      toYear={currentYear + 5}
                     />
                   </PopoverContent>
                 </Popover>
