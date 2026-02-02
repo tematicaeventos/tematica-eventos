@@ -34,7 +34,7 @@ const ConfettiParticle = ({ id }: { id: number }) => {
         '--r-start': `${rStart}deg`,
         '--r-end': `${rEnd}deg`,
         animation: `confetti-explode ${randomDuration}s cubic-bezier(0.1, 1, 0.7, 1) forwards`,
-    });
+    } as React.CSSProperties);
   }, [id]);
 
   return (
