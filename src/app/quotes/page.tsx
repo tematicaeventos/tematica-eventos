@@ -297,7 +297,7 @@ export default function ModularQuotePage() {
       });
 
       message += `---\n*TOTAL: ${formatCurrency(total)}*\n\n`;
-      message += `_Cotización generada desde la web._`;
+      message += `_Cotización generada en el portal Temática Eventos... No solo hacemos eventos, creamos Recuerdos Inolvidables_`;
 
       const whatsappUrl = `https://wa.me/573112410969?text=${encodeURIComponent(message)}`;
       
