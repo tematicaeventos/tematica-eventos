@@ -109,11 +109,11 @@ export type Quote = {
     fechaEvento: string;
     horaInicio: string;
     horaFin: string;
-    direccionSalon?: string;
-    direccion?: string;
-    barrio?: string;
-    tema?: string;
-    observaciones?: string;
+    direccionSalon?: string | null;
+    direccion?: string | null;
+    barrio?: string | null;
+    tema?: string | null;
+    observaciones?: string | null;
 }
 
 export type UserContextType = {

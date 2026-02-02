@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
@@ -261,10 +260,10 @@ export default function ModularQuotePage() {
       fechaEvento: format(fecha, 'yyyy-MM-dd'),
       horaInicio: horaInicio,
       horaFin: horaFin,
-      direccionSalon: direccionSalon.trim() || undefined,
-      direccion: direccion.trim() || undefined,
-      barrio: barrio.trim() || undefined,
-      observaciones: observaciones.trim() || undefined,
+      direccionSalon: direccionSalon.trim() || null,
+      direccion: direccion.trim() || null,
+      barrio: barrio.trim() || null,
+      observaciones: observaciones.trim() || null,
     };
 
     try {

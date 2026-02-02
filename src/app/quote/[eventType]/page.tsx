@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
@@ -288,11 +287,11 @@ export default function PackagedQuotePage() {
       fechaEvento: format(fecha, 'yyyy-MM-dd'),
       horaInicio: horaInicio,
       horaFin: horaFin,
-      tema: selectedTheme || undefined,
-      direccionSalon: !incluirSalon && direccionSalon.trim() ? direccionSalon.trim() : undefined,
-      direccion: direccion.trim() || undefined,
-      barrio: barrio.trim() || undefined,
-      observaciones: finalObservaciones || undefined,
+      tema: selectedTheme || null,
+      direccionSalon: !incluirSalon && direccionSalon.trim() ? direccionSalon.trim() : null,
+      direccion: direccion.trim() || null,
+      barrio: barrio.trim() || null,
+      observaciones: finalObservaciones || null,
     };
 
     try {
