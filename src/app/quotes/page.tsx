@@ -243,6 +243,8 @@ export default function ModularQuotePage() {
       return;
     }
 
+    if (!user) return;
+
     setIsSaving(true);
     
     const personasItem = Object.values(selectedServices).find(({service}) => service.tipoCobro === 'persona');
@@ -250,18 +252,18 @@ export default function ModularQuotePage() {
     
     const quoteData: Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> = {
       usuarioId: user.uid,
-      nombreCliente,
-      correo,
-      telefono,
+      nombreCliente: nombreCliente,
+      correo: correo,
+      telefono: telefono,
       items: quoteItems,
-      total,
+      total: total,
       estado: 'pendiente',
       origen: 'web-modular',
       tipoEvento: 'Modular',
       personas: personasCount,
       fechaEvento: format(fecha, 'yyyy-MM-dd'),
-      horaInicio,
-      horaFin,
+      horaInicio: horaInicio,
+      horaFin: horaFin,
       ...(direccionSalon.trim() ? { direccionSalon: direccionSalon.trim() } : {}),
       ...(direccion.trim() ? { direccion: direccion.trim() } : {}),
       ...(barrio.trim() ? { barrio: barrio.trim() } : {}),

@@ -253,7 +253,7 @@ export default function PackagedQuotePage() {
       return;
     }
 
-    if (!eventType) return;
+    if (!eventType || !user) return;
 
     setIsSaving(true);
     
@@ -277,18 +277,18 @@ export default function PackagedQuotePage() {
 
     const quoteData: Omit<Quote, 'cotizacionId' | 'fechaCotizacion'> = {
       usuarioId: user.uid,
-      nombreCliente,
-      correo,
-      telefono,
+      nombreCliente: nombreCliente,
+      correo: correo,
+      telefono: telefono,
       items: quoteItems,
-      total,
+      total: total,
       estado: 'pendiente',
       origen: 'web-paquete',
       tipoEvento: eventType.title,
       personas: personas,
       fechaEvento: format(fecha, 'yyyy-MM-dd'),
-      horaInicio,
-      horaFin,
+      horaInicio: horaInicio,
+      horaFin: horaFin,
       ...(selectedTheme && { tema: selectedTheme }),
       ...(!incluirSalon && direccionSalon.trim() ? { direccionSalon: direccionSalon.trim() } : {}),
       ...(direccion.trim() ? { direccion: direccion.trim() } : {}),
