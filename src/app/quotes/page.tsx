@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
@@ -300,7 +301,7 @@ export default function ModularQuotePage() {
       message += `---\n*TOTAL: ${formatCurrency(total)}*\n\n`;
       message += `_Cotización generada desde la web._`;
 
-      const whatsappUrl = `https://wa.me/573045295251?text=${encodeURIComponent(message)}`;
+      const whatsappUrl = `https://wa.me/573112410969?text=${encodeURIComponent(message)}`;
       
       window.open(whatsappUrl, '_blank');
 
