@@ -222,7 +222,7 @@ export default function PackagedQuotePage() {
   };
 
   async function handleSaveAndRedirect() {
-    if (!handleAuthCheck()) {
+    if (!handleAuthCheck() || !user || !profile) {
       return;
     }
     
@@ -253,7 +253,7 @@ export default function PackagedQuotePage() {
       return;
     }
 
-    if (!eventType || !user) return;
+    if (!eventType) return;
 
     setIsSaving(true);
     
@@ -289,11 +289,11 @@ export default function PackagedQuotePage() {
       fechaEvento: format(fecha, 'yyyy-MM-dd'),
       horaInicio: horaInicio,
       horaFin: horaFin,
-      ...(selectedTheme && { tema: selectedTheme }),
-      ...(!incluirSalon && direccionSalon.trim() ? { direccionSalon: direccionSalon.trim() } : {}),
-      ...(direccion.trim() ? { direccion: direccion.trim() } : {}),
-      ...(barrio.trim() ? { barrio: barrio.trim() } : {}),
-      ...(finalObservaciones ? { observaciones: finalObservaciones } : {}),
+      tema: selectedTheme || undefined,
+      direccionSalon: !incluirSalon && direccionSalon.trim() ? direccionSalon.trim() : undefined,
+      direccion: direccion.trim() || undefined,
+      barrio: barrio.trim() || undefined,
+      observaciones: finalObservaciones || undefined,
     };
 
     try {
@@ -595,7 +595,7 @@ export default function PackagedQuotePage() {
                       initialFocus
                       locale={es}
                       disabled={(date) => date < new Date(new Date().setDate(new Date().getDate() - 1))}
-                      captionLayout="dropdown-buttons"
+                      captionLayout="dropdown"
                       fromYear={currentYear}
                       toYear={currentYear + 5}
                     />

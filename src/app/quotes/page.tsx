@@ -212,7 +212,7 @@ export default function ModularQuotePage() {
 
 
   async function handleContinueToReservation() {
-    if (!handleAuthCheck()) {
+    if (!handleAuthCheck() || !user || !profile) {
       return;
     }
 
@@ -243,8 +243,6 @@ export default function ModularQuotePage() {
       return;
     }
 
-    if (!user) return;
-
     setIsSaving(true);
     
     const personasItem = Object.values(selectedServices).find(({service}) => service.tipoCobro === 'persona');
@@ -264,10 +262,10 @@ export default function ModularQuotePage() {
       fechaEvento: format(fecha, 'yyyy-MM-dd'),
       horaInicio: horaInicio,
       horaFin: horaFin,
-      ...(direccionSalon.trim() ? { direccionSalon: direccionSalon.trim() } : {}),
-      ...(direccion.trim() ? { direccion: direccion.trim() } : {}),
-      ...(barrio.trim() ? { barrio: barrio.trim() } : {}),
-      ...(observaciones.trim() ? { observaciones: observaciones.trim() } : {}),
+      direccionSalon: direccionSalon.trim() || undefined,
+      direccion: direccion.trim() || undefined,
+      barrio: barrio.trim() || undefined,
+      observaciones: observaciones.trim() || undefined,
     };
 
     try {
@@ -582,7 +580,7 @@ export default function ModularQuotePage() {
                           initialFocus
                           locale={es}
                           disabled={(date) => date < new Date(new Date().setDate(new Date().getDate() - 1))}
-                          captionLayout="dropdown-buttons"
+                          captionLayout="dropdown"
                           fromYear={currentYear}
                           toYear={currentYear + 5}
                         />
